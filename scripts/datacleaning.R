@@ -6,9 +6,14 @@
 ### offspring personality ~ maternal care * density + other stuff
 
 ##############################################################################
-### Script for loading in packages
+### Script for cleaning all data
 
-library(paletteer) #for pretty colors
-library(ggplot2) #for figures and graphs
-library(dplyr) #for data manipulation
-library(psych) #descriptives
+##PERSONALITY
+#new df with only 2018-2021
+personality <- filter(personality_all,
+                      cohort > 2017) 
+personality_clean <- filter(personality,
+                            Exclude_unless_video_reanalyzed == 'N')
+describe(personality_clean) #errors in latencies, gotta check data
+
+                      

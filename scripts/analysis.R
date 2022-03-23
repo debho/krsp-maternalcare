@@ -6,9 +6,18 @@
 ### offspring personality ~ maternal care * density + other stuff
 
 ##############################################################################
-### Script for loading in packages
+### Script for running analyses
 
-library(paletteer) #for pretty colors
-library(ggplot2) #for figures and graphs
-library(dplyr) #for data manipulation
-library(psych) #descriptives
+##PCA LOADINGS
+
+
+##STEP 1: survival ~ personality * density
+
+
+##STEP 2: personality ~ grid * year
+
+
+##STEP 3: personality ~ maternal care
+
+
+##STEP 4: maternal attentiveness ~ year (mast vs non-mast)

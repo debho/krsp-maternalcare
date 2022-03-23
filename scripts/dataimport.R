@@ -6,9 +6,10 @@
 ### offspring personality ~ maternal care * density + other stuff
 
 ##############################################################################
-### Script for loading in packages
+### Script for importing data
 
-library(paletteer) #for pretty colors
-library(ggplot2) #for figures and graphs
-library(dplyr) #for data manipulation
-library(psych) #descriptives
+#reading in personality data
+personality_all <- read.csv('data/personality-master.csv')
+
+#reading in nest attendance data
+                            
