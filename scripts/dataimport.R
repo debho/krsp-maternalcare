@@ -9,7 +9,9 @@
 ### Script for importing data
 
 #reading in personality data
-personality_all <- read.csv('data/personality-master.csv')
+personality_raw <- read.csv('data/personality-master.csv',
+                            header = T,
+                            na.strings = c("", " ", "NA"))
 
 #reading in nest attendance data
                             

@@ -12,3 +12,6 @@ library(paletteer) #for pretty colors
 library(ggplot2) #for figures and graphs
 library(dplyr) #for data manipulation
 library(psych) #descriptives
+library(ade4) #for PCA
+library(tidyverse)
+library(lubridate)
