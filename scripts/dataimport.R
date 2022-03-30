@@ -8,10 +8,21 @@
 ##############################################################################
 ### Script for importing data
 
-#reading in personality data
-personality_raw <- read.csv('data/personality-master.csv',
-                            header = T,
-                            na.strings = c("", " ", "NA"))
+#connecting to database
+con <- krsp_connect(
+  host = "krsp.cepb5cjvqban.us-east-2.rds.amazonaws.com",
+  dbname ="krsp",
+  username = Sys.getenv("krsp_user"),
+  password = Sys.getenv("krsp_password")
+)
+
+#pulling tables from database
+krsp_tables(con)
+
+juvenile <- tbl(con, "litter") %>%
+  collect()
+
+juvenile_data <- filter(juvenile,
+                        yr > 2017)
 
 #reading in nest attendance data
-                            

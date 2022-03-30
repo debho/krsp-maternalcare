@@ -15,3 +15,6 @@ library(psych) #descriptives
 library(ade4) #for PCA
 library(tidyverse)
 library(lubridate)
+library(krsp) #access database
+
+

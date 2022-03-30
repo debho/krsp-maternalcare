@@ -8,9 +8,6 @@
 ##############################################################################
 ### Script for running analyses
 
-##PCA LOADINGS
-
-
 ##STEP 1: survival ~ personality * density
 
 
