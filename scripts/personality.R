@@ -48,7 +48,8 @@ library(ade4)
 pca.oft <- principal(beh.oft,
                   nfactors = 2,
                   scores = TRUE,
-                  rotate ="oblimin")
+                  rotate ="oblimin",
+                  covar = FALSE)
 
 print.psych(pca.oft,
             cut = .4,
@@ -61,7 +62,8 @@ personality$oft1 <- pca.oft$scores
 pca.mis <- principal(beh.mis,
                   nfactors = 2,
                   scores = TRUE,
-                  rotate = "oblimin")
+                  rotate = "oblimin",
+                  covar = FALSE)
 
 print.psych(pca.mis,
             cut = .4,
