@@ -6,12 +6,15 @@
 ### offspring personality ~ maternal care * density + other stuff
 
 ##############################################################################
-### Script for loading in packages required across the whole project
+### Script for preparing nest attendance data for analysis
 
-library(paletteer) #for pretty colors
-library(ggplot2) #for figures and graphs
-library(dplyr) #for data manipulation
-library(psych) #descriptive stats
-library(tidyverse) #for data cleaning, includes lubridate
-
-
+#reading in nest attendance data and cleans it
+nest_att <- read.csv("data/AllNests.csv",
+                     header = TRUE,
+                     sep = ",") %>%
+  filter(year > 2017, #take only 2018 to 2021 data
+         t_return < 421, #filters out any latencies > 420
+         t_move < 421) %>%
+  drop_na(charges,
+          mock_falls,
+          rattles) #removes any rows where values weren't specified

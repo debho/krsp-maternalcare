@@ -6,7 +6,10 @@
 ### offspring personality ~ maternal care * density + other stuff
 
 ##############################################################################
-### Script for importing data
+### Script for importing data from krsp database
+
+#library for krsp functions
+library(krsp)
 
 #connecting to database
 con <- krsp_connect(
@@ -19,10 +22,19 @@ con <- krsp_connect(
 #pulling tables from database
 krsp_tables(con)
 
-juvenile <- tbl(con, "litter") %>%
+squirrels <- tbl(con, "squirrel") %>%
   collect()
 
-juvenile_data <- filter(juvenile,
-                        yr > 2017)
+squirrels_data <- filter(squirrels,
+                         trap_date > "2017-12-31")
 
-#reading in nest attendance data
+litters <- tbl(con, "litter") %>%
+  collect()
+
+litters_data <- filter(litters,
+                       yr > 2017)
+
+ids <- tbl(con, "historic_squirrel_ids") %>%
+  collect()
+
+

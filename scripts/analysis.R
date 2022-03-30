@@ -8,6 +8,7 @@
 ##############################################################################
 ### Script for running analyses
 
+
 ##STEP 1: survival ~ personality * density
 
 

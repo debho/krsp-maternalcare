@@ -8,48 +8,64 @@
 ##############################################################################
 ### Script for setting personality data up for analysis
 
-#importing data from .csv
-personality_raw <- read.csv('data/personality-master.csv',
+#importing data and cleaning
+personality <- read.csv('data/personality-master.csv',
                             header = T,
-                            na.strings = c("", " ", "NA"))
+                            na.strings = c("", " ", "NA")) %>%
+  filter(cohort > 2017, #takes only 2018 to 2021
+         ageclass == "J", #takes only juvs
+         Exclude_unless_video_reanalyzed == "N") #eliminates any exclusions
 
-#new df with only 2018-2021
-juv_personality <- filter(personality_raw,
-                          Exclude_unless_video_reanalyzed == 'N',
-                          ageclass == 'J',
-                          cohort > 2017)
+behaviors <- mutate_if(personality,
+                       is.character, as.numeric) #convert all to numbers
 
-#convert all to factors and extract only the variables i need
-behaviors <- mutate_if(juv_personality,
-                       is.character, as.numeric)
-behaviors_prop <- transmute(behaviors,
-                            walk_prop = (walk/oft_duration),
-                            jump_prop = (jump/oft_duration),
-                            hole_prop = (hole/oft_duration),
-                            hang_prop = (hang/oft_duration),
-                            still_prop = (still/oft_duration),
-                            chew_prop = (chew/oft_duration),
-                            groom_prop = (groom/oft_duration),
-                            front_prop = (front/mis_duration),
-                            back_prop = (back/mis_duration),
-                            approachlat_prop = (approachlatency/mis_duration),
-                            attacklat_prop = (attacklatency/mis_duration),
-                            attack_prop = (attack/mis_duration)
+#extracts OFT behaviors
+beh.oft <- transmute(behaviors,
+                     walk_prop = (walk/oft_duration),
+                     jump_prop = (jump/oft_duration),
+                     hole_prop = (hole/oft_duration),
+                     hang_prop = (hang/oft_duration),
+                     still_prop = (still/oft_duration),
+                     chew_prop = (chew/oft_duration),
+                     groom_prop = (groom/oft_duration)
 )
 
-#PCA loadings
-#now load a table that contains only the variables of interest (no other info). If there are missing values, you can estimate the median for that behavior, and insert it for the missing value (but be sure to make to note this)
-#below, the data file is named “data”
-pca.oft <- dudi.pca(behaviors_prop,
-                    scale = TRUE, #to use correlation instead of covariance matrix
-                    scannf = FALSE,
-                    nf = 2)
-summary(pca.oft$c1) #this gives you the loadings
+#extracts MIS behaviors
+beh.mis <- transmute(behaviors,
+                     front_prop = (front/mis_duration),
+                     back_prop = (back/mis_duration),
+                     approachlat_prop = (mis_duration/approachlatency), #reversed because of rev corr with aggression
+                     attacklat_prop = (mis_duration/attacklatency), #reversed because of rev corr with aggression
+                     attack_prop = (attack/mis_duration)
+)
 
-summary(pca.oft$eig) #gives you eigenvalues, which you can use to estimate prop variance explained by each PC
-pc <- pca.oft$l1 #this gives you the composite variables
+#PCA ####
 
-#attaches composites to  dataframe
-juv_personality$oft1 <- pc$RS1
-juv_personality$mis1 <- pc$RS2
+library(ade4)
+
+#PCA loadings for OFT
+
+pca.oft <- principal(beh.oft,
+                  nfactors = 2,
+                  scores = TRUE,
+                  rotate ="oblimin")
+
+print.psych(pca.oft,
+            cut = .4,
+            sort = TRUE)
+
+personality$oft1 <- pca.oft$scores
+
+#PCA loadings for MIS
+
+pca.mis <- principal(beh.mis,
+                  nfactors = 2,
+                  scores = TRUE,
+                  rotate = "oblimin")
+
+print.psych(pca.mis,
+            cut = .4,
+            sort = TRUE)
+
+personality$mis1 <- pca.mis$scores
 
