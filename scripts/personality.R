@@ -41,8 +41,6 @@ beh.mis <- transmute(behaviors,
 
 #PCA ####
 
-library(ade4)
-
 #PCA loadings for OFT
 
 pca.oft <- principal(beh.oft,
