@@ -719,7 +719,7 @@
 718,H3570,H3571,19729,JO,rattle,,,,D3,D.0,3,Bk/R,9315,1,,4,6/30/19,181,2019,,,,y,y,y,120,,,n,n,2,0,0,y,LKE,underground,,mom hovered over us for duration of processing,SWK
 719,F9562,F9025,23201,JO,rattle,,,,I5,I.0,5,Y/R,9173,1,1,1,6/25/19,176,2019,6/18/19,169,7,y,y,y,,,,n,n,0,0,1,y,LKE,underground,,"barked repeatedly from nearby tree, approached nest 7 min after pup return kept circling around it",SWK
 720,H3582,H3583,20046,JO,rattle,,,,F3,F.0,3,P/P,9081,1,1,5,6/23/19,174,2019,6/20/19,171,3,n,n,n,,,,n,n,0,0,0,n,LKE,underground,,loc'd mom not around when nest done,SWK
-721,H4766,H4767,20417,JO,rattle,,,,O.1.,O.5,1.5,O/B,9090,1,1,,6/19/19,170,2019,6/15/19,166,4,n,n,n,,,,n,n,0,0,0,n,LSM,underground,n,mom showed up ~halfway through processing pups,SWK
+721,H4766,H4767,20417,JO,rattle,,,,O.1.,O.5,1.5,O/B,9090,1,1,6,6/19/19,170,2019,6/15/19,166,4,n,n,n,,,,n,n,0,0,0,n,LSM,underground,n,mom showed up ~halfway through processing pups,SWK
 722,M5924,M5925,23787,JO,rattle,,,,P15.,P.0,15.5,P/G,9191,1,1,5,,,2019,6/12/19,,,y,y,y,240,,,n,n,0,0,0,n,LKE/JGR,grass,n,"mom leaped pretty far down out of nest, then took off pretty quickly",SWK
 723,M1843,M1844,22543,JO,rattle,,,,R5.,R.0,5.5,W/W,9147,1,1,4,6/12/19,163,2019,6/8/19,159,4,n,n,n,240,,,n,n,0,0,0,n,SRT,grass,,"mom was not present at all, sneaker nest",SWK
 724,M3686,M3687,22290,JO,rattle,,,,T11,T.0,11,B/O,9134,1,1,3,6/6/19,157,2019,,,,y,y,y,,,,n,n,0,0,0,y,LSM,underground,n,"took long time to access nest, mom circled aroung nest hole several times when pups put back, but did not grab them while we watched",SWK
@@ -731,7 +731,7 @@
 730,M5805,M5806,23931,RR,rattle,,,,C2/B2,,,Y/B,9372,2,2,6,9/5/19,248,2019,8/9/19,221,27,y,y,y,240,,,n,n,0,0,0,y,AJH,wbr,,,SWK
 731,F9997,F9998,23869,RR,rattle,,,,A10.,A.0,10.5,R/Y,9376,2,1,6,8/14/19,226,2019,8/12/19,224,2,y,y,y,0,120,,y,y,0,0,0,n,LKE/SRT,cavity,n,"no time recorded for t_move but new nest loc was recorded, mom was quiet but hovered and investigated the nest tree all through processing",SWK
 732,M5805,M5806,23931,RR,rattle,,,,C5./B2,,,Y/B,9372,2,1,6,8/13/19,225,2019,8/9/19,221,4,y,y,y,300,,,n,n,0,0,0,y,SRT,wbr,,"mom obs lac, hanging out nearby in tree, barked while processing nonstop",SWK
-733,M4293,M4294,,RR,rattle,,,,C12,C.0,12,G/W,,2,1,,7/29/19,210,2019,,,,y,y,y,180,,,n,n,0,0,2,y,ERS,,,,SWK
+733,M4293,M4294,23858,RR,rattle,,,,C12,C.0,12,G/W,9222,2,1,,7/29/19,210,2019,,,,y,y,y,180,,,n,n,0,0,2,y,ERS,,,,SWK
 734,M4289,M4290,23856,RR,rattle,,,,B9/C8,,,P/R,9330,2,1,5,7/22/19,203,2019,7/18/19,199,4,y,y,y,240,,,n,n,0,0,0,y,AND,grass,,"mom kicked out, hung around and barked during retrieval, then took off",SWK
 735,F9998,F9997,23869,RR,rattle,,,,A10.,A.0,10.5,R/Y,9230,1,1,5,6/29/19,180,2019,6/14/19,165,15,y,y,y,,120,300,y,y,0,0,0,y,LKE,underground,n,mom hovered around & kept approaching us throughout nest processing; checked nest while we were processing,SWK
 736,M6285,M6286,23957,RR,rattle,,,,EE9,EE.0,9,Y/O,9279,1,2,3,6/25/19,176,2019,,,,y,y,y,,,,n,n,0,0,0,y,SRT,underground,,"mom approached within 5 m, circling around nest, barked at me from tree",SWK
@@ -746,80 +746,80 @@
 745,F9856,F9857,23903,SUX,chickadee,,,,-8.17,-8.5,17,O/Y,9348,2,2,4,8/25/19,237,2019,7/27/19,208,29,y,y,y,180,,,n,n,0,0,0,y,AJH,wbr,,,SWK
 746,F9854,F9855,23902,SUX,chickadee,,,,"-10,17",-10,17,G/O,9341,2,2,4,8/25/19,237,2019,7/26/19,207,30,y,y,y,420,,,n,n,0,0,0,y,AJH,wbr,,,SWK
 747,F9858,F9859,23904,SUX,chickadee,,,,"-13,20",-13,20,W/G,9416,2,1,3,9/11/19,254,2019,,,,y,y,y,,240,,y,n,0,0,0,y,MCK,underground,,,SWK
-748,M5836,M5837,,BT,chickadee,,,,63,G.1,3.1,G/B,,1,1,,5/4/20,,2020,,,,y,n,y,120,180,240,y,y,0,0,1,n,AND,snag cavity,y,,DH
-749,M6891,M6341,,BT,chickadee,,,,B1.,B.0,1.5,R/Y,,1,1,,5/4/20,,2020,,,,y,y,y,60,,,n,n,0,0,0,y,AMS,bucket,y,,DH
-750,M7302,M7303,,BT,chickadee,,,,K6.,J.9,6.9,P/P,,1,1,,5/4/20,,2020,,,,y,y,n,300,,,n,n,0,0,0,y,AND,grass,n,lost litter confirmed 5/31/20,DH
-751,F9747,F9728,,BT,chickadee,,,,I7,1.5,7.3,O/O,,1,1,,5/4/20,,2020,,,,y,y,y,120,,,n,n,0,0,0,y,AMS,grass,y,,DH
-752,M3686,M3687,,JO,rattle,,,,T13,S.8,13.9,R/W,,1,1,,4/19/20,,2020,,,,y,y,y,540,780,840,y,y,0,,4,y,AND,wbr,y,no. of mock falls not specified,DH
-753,F9845,M3687,,JO,rattle,,,,K.10.,L.0,10,G/B,,1,1,,4/15/20,,2020,,,,y,y,y,240,300,360,y,y,0,0,0,y,AMS,grass ball,y,,DH
-754,M5924,M5925,,JO,rattle,,,,H.12.,H.4,12.5,P/G,,1,1,,4/27/20,,2020,,,,y,n,y,60,480,480,y,y,0,0,0,y,AMS,bucket,y,,DH
-755,M0482,M0483,,JO,rattle,,,,P12.,L.2,12,B/Y,,1,1,,4/18/20,,2020,,,,y,y,y,240,420,480,y,y,0,0,2,y,AND/AMS,grass,y,,DH
-756,M0470,H4947,,JO,rattle,,,,H.17,I.8,16.5,Y/R,,1,1,,5/5/20,,2020,,,,y,n,y,180,,,n,n,0,0,0,y,ALC,grass,y,,DH
-757,M4267,M4268,,JO,rattle,,,,D.14,E.2,14,W/Y,,1,1,,5/10/20,,2020,,,,y,y,y,180,,,n,n,0,0,0,n,AMS,grass ball,y,,DH
-758,M6318,M6836,,JO,rattle,,,,E1.,E.0,1.4,G/W,,1,1,,4/13/20,,2020,,,,y,y,y,120,360,,y,n,0,0,0,y,AMS,grass,n,lost litter,DH
-759,M5424,H3457,,JO,rattle,,,,K.7.,K.0,7.1,R/P,,1,1,,4/12/20,,2020,,,,y,n,n,180,,,n,n,0,0,2,y,AND,wbr,y,,DH
-760,-,A7240,,JO,rattle,,,,Q9,R.0,9,-/P,,1,1,,5/23/20,,2020,,,,y,y,y,240,,,n,n,0,1,0,n,AND,wbr,y,,DH
-761,F9843,F9844,,JO,rattle,,,,O12,O.0,11.9,W/W,,1,1,,4/28/20,,2020,,,,y,y,y,120,120,120,y,y,,0,2,y,AMS,grass,y,no. of charges not specified,DH
-762,F9562,F9025,,JO,rattle,,,,G.10,,10.7,B/B,,1,1,,3/30/20,,2020,,,,y,n,y,1380,,,n,n,0,0,1,y,AMS,,n,nest type and locx not stated,DH
-763,F9723,F9724,,JO,rattle,,,,L16.,L.0,16.3,R/R,,1,1,,4/12/20,,2020,,,,y,n,n,420,,,n,n,0,0,0,y,AMS/AND,grass,n,lost litter,DH
-764,M6320,M6321,,JO,rattle,,,,F.4.,F.3,4.7,R/O,,1,1,,4/2/20,,2020,,,,y,n,n,480,,,n,n,0,0,1,n,AND/AMS,grass,n,,DH
-765,M4239,M4240,,JO,rattle,,,,O.19.,O.5,19.9,B/R,,1,1,,4/26/20,,2020,,,,y,y,n,300,240,240,y,y,0,0,4,y,AND,grass,n,,DH
-766,F9848,M4271,,JO,rattle,,,,T.1,T.9,1,O/P,,1,1,,5/12/20,,2020,,,,y,y,y,60,180,,y,n,0,0,0,y,AMS,bucket,y,,DH
-767,M1860,H3412,,JO,rattle,,,,F.10.,F.8,10.5,G/R,,1,1,,4/15/20,,2020,,,,y,y,y,,,,n,n,0,0,0,y,AND/AMS,ground,n,lost litter,DH
-768,M6338,F9736,,BT,chickadee,,,,B3.,B.6,4.0,B/B,,1,1,,6/17/21,,2021,,,,y,y,y,60,,,n,n,0,0,0,n,MDM/DKZ,bucket,n,,DH
-769,M5836,M5837,,BT,chickadee,,,,G3,D.6,3.0,O/O,,1,1,,6/5/21,,2021,,,,y,y,n,120,,,n,n,0,0,0,n,LLR,wbr,n,lost litter,DH
-770,M7302,M7303,,BT,chickadee,,,,K6.,K.0,6.5,G/Y,,1,2,,6/5/21,,2021,,,,y,n,y,120,600,,y,n,0,0,1,y,LLR,wbr,n,,DH
-771,M7306,M7307,,BT,chickadee,,,,I.8,60.9746,-138.0812,W/W,,1,1,,6/8/21,,2021,,,,n,n,n,60,,,n,n,0,0,0,n,LLR,grass,n,"lost litter, locx and locy given in lat/long",DH
-772,M7308,M7309,,BT,chickadee,,,,J3,I.8,2.7,R/R,,1,1,,5/11/21,,2021,,,,n,n,n,240,,,n,n,0,0,0,n,SEL/MBB,wbr,n,,DH
-773,M6338,F9736,,BT,chickadee,,,,B3.,B.0,3.3,B/B,,1,2,,7/11/21,,2021,,,,y,y,y,120,,,n,n,0,0,12,y,MDM/SEL,grass,n,"rattles value seems high, check against sheet",DH
-774,M7304,M7305,,BT,chickadee,,,,0.2,60.96987,-138.07523,G/G,,1,1,,5/14/21,,2021,,,,y,n,n,360,300,,y,n,0,0,0,n,MBB,snag cavity,n,"2nd attempt recorded here as failed to reach into snag the first time, locx and locy recorded in lat/long",DH
-775,M7308,M7309,,BT,chickadee,,,,J3,I.7,3.1,R/R,,1,2,,6/5/21,,2021,,,,y,y,y,120,480,,y,n,0,0,2,y,SEL/MBB,wbr,n,,DH
-776,M7302,M7303,,BT,chickadee,,,,K6.,K.2,6.0,G/Y,,1,1,,5/12/21,,2021,,,,y,y,n,600,420,420,y,y,0,0,2,n,EMM,grass,n,,DH
-777,F9723,F9724,,JO,rattle,,,,L16.,L.5,16.0,Y/O,,1,1,,5/29/21,,2021,,,,y,n,y,600,180,,y,n,0,0,0,n,DKZ,wbr,n,lost litter,DH
-778,M4228,M4229,,JO,rattle,,,,F16,F.7,16.1,B/W,,1,2,,6/8/21,,2021,,,,y,n,n,240,,,n,n,0,0,0,n,MDM,wbr,n,rattled once when handling pups,DH
-779,M7058,M7066,,JO,rattle,,,,T11,5.3,10.8,B/R,,1,1,,5/25/21,,2021,,,,y,n,n,240,420,,y,n,0,0,1,n,MDM,wbr,n,"mom moved pups after more than 7 min, new nest T.0, 11.0 snag cavity ~12m, lost litter",DH
-780,-,M0926,,JO,rattle,,,,F.10.,G.7,10.0,-/W,,1,2,,5/27/21,,2021,,,,y,n,y,180,,,n,n,0,0,0,y,MBB,wbr,n,,DH
-781,M6981,M6982,,JO,rattle,,,,03,0.1,2.9,B/Y,,1,1,,5/11/21,,2021,,,,y,n,y,180,120,,y,n,0,0,0,y,DKZ/KAC,wbr,n,,DH
-782,M6981,M6982,,JO,rattle,,,,03,-0.5,2.5,B/Y,,1,2,,5/26/21,,2021,,,,y,n,y,120,,,n,n,0,0,0,y,MBB,grass,n,,DH
-783,M5424,H3457,,JO,rattle,,,,K.7.,K.0,7.6,W/Y,,1,1,,4/25/21,,2021,,,,y,y,y,240,,,n,n,0,0,0,y,EMM,wbr,n,mom went back into nest after being kicked out,DH
-784,F9843,F9844,,JO,rattle,,,,O12,N.6,12.0,Bk/B,,1,1,,5/5/21,,2021,,,,y,y,y,120,60,60,y,y,1,0,0,n,SEL/MBB,nest box,n,"mom barked once during handling, new nest at N.3, 12.0, lost litter, tail and collar found at O.7, 13.2",DH
-785,M6318,M6836,,JO,rattle,,,,E1.,E.1,1.5,G/Y,,1,2,,5/17/21,,2021,,,,y,n,n,60,540,720,y,y,0,0,1,y,LLR/JBF,grass,n,,DH
-786,-,M0926,,JO,rattle,,,,F.10.,F.3,10.6,-/W,,1,1,,5/17/21,,2021,,,,y,n,y,180,,,n,n,0,0,0,n,MDM,grass,n,,DH
-787,M4228,M4229,,JO,rattle,,,,F16,F.0,15.0,B/W,,1,1,,5/17/21,,2021,,,,y,n,y,60,,,n,n,0,0,0,n,MDM,wbr,n,,DH
-788,M6721,M0929,,JO,rattle,,,,L.11,K.7,11.9,O/Y,,1,1,,5/12/21,,2021,,,,y,y,y,60,,,n,n,0,0,0,n,DKZ,ground,n,lost litter,DH
-789,M6359,M5169,,KL,control,,,,C.0./B2,A.8,2.0,Bk/B,,1,2,,5/27/21,,2021,,,,y,y,y,120,,,n,n,0,0,0,n,SEL/KAC,grass,n,,DH
-790,M7029,M6846,,KL,control,,,,L11,L.0,10.6,W/W,,1,2,,6/5/21,,2021,,,,n,n,n,1800,,,n,n,0,0,0,n,SEL,wbr,n,,DH
-791,F9647,F9648,,KL,control,,,,P9,60.954882,-138.024781,G/R,,1,2,,5/30/21,,2021,,,,y,y,y,60,,,n,n,0,0,0,y,MBB/KAC,wbr,n,locx and locy given in lat and long,DH
-792,M6297,M7802,,KL,control,,,,J.9,J.0,8.1,B/O,,1,1,,6/7/21,,2021,,,,y,n,y,180,,,n,n,0,0,0,n,KAC,wbr,n,"axy RC found near O14, squirrel presumed dead",DH
-793,M7860,M7861,,KL,control,,,,F17,F.2,17.0,O/G,,2,2,,7/10/21,,2021,,,,y,y,y,240,,,n,n,0,0,2,y,SEL,wbr,n,,DH
-794,F9207,F9208,,KL,control,,,,C13,C.0,13,R/R,,1,2,,5/22/21,,2021,,,,y,n,y,180,,,n,n,0,0,0,y,KAC,wbr,n,,DH
-795,M5642,M5643,,KL,control,,,,I2.,,,W/Y,,1,2,,5/29/21,,2021,,,,y,n,n,60,60,120,n,n,0,0,0,y,KAC,,n,"new nest I.0/2.7, 6/7/21 squirrel found dead at N2, thought to be killed by male",DH
-796,F9240,M6505,,KL,control,,,,G.2,F.2,2.0,Bk/Bk,,1,2,,6/1/21,,2021,,,,y,y,y,180,,,n,n,0,0,0,n,KAC,wbr,n,RC off,DH
-797,F9048,F9049,,KL,control,,,,-35.,-2.7,4.1,O/P,,2,1,,6/13/21,,2021,,,,y,n,n,120,240,240,y,y,0,0,0,y,LLR,wbr,n,"new nest -3.1, 5.5",DH
-798,F9928,F9929,,KL,control,,,,N6,N.3,6.0,P/W,,1,2,,6/19/21,,2021,,,,y,y,y,180,180,,y,n,0,0,0,n,KAC/SEL,wbr,n,,DH
-799,F9468,F9469,,KL,control,,,,H6,H.3,6.4,R/Y,,1,3,,6/12/21,,2021,,,,n,n,n,180,60,120,y,y,0,0,0,n,KAC,wbr,n,"mom showed up while processing, new nest G.9, 6.9, presumed dead, mom and pups not found",DH
-800,F9048,F9049,,KL,control,,,,-35.,-4.0,5.7,O/P,,2,2,,7/8/21,,2021,,,,y,y,y,420,,,n,n,0,0,0,y,SEL,grass,n,,DH
-801,M7860,M7861,,KL,control,,,,F17,E.9,17.1,O/G,,2,1,,6/14/21,,2021,,,,y,y,y,120,,,n,n,0,0,2,n,LLR/SEL,grass,n,,DH
-802,M6152,M4223,,KL,control,,,,N1.,N.4,1.1,R/G,,1,2,,5/26/21,,2021,,,,y,y,y,120,540,,y,n,0,0,0,n,KAC/SEL,wbr,n,"new nest at N.4, 1.1",DH
-803,F9928,F9929,,KL,control,,,,N6,N.3,6.0,P/W,,1,1,,5/25/21,,2021,,,,y,y,y,60,120,180,y,y,0,0,0,n,MBB,grass,n," new nest N.3, 6.9",DH
-804,M6568,M6569,,KL,control,,,,G9,H.1,10.3,Y/O,,1,2,,6/8/21,,2021,,,,n,n,n,240,240,,y,n,0,0,0,n,KAC/SEL,wbr,n,same nest as nest 1,DH
-805,M6199,M6200,,KL,control,,,,-14,-1.7,1.8,B/G,,1,2,,6/13/21,,2021,,,,y,y,y,2820,,,n,n,0,0,0,n,SEL/LLR,wbr cavity,n,,DH
-806,M7853,M7854,,KL,control,,,,A10.,A.8,11.5,G/G,,1,2,,6/12/21,,2021,,,,y,y,y,129,480,480,y,y,0,0,0,y,KAC/SEL/LLR,wbr,n,"mom moved pup during retrieval, one pup not found at N2",DH
-807,F9240,M6505,,KL,control,,,,G.2,F.2,2.0,Bk/Bk,,1,2,,6/10/21,,2021,,,,y,n,n,1020,300,,y,n,0,0,0,y,EMM,wbr,n,,DH
-808,M7099,M7100,,KL,control,,,,-4.10,-4.9,9.8,P/B,,1,2,,5/19/21,,2021,,,,y,y,y,420,,,n,n,5,2,0,n,SEL/KAC,wbr,n,"vocal during processing, bit Lia while climbing",DH
-809,M6156,M6157,,KL,control,,,,O1,O.3,2.6,G/P,,1,2,,6/3/21,,2021,,,,y,y,y,840,,,n,n,0,0,0,n,KAC,wbr,n,could only find one pup,DH
-810,F9468,F9469,,KL,control,,,,H6,I.1,6.0,R/Y,,1,2,,6/3/21,,2021,,,,n,n,n,60,60,60,y,y,0,0,0,n,LLR,wbr,n,"new nest H.1, 6.1",DH
-811,M6405,M6406,,KL,control,,,,F3,E.9,3.0,Bk/R,,1,2,,5/22/21,,2021,,,,y,n,y,300,,,n,n,0,0,0,n,MBB/SEL,wbr,n,,DH
-812,M6199,M6200,,KL,control,,,,-14,-2.0,1.5,B/G,,1,1,,5/20/21,,2021,,,,y,y,y,240,,,n,n,0,0,0,y,SEL/MBB/KAC/LLR,wbr,n,,DH
-813,M6516,M6157,,KL,control,,,,O1,O.3,2.6,G/P,,1,2,,6/3/21,,2021,,,,y,n,n,120,,,n,n,0,0,0,n,KAC,wbr,n,2nd record on the same day for the same nest,DH
-814,M7029,M6846,,KL,control,,,,L11,K.2,10.7,W/W,,1,1,,5/22/21,,2021,,,,n,y,n,120,,,n,n,0,0,0,n,KAC,grass,n,,DH
-815,M6520,M6365,,KL,control,,,,-114.,-3.9,15.1,G/B,,1,2,,5/26/21,,2021,,,,y,ran out,n,,,,n,n,0,0,0,n,KAC/SEL,underground,n,,DH
-816,M6886,M6863,,SU,control,,,,B.12.,C.0,11.3,W/W,,1,2,,6/21/21,,2021,,,,y,y,y,180,540,600,y,y,0,0,1,y,LLR,grass,n,"one pup missing from N2, new nest found on B.10., B.7, 10.9, grass",DH
-817,M6886,M6863,,SU,control,,,,B.12.,B.4,12.8,W/W,,1,1,,5/26/21,,2021,,,,y,n,y,60,NA,NA,n,n,0,0,0,n,SEL/EMM,cavity,n,"new nest found at B.4, 12.8",DH
-818,M7828,M7829,,SU,control,,,,A17,0.6,18.0,Bk/P,,1,2,,6/26/21,,2021,,,,y,y,y,120,NA,NA,n,n,0,0,0,n,KAC,wbr,n,,DH
-819,M6095,M6094,,SU,control,,,,-117,-1.5,16.2,G/W,,1,1,,5/30/21,,2021,,,,y,n,y,60,NA,NA,n,n,0,0,0,n,SEL,wbr,n,,DH
-820,S0954,M4717,,SU,control,,,,-3.4,-4.4,5.2,B/R,,1,1,,6/8/21,,2021,,,,y,n,n,<60,NA,NA,n,n,0,0,0,n,LLR,grass,n,mom was watching,DH
-821,M6095,M6094,,SU,control,,,,-117,-.15,16.2,G/W,,1,2,,6/23/21,,2021,,,,n,n,n,60,NA,NA,n,n,0,0,0,n,LLR/SEL,wbr,n,,DH
-822,S0954,M4717,,SU,control,,,,-3.4,60.951801,-138.032797,B/R,,1,2,,6/30/21,,2021,,,,y,n,n,180,NA,NA,n,n,0,0,0,n,MDM/KAC,abr,n,locx and locy given in lat and long,DH
-823,M4822,M4823,,SU,control,,,,0.3,A.4,1.0,B/Y,,1,2,,6/7/21,,2021,,,,y,n,y,60,NA,NA,n,n,0,0,0,n,MDM,grass,n,,DH
-824,M7828,M7829,,SU,control,,,,A17,A.2,17.2,Bk/P,,1,1,,5/31/21,,2021,,,,n,n,n,240,NA,NA,n,n,0,0,0,n,KAC,wbr,n,mom barked during processing,DH
+764,M6320,M6321,24384,JO,rattle,,,,F.4.,F.3,4.7,R/O,9655,1,1,4,4/2/20,,2020,,,,y,n,n,480,,,n,n,0,0,1,n,AND/AMS,grass,n,,DH
+762,F9562,F9025,23201,JO,rattle,,,,G.10,,10.7,B/B,9695,1,1,3,3/30/20,,2020,,,,y,n,y,1380,,,n,n,0,0,1,y,AMS,,n,nest type and locx not stated,DH
+751,F9747,F9728,24704,BT,chickadee,,,,I7,1.5,7.3,O/O,9746,1,1,3,5/4/20,,2020,,,,y,y,y,120,,,n,n,0,0,0,y,AMS,grass,y,,DH
+755,M0482,M0483,21029,JO,rattle,,,,P12.,L.2,12,B/Y,9748,1,1,5,4/18/20,,2020,,,,y,y,y,240,420,480,y,y,0,0,2,y,AND/AMS,grass,y,,DH
+763,F9723,F9724,24824,JO,rattle,,,,L16.,L.0,16.3,R/R,9749,1,1,4,4/12/20,,2020,,,,y,n,n,420,,,n,n,0,0,0,y,AMS/AND,grass,n,lost litter,DH
+752,M3686,M3687,22290,JO,rattle,,,,T13,S.8,13.9,R/W,9750,1,1,4,4/19/20,,2020,,,,y,y,y,540,780,840,y,y,0,,4,y,AND,wbr,y,no. of mock falls not specified,DH
+759,M5424,H3457,24525,JO,rattle,,,,K.7.,K.0,7.1,R/P,9751,1,1,3,4/12/20,,2020,,,,y,n,n,180,,,n,n,0,0,2,y,AND,wbr,y,,DH
+758,M6318,M6836,24383,JO,rattle,,,,E1.,E.0,1.4,G/W,9755,1,1,3,4/13/20,,2020,,,,y,y,y,120,360,,y,n,0,0,0,y,AMS,grass,n,lost litter,DH
+761,F9843,F9844,24356,JO,rattle,,,,O12,O.0,11.9,W/W,9758,1,1,4,4/28/20,,2020,,,,y,y,y,120,120,120,y,y,,0,2,y,AMS,grass,y,no. of charges not specified,DH
+753,F9845,M3687,24360,JO,rattle,,,,K.10.,L.0,10,G/B,9765,1,1,3,4/15/20,,2020,,,,y,y,y,240,300,360,y,y,0,0,0,y,AMS,grass ball,y,,DH
+767,M1860,H3412,24653,JO,rattle,,,,F.10.,F.8,10.5,G/R,9766,1,1,3,4/15/20,,2020,,,,y,y,y,,,,n,n,0,0,0,y,AND/AMS,ground,n,lost litter,DH
+765,M4239,M4240,24994,JO,rattle,,,,O.19.,O.5,19.9,B/R,9773,1,1,4,4/26/20,,2020,,,,y,y,n,300,240,240,y,y,0,0,4,y,AND,grass,n,,DH
+754,M5924,M5925,23787,JO,rattle,,,,H.12.,H.4,12.5,P/G,9774,1,1,3,4/27/20,,2020,,,,y,n,y,60,480,480,y,y,0,0,0,y,AMS,bucket,y,,DH
+749,M6891,M6341,24265,BT,chickadee,,,,B1.,B.0,1.5,R/Y,9777,1,1,3,5/4/20,,2020,,,,y,y,y,60,,,n,n,0,0,0,y,AMS,bucket,y,,DH
+748,M5836,M5837,24831,BT,chickadee,,,,63,G.1,3.1,G/B,9778,1,1,3,5/4/20,,2020,,,,y,n,y,120,180,240,y,y,0,0,1,n,AND,snag cavity,y,,DH
+750,M7302,M7303,25024,BT,chickadee,,,,K6.,J.9,6.9,P/P,9779,1,1,1,5/4/20,,2020,,,,y,y,n,300,,,n,n,0,0,0,y,AND,grass,n,lost litter confirmed 5/31/20,DH
+756,M0470,H4947,20601,JO,rattle,,,,H.17,I.8,16.5,Y/R,9780,1,1,4,5/5/20,,2020,,,,y,n,y,180,,,n,n,0,0,0,y,ALC,grass,y,,DH
+757,M4267,M4268,24915,JO,rattle,,,,D.14,E.2,14,W/Y,9781,1,1,2,5/10/20,,2020,,,,y,y,y,180,,,n,n,0,0,0,n,AMS,grass ball,y,,DH
+766,F9848,M4271,24417,JO,rattle,,,,T.1,T.9,1,O/P,9802,1,1,3,5/12/20,,2020,,,,y,y,y,60,180,,y,n,0,0,0,y,AMS,bucket,y,,DH
+760,-,A7240,24785,JO,rattle,,,,Q9,R.0,9,-/P,9804,1,1,3,5/23/20,,2020,,,,y,y,y,240,,,n,n,0,1,0,n,AND,wbr,y,,DH
+783,M5424,H3457,25198,JO,rattle,,,,K.7.,K.0,7.6,W/Y,9824,1,1,3,4/25/21,,2021,,,,y,y,y,240,,,n,n,0,0,0,y,EMM,wbr,n,mom went back into nest after being kicked out,DH
+768,M6338,F9736,22028,BT,chickadee,,,,B3.,B.6,4,B/B,9825,1,1,2,6/17/21,,2021,,,,y,y,y,60,,,n,n,0,0,0,n,MDM/DKZ,bucket,n,,DH
+773,M6338,F9736,22028,BT,chickadee,,,,B3.,B.0,3.3,B/B,9825,1,2,2,7/11/21,,2021,,,,y,y,y,120,,,n,n,0,0,12,y,MDM/SEL,grass,n,"rattles value seems high, check against sheet",DH
+774,M7304,M7305,25033,BT,chickadee,,,,0.2,60.96987,-138.07523,G/G,9826,1,1,3,5/14/21,,2021,,,,y,n,n,360,300,,y,n,0,0,0,n,MBB,snag cavity,n,"2nd attempt recorded here as failed to reach into snag the first time, locx and locy recorded in lat/long",DH
+769,M5836,M5837,24831,BT,chickadee,,,,G3,D.6,3,O/O,9828,1,1,3,6/5/21,,2021,,,,y,y,n,120,,,n,n,0,0,0,n,LLR,wbr,n,lost litter,DH
+789,M6359,M5169,24256,KL,control,,,,C.0./B2,A.8,2,Bk/B,9834,1,2,3,5/27/21,,2021,,,,y,y,y,120,,,n,n,0,0,0,n,SEL/KAC,grass,n,,DH
+799,F9468,F9469,23532,KL,control,,,,H6,H.3,6.4,R/Y,9836,1,3,3,6/12/21,,2021,,,,n,n,n,180,60,120,y,y,0,0,0,n,KAC,wbr,n,"mom showed up while processing, new nest G.9, 6.9, presumed dead, mom and pups not found",DH
+810,F9468,F9469,23532,KL,control,,,,H6,I.1,6,R/Y,9836,1,2,3,6/3/21,,2021,,,,n,n,n,60,60,60,y,y,0,0,0,n,LLR,wbr,n,"new nest H.1, 6.1",DH
+796,F9240,M6505,24424,KL,control,,,,G.2,F.2,2,Bk/Bk,9842,1,2,3,6/1/21,,2021,,,,y,y,y,180,,,n,n,0,0,0,n,KAC,wbr,n,RC off,DH
+807,F9240,M6505,24424,KL,control,,,,G.2,F.2,2,Bk/Bk,9842,1,2,3,6/10/21,,2021,,,,y,n,n,1020,300,,y,n,0,0,0,y,EMM,wbr,n,,DH
+809,M6156,M6157,24003,KL,control,,,,O1,O.3,2.6,G/P,9844,1,2,2,6/3/21,,2021,,,,y,y,y,840,,,n,n,0,0,0,n,KAC,wbr,n,could only find one pup,DH
+813,M6156,M6157,24003,KL,control,,,,O1,O.3,2.6,G/P,9844,1,2,2,6/3/21,,2021,,,,y,n,n,120,,,n,n,0,0,0,n,KAC,wbr,n,2nd record on the same day for the same nest,DH
+798,F9928,F9929,24591,KL,control,,,,N6,N.3,6,P/W,9845,1,2,2,6/19/21,,2021,,,,y,y,y,180,180,,y,n,0,0,0,n,KAC/SEL,wbr,n,,DH
+803,F9928,F9929,24591,KL,control,,,,N6,N.3,6,P/W,9845,1,1,2,5/25/21,,2021,,,,y,y,y,60,120,180,y,y,0,0,0,n,MBB,grass,n," new nest N.3, 6.9",DH
+792,M6297,M7802,24709,KL,control,,,,J.9,J.0,8.1,B/O,9846,1,1,3,6/7/21,,2021,,,,y,n,y,180,,,n,n,0,0,0,n,KAC,wbr,n,"axy RC found near O14, squirrel presumed dead",DH
+802,M6152,M4223,24002,KL,control,,,,N1.,N.4,1.1,R/G,9847,1,2,3,5/26/21,,2021,,,,y,y,y,120,540,,y,n,0,0,0,n,KAC/SEL,wbr,n,"new nest at N.4, 1.1",DH
+794,F9207,F9208,25187,KL,control,,,,C13,C.0,13,R/R,9851,1,2,4,5/22/21,,2021,,,,y,n,y,180,,,n,n,0,0,0,y,KAC,wbr,n,,DH
+805,M6199,M6200,24577,KL,control,,,,-14,-1.7,1.8,B/G,9853,1,2,2,6/13/21,,2021,,,,y,y,y,2820,,,n,n,0,0,0,n,SEL/LLR,wbr cavity,n,,DH
+812,M6199,M6200,24577,KL,control,,,,-14,-2,1.5,B/G,9853,1,1,2,5/20/21,,2021,,,,y,y,y,240,,,n,n,0,0,0,y,SEL/MBB/KAC/LLR,wbr,n,,DH
+790,M7029,M6846,25082,KL,control,,,,L11,L.0,10.6,W/W,9854,1,2,3,6/5/21,,2021,,,,n,n,n,1800,,,n,n,0,0,0,n,SEL,wbr,n,,DH
+814,M7029,M6846,25082,KL,control,,,,L11,K.2,10.7,W/W,9854,1,1,3,5/22/21,,2021,,,,n,y,n,120,,,n,n,0,0,0,n,KAC,grass,n,,DH
+806,M7853,M7854,25150,KL,control,,,,A10.,A.8,11.5,G/G,9855,1,2,2,6/12/21,,2021,,,,y,y,y,129,480,480,y,y,0,0,0,y,KAC/SEL/LLR,wbr,n,"mom moved pup during retrieval, one pup not found at N2",DH
+808,M7099,M7100,24818,KL,control,,,,-4.1,-4.9,9.8,P/B,9856,1,2,2,5/19/21,,2021,,,,y,y,y,420,,,n,n,5,2,0,n,SEL/KAC,wbr,n,"vocal during processing, bit Lia while climbing",DH
+815,M6520,M6365,24506,KL,control,,,,-114,-3.9,15.1,G/B,9860,1,2,3,5/26/21,,2021,,,,y,ran out,n,,,,n,n,0,0,0,n,KAC/SEL,underground,n,,DH
+804,M6568,M6569,24471,KL,control,,,,G9,H.1,10.3,Y/O,9864,1,2,3,6/8/21,,2021,,,,n,n,n,240,240,,y,n,0,0,0,n,KAC/SEL,wbr,n,same nest as nest 1,DH
+811,M6405,M6406,24661,KL,control,,,,F3,E.9,3,Bk/R,9866,1,2,3,5/22/21,,2021,,,,y,n,y,300,,,n,n,0,0,0,n,MBB/SEL,wbr,n,,DH
+784,F9843,F9844,24356,JO,rattle,,,,O12,N.6,12,Bk/B,9868,1,1,2,5/5/21,,2021,,,,y,y,y,120,60,60,y,y,1,0,0,n,SEL/MBB,nest box,n,"mom barked once during handling, new nest at N.3, 12.0, lost litter, tail and collar found at O.7, 13.2",DH
+791,F9647,F9648,24621,KL,control,,,,P9,60.954882,-138.024781,G/R,9869,1,2,4,5/30/21,,2021,,,,y,y,y,60,,,n,n,0,0,0,y,MBB/KAC,wbr,n,locx and locy given in lat and long,DH
+781,M6981,M6982,24692,JO,rattle,,,,3,0.1,2.9,B/Y,9870,1,1,3,5/11/21,,2021,,,,y,n,y,180,120,,y,n,0,0,0,y,DKZ/KAC,wbr,n,,DH
+782,M6981,M6982,24692,JO,rattle,,,,3,-0.5,2.5,B/Y,9870,1,2,3,5/26/21,,2021,,,,y,n,y,120,,,n,n,0,0,0,y,MBB,grass,n,,DH
+772,M7308,M7309,25102,BT,chickadee,,,,J3,I.8,2.7,R/R,9871,1,1,3,5/11/21,,2021,,,,n,n,n,240,,,n,n,0,0,0,n,SEL/MBB,wbr,n,,DH
+775,M7308,M7309,25102,BT,chickadee,,,,J3,I.7,3.1,R/R,9871,1,2,3,6/5/21,,2021,,,,y,y,y,120,480,,y,n,0,0,2,y,SEL/MBB,wbr,n,,DH
+770,M7302,M7303,25024,BT,chickadee,,,,K6.,K.0,6.5,G/Y,9872,1,2,3,6/5/21,,2021,,,,y,n,y,120,600,,y,n,0,0,1,y,LLR,wbr,n,,DH
+776,M7302,M7303,25024,BT,chickadee,,,,K6.,K.2,6,G/Y,9872,1,1,3,5/12/21,,2021,,,,y,y,n,600,420,420,y,y,0,0,2,n,EMM,grass,n,,DH
+795,M5642,M5643,25188,KL,control,,,,I2.,,,W/Y,9874,1,2,4,5/29/21,,2021,,,,y,n,n,60,60,120,n,n,0,0,0,y,KAC,,n,"new nest I.0/2.7, 6/7/21 squirrel found dead at N2, thought to be killed by male",DH
+823,M4822,M4823,22978,SU,control,,,,0.3,A.4,1,B/Y,9876,1,2,3,6/7/21,,2021,,,,y,n,y,60,NA,NA,n,n,0,0,0,n,MDM,grass,n,,DH
+788,M6721,M0929,25195,JO,rattle,,,,L.11,K.7,11.9,O/Y,9877,1,1,3,5/12/21,,2021,,,,y,y,y,60,,,n,n,0,0,0,n,DKZ,ground,n,lost litter,DH
+785,M6318,M6836,25204,JO,rattle,,,,E1.,E.1,1.5,G/Y,9878,1,2,2,5/17/21,,2021,,,,y,n,n,60,540,720,y,y,0,0,1,y,LLR/JBF,grass,n,,DH
+778,M4228,M4229,25057,JO,rattle,,,,F16,F.7,16.1,B/W,9880,1,2,3,6/8/21,,2021,,,,y,n,n,240,,,n,n,0,0,0,n,MDM,wbr,n,rattled once when handling pups,DH
+787,M4228,M4229,25057,JO,rattle,,,,F16,F.0,15,B/W,9880,1,1,3,5/17/21,,2021,,,,y,n,y,60,,,n,n,0,0,0,n,MDM,wbr,n,,DH
+780,-,M0926,25216,JO,rattle,,,,F.10.,G.7,10,-/W,9881,1,2,3,5/27/21,,2021,,,,y,n,y,180,,,n,n,0,0,0,y,MBB,wbr,n,,DH
+786,-,M0926,25216,JO,rattle,,,,F.10.,F.3,10.6,-/W,9881,1,1,3,5/17/21,,2021,,,,y,n,y,180,,,n,n,0,0,0,n,MDM,grass,n,,DH
+777,F9723,F9724,25200,JO,rattle,,,,L16.,L.5,16,Y/O,9886,1,1,3,5/29/21,,2021,,,,y,n,y,600,180,,y,n,0,0,0,n,DKZ,wbr,n,lost litter,DH
+779,M7058,M7066,25164,JO,rattle,,,,T11,5.3,10.8,B/R,9887,1,1,3,5/25/21,,2021,,,,y,n,n,240,420,,y,n,0,0,1,n,MDM,wbr,n,"mom moved pups after more than 7 min, new nest T.0, 11.0 snag cavity ~12m, lost litter",DH
+816,M6886,M6863,25029,SU,control,,,,B.12.,C.0,11.3,W/W,9897,1,2,3,6/21/21,,2021,,,,y,y,y,180,540,600,y,y,0,0,1,y,LLR,grass,n,"one pup missing from N2, new nest found on B.10., B.7, 10.9, grass",DH
+817,M6886,M6863,25029,SU,control,,,,B.12.,B.4,12.8,W/W,9897,1,1,3,5/26/21,,2021,,,,y,n,y,60,NA,NA,n,n,0,0,0,n,SEL/EMM,cavity,n,"new nest found at B.4, 12.8",DH
+818,M7828,M7829,25156,SU,control,,,,A17,0.6,18,Bk/P,9900,1,2,3,6/26/21,,2021,,,,y,y,y,120,NA,NA,n,n,0,0,0,n,KAC,wbr,n,,DH
+824,M7828,M7829,25156,SU,control,,,,A17,A.2,17.2,Bk/P,9900,1,1,3,5/31/21,,2021,,,,n,n,n,240,NA,NA,n,n,0,0,0,n,KAC,wbr,n,mom barked during processing,DH
+819,M6095,M6094,25119,SU,control,,,,-117,-1.5,16.2,G/W,9905,1,1,3,5/30/21,,2021,,,,y,n,y,60,NA,NA,n,n,0,0,0,n,SEL,wbr,n,,DH
+821,M6095,M6094,25119,SU,control,,,,-117,-0.15,16.2,G/W,9905,1,2,3,6/23/21,,2021,,,,n,n,n,60,NA,NA,n,n,0,0,0,n,LLR/SEL,wbr,n,,DH
+820,S0954,M4717,25107,SU,control,,,,-3.4,-4.4,5.2,B/R,9906,1,1,3,6/8/21,,2021,,,,y,n,n,<60,NA,NA,n,n,0,0,0,n,LLR,grass,n,mom was watching,DH
+822,S0954,M4717,25107,SU,control,,,,-3.4,60.951801,-138.032797,B/R,9906,1,2,3,6/30/21,,2021,,,,y,n,n,180,NA,NA,n,n,0,0,0,n,MDM/KAC,abr,n,locx and locy given in lat and long,DH
+771,M7306,M7307,25101,BT,chickadee,,,,I.8,60.9746,-138.0812,W/W,9907,1,1,3,6/8/21,,2021,,,,n,n,n,60,,,n,n,0,0,0,n,LLR,grass,n,"lost litter, locx and locy given in lat/long",DH
+797,F9048,F9049,25178,KL,control,,,,-35,-2.7,4.1,O/P,9908,2,1,4,6/13/21,,2021,,,,y,n,n,120,240,240,y,y,0,0,0,y,LLR,wbr,n,"new nest -3.1, 5.5",DH
+800,F9048,F9049,25178,KL,control,,,,-35,-4,5.7,O/P,9908,2,2,4,7/8/21,,2021,,,,y,y,y,420,,,n,n,0,0,0,y,SEL,grass,n,,DH
+793,M7860,M7861,25186,KL,control,,,,F17,F.2,17,O/G,9910,2,2,2,7/10/21,,2021,,,,y,y,y,240,,,n,n,0,0,2,y,SEL,wbr,n,,DH
+801,M7860,M7861,25186,KL,control,,,,F17,E.9,17.1,O/G,9910,2,1,2,6/14/21,,2021,,,,y,y,y,120,,,n,n,0,0,2,n,LLR/SEL,grass,n,,DH
