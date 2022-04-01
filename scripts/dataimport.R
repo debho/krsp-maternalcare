@@ -30,7 +30,15 @@ litters <- tbl(con, "litter") %>%
   collect() 
  
 juveniles <- tbl(con, "juvenile") %>%
-  collect() 
+  collect() %>%
+  filter(date_created > "2020-12-31") %>%
+  select(date_created,
+         dna1,
+         litter_id,
+         sex,
+         squirrel_id,
+         tagLft,
+         tagRt)
 
 ids <- tbl(con, "historic_squirrel_ids") %>%
   collect()
