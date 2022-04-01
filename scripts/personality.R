@@ -12,7 +12,7 @@
 personality <- read.csv('data/personality-master.csv',
                             header = T,
                             na.strings = c("", " ", "NA")) %>%
-  filter(cohort > 2017, #takes only 2018 to 2021
+  filter(cohort > 2017, #takes only 2018 to 2021, STILL NEED TO ADD IN 2019 DATA!
          ageclass == "J", #takes only juvs
          Exclude_unless_video_reanalyzed == "N") #eliminates any exclusions
 
@@ -41,31 +41,34 @@ beh.mis <- transmute(behaviors,
 
 #PCA ####
 
+library(ade4) #trying this out again lmao
+
 #PCA loadings for OFT
 
-pca.oft <- principal(beh.oft,
-                  nfactors = 2,
-                  scores = TRUE,
-                  rotate ="oblimin",
-                  covar = FALSE)
+pca.oft <- dudi.pca(beh.oft,
+                    scale = TRUE,)
 
-print.psych(pca.oft,
-            cut = .4,
-            sort = TRUE)
 
-personality$oft1 <- pca.oft$scores
+pca.oft$c1
 
-#PCA loadings for MIS
+pca.oft$eig
+head(pca.oft$l1)
 
-pca.mis <- principal(beh.mis,
-                  nfactors = 2,
-                  scores = TRUE,
-                  rotate = "oblimin",
-                  covar = FALSE)
+personality$oft1 <- (pca.oft$l1$RS1) * -1 #because loadings are reversed for some reason
 
-print.psych(pca.mis,
-            cut = .4,
-            sort = TRUE)
+# PCA loadings for MIS
 
-personality$mis1 <- pca.mis$scores
+pca.mis <- dudi.pca(beh.mis,
+                    scale = TRUE,)
+
+pca.mis$c1
+pca.mis$eig
+head(pca.mis$l1)
+
+personality$mis1 <- pca.mis$l1$RS1
+
+#looking at correlation between OFT and MIS scores
+cor.test(personality$oft1,
+         personality$mis1,
+         alternative = "greater") #p < .05
 
