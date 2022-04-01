@@ -13,4 +13,3 @@ library(ggplot2) #for figures and graphs
 library(dplyr) #for data manipulation
 library(psych) #descriptive stats
 library(tidyverse) #for data cleaning, includes lubridate
-library(lubridate) #for handling dates

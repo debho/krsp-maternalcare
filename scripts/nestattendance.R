@@ -13,9 +13,10 @@ nest_att <- read.csv("data/AllNests.csv",
                      header = TRUE,
                      sep = ",") %>%
   filter(year > 2017) %>% #to take only 2018-2021
-  drop_na(charges,
-          mock_falls,
-          rattles) #removes any rows where values weren't specified
+  drop_na(charges,  #removes any rows where values weren't specified
+         mock_falls,
+         rattles)
+
 
 #converts dates to julian dates
 nest_att$date <- as.Date(nest_att$date,
@@ -26,5 +27,7 @@ nest_att$birth_date <- as.Date(nest_att$birth_date,
                                "%m/%d/%y")
 nest_att$julian_birth_date <- yday(nest_att$birth_date)
 
-#gets ages of pups
-nest_att$age <- yday(nest_att$date - nest_att$julian_birth_date)
+#gets ages of pups, as.numeric to handle 0 day old pups
+nest_att$age <- (as.numeric(nest_att$julian_date) 
+                 - as.numeric(nest_att$julian_birth_date))
+
