@@ -15,7 +15,14 @@
 ##STEP 2: personality ~ grid * year
 
 
+
 ##STEP 3: personality ~ maternal care
 
+#maternalcare <- lmer1(oft1 ~ sex + grid + age 
+#                     + (1/litter_id)) #random effect
 
 ##STEP 4: maternal attentiveness ~ year (mast vs non-mast)
+
+
+#maternal care model
+

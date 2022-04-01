@@ -23,28 +23,16 @@ con <- krsp_connect(
 krsp_tables(con)
 
 squirrels <- tbl(con, "squirrel") %>%
-  collect() %>%
-  filter(trap_date > "2017-12-31")
+  collect()
   
 litters <- tbl(con, "litter") %>%
   collect() 
  
 juveniles <- tbl(con, "juvenile") %>%
-  collect() %>%
-  filter(date_created > "2020-12-31") %>%
-  select(date_created,
-         dna1,
-         litter_id,
-         sex,
-         squirrel_id,
-         tagLft,
-         tagRt)
+  collect()
 
 ids <- tbl(con, "historic_squirrel_ids") %>%
   collect()
 
 census <- tbl(con, "census") %>%
-  collect() %>%
-  filter(census_date > "2017-12-31")
-
-
+  collect()
