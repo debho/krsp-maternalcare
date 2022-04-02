@@ -4,7 +4,6 @@
 ### How does maternal care style influence the development of offspring
 ### personality and what are the fitness effects on offspring?
 ### offspring personality ~ maternal care * density + other stuff
-
 ##############################################################################
 ### Script for setting personality data up for analysis
 
@@ -76,4 +75,3 @@ personality$mis1 <- pca.mis$l1$RS1
 cor.test(personality$oft1,
          personality$mis1,
          alternative = "greater") #p < .05
-

@@ -4,7 +4,6 @@
 ### How does maternal care style influence the development of offspring
 ### personality and what are the fitness effects on offspring?
 ### offspring personality ~ maternal care * density + other stuff
-
 ##############################################################################
 ### Script for importing data from krsp database
 
@@ -26,8 +25,11 @@ squirrels <- tbl(con, "squirrel") %>%
   collect()
   
 litters <- tbl(con, "litter") %>%
-  collect()
- 
+  collect() %>%
+  filter(yr > 2017)
+
 juveniles <- tbl(con, "juvenile") %>%
   collect() %>%
   filter(date_created > "2017-12-31")
+
+
