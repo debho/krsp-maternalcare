@@ -41,8 +41,8 @@ beh.mis <- transmute(behaviors,
 
 #PCA ####
 
-library(ade4) #for PCA
-library(factoextra) #visualizing PCA
+library(ade4) #for PCA loadings
+library(factoextra) #to get variance and all that good stuff
 
 #PCA loadings for OFT
 
