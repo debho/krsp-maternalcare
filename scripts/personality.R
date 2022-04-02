@@ -41,30 +41,35 @@ beh.mis <- transmute(behaviors,
 
 #PCA ####
 
-library(ade4) #trying this out again lmao
+library(ade4) #for PCA
+library(factoextra) #visualizing PCA
 
 #PCA loadings for OFT
 
 pca.oft <- dudi.pca(beh.oft,
-                    scale = TRUE,)
+                    scale = TRUE,
+                    scannf = FALSE,
+                    nf = 7)
 
 
+pca.oft$c1 <- (pca.oft$c1 * -1)
 pca.oft$c1
-
 pca.oft$eig
-head(pca.oft$l1)
 
-personality$oft1 <- (pca.oft$l1$RS1) * -1 #because loadings are reversed for some reason
+
+personality$oft1 <- (pca.oft$l1$RS1 * -1) #because loadings are reversed for some reason
+get_eig(pca.oft)
 
 # PCA loadings for MIS
 
 pca.mis <- dudi.pca(beh.mis,
-                    scale = TRUE,)
+                    scale = TRUE,
+                    scannf = FALSE,
+                    nf = 5)
 
 pca.mis$c1
 pca.mis$eig
-head(pca.mis$l1)
-
+get_eig(pca.mis)
 personality$mis1 <- pca.mis$l1$RS1
 
 #looking at correlation between OFT and MIS scores
