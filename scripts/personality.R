@@ -13,7 +13,8 @@ personality <- read.csv('data/personality-master.csv',
                             na.strings = c("", " ", "NA")) %>%
   filter(cohort > 2017, #takes only 2018 to 2021, STILL NEED TO ADD IN 2019 DATA!
          ageclass == "J", #takes only juvs
-         Exclude_unless_video_reanalyzed == "N") #eliminates any exclusions
+         Exclude_unless_video_reanalyzed == "N",
+         Proceed_with_caution == "N") #eliminates any exclusions
 
 behaviors <- mutate_if(personality,
                        is.character, as.numeric) #convert all to numbers

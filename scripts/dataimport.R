@@ -22,14 +22,17 @@ con <- krsp_connect(
 krsp_tables(con)
 
 squirrels <- tbl(con, "squirrel") %>%
-  collect()
+  collect() 
   
 litters <- tbl(con, "litter") %>%
-  collect() %>%
-  filter(yr > 2017)
+  collect() 
 
 juveniles <- tbl(con, "juvenile") %>%
-  collect() %>%
-  filter(date_created > "2017-12-31")
+  collect() 
 
+traps <- tbl(con, "trapping") %>%
+  collect() 
+
+changed_ids <- tbl(con, "historic_squirrel_ids") %>%
+  collect()
 
