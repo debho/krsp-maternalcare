@@ -14,14 +14,13 @@ library(lme4) #for linear models
 
 ##STEP 2: personality ~ grid * year
 
-#personality <- lmer1(oft1 ~ sex + grid + age 
+personality_analysis <- lmer(oft1 ~ sex.x + grid.x + age + (1|litter_id),
+                             data = master_table)
+#personality <- lmer(oft1 ~ sex + grid + age 
 #                     + (1/litter_id)) #random effect
 
 ##STEP 3: personality ~ maternal care
 
 
-##STEP 4: maternal attentiveness ~ year (mast vs non-mast)
-
-
-#maternal care model
+##STEP 4: aggression ~ LSR
 
