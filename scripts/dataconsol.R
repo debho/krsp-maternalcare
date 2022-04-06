@@ -22,7 +22,8 @@ juvs_litters <- merge(juveniles,
          sex,
          squirrel_id.y,
          grid,
-         yr) %>%
+         yr,
+         fieldBDate) %>%
   drop_na("squirrel_id.x")
 
 
@@ -36,6 +37,7 @@ juvs_personality <- merge(juvs_litters,
                           all = TRUE) %>%
   select(litter_id,
          squirrel_id,
+         fieldBDate,
          taglft,
          tagrt,
          colours,
@@ -54,27 +56,7 @@ master_table <- merge(juvs_personality,
                       nest_att,
                       by = "litter_id",
                       all = TRUE) %>%
-  select(litter_id,
-         squirrel_id,
-         taglft,
-         tagrt,
-         colours,
-         sex.x,
-         mom_id.x,
-         litter,
-         nest,
-         grid.x,
-         grid,
-         yr,
-         oft1,
-         mis1,
-         age,
-         t_return,
-         t_move,
-         charges,
-         mock_falls,
-         rattles,
-         bark) %>%
-  drop_na(oft1,
-          mis1,
-          bark)
+  filter(yr > 2017) %>%
+  drop_na(bark) #gives all squirrels that have both personality and nest att data
+
+
