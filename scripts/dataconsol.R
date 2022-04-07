@@ -32,8 +32,8 @@ juvlitter_mom <- merge(juv_to_litter,
                        all.x = TRUE)
 
 # STEP 3 ####
-# match these to personality
-# match on juveniles
+## match these to personality
+## match on juv_id
 
 colnames(personality)[1] <- "juv_id"
 
@@ -58,3 +58,15 @@ master <- merge(juvlitter_mom,
          mis1,
          yr) #obtain consolidated table
   
+# STEP 4 ####
+## clean up column names
+
+colnames(master)[2] <- "litter_id"
+colnames(master)[4] <- "sex"
+colnames(master)[5] <- "grid"
+colnames(master)[6] <- "age"
+
+# STEP 5 ####
+## combine all except for JO into control
+master$is_control[master$grid == "JO"] <- 0
+master$is_control[master$grid %in% c("BT", "KL", "SU")] <- 1
