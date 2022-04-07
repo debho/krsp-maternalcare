@@ -7,15 +7,18 @@
 ##############################################################################
 ### Script for running analyses
 
-library(lme4) #for linear models
-
+library(lmerTest) #for linear models
+library(psycho)
 ##STEP 1: survival ~ personality * density
 
 
 ##STEP 2: personality ~ grid * year
 
-personality_analysis <- lmer(oft1 ~ sex.x + grid.x + age + (1|litter_id),
-                             data = master_table)
+oft1_analysis <- lmer(oft1 ~ sex.x + grid.x + age + (1|litter_id),
+                      data = master_table)
+mis1_analysis <- lmer(mis1 ~ sex.x + grid.x + age + (1|litter_id),
+                      data = master_table)
+
 #personality <- lmer(oft1 ~ sex + grid + age 
 #                     + (1/litter_id)) #random effect
 
