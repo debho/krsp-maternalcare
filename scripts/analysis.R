@@ -14,9 +14,9 @@ library(lmerTest) #for linear models
 
 ##STEP 2: personality ~ grid * year
 
-oft1_analysis <- lmer(oft1 ~ sex + is_control + age + (1|litter_id),
+oft1_analysis <- lmer(oft1 ~ sex * treatment * age * (1|litter_id),
                       data = master)
-mis1_analysis <- lmer(mis1 ~ sex + is_control + age + (1|litter_id),
+mis1_analysis <- lmer(mis1 ~ sex * treatment * age * (1|litter_id),
                       data = master)
 
 summary(oft1_analysis)
@@ -29,10 +29,14 @@ cor.test(master$oft1,
          master$t_return)
 cor.test(master$oft1,
          master$t_move)
+cor.test(master$oft1,
+         master$treatment)
 cor.test(master$mis1,
          master$t_return)
 cor.test(master$mis1,
          master$t_move)
+cor.test(master$mis1,
+         master$treatment)
 
 ##STEP 4: aggression ~ LSR
 

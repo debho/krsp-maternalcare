@@ -39,7 +39,7 @@ colnames(personality)[1] <- "juv_id"
 
 master <- merge(juvlitter_mom,
                 personality,
-                by = "juv_id",
+                by = "juv_id", 
                 all.x = TRUE) %>% #now we clean
   filter(yr > 2017,
          grid.x %in% c("BT", "JO", "KL", "SU")) %>% #gets only 2018-2021 data
@@ -56,7 +56,8 @@ master <- merge(juvlitter_mom,
          t_move,
          oft1,
          mis1,
-         yr) #obtain consolidated table
+         yr,
+         n_pups) #obtain consolidated table
   
 # STEP 4 ####
 ## clean up column names
@@ -68,5 +69,17 @@ colnames(master)[6] <- "age"
 
 # STEP 5 ####
 ## combine all except for JO into control
-master$is_control[master$grid == "JO"] <- 0
-master$is_control[master$grid %in% c("BT", "KL", "SU")] <- 1
+master$treatment[master$grid == "JO"] <- 1
+master$treatment[master$grid %in% c("BT", "KL", "SU")] <- 0
+
+# STEP 6 ####
+## obtain LSR, using F:M
+## group by litter
+## no. of females/n_pups
+
+nests <- master %>%
+  group_by(litter_id,
+           sex) %>%
+  summarise(n_females = n()) #hmmm i think i need durther wrangling before i can do this
+
+
