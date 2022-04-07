@@ -7,56 +7,54 @@
 ##############################################################################
 ### Script for consolidating data
 
-#what do i need to do to combine maternal care data with juves?
-#1. take juvs and litters table and join on litter_id
-#2. join that on squirrel_id but use the one in juvs because the one in litter is mom
-#3. join it with nest_att on litter_id
-colnames(litters)[1] <- "litter_id"
+# STEP 1 ####
+## matching juveniles to litters
+## should match on litter ID
 
-juvs_litters <- merge(juveniles,
-                      litters,
-                      by = "litter_id",
-                      all = TRUE) %>%
-  select(litter_id,
-         squirrel_id.x,
-         sex,
-         squirrel_id.y,
-         grid,
-         yr,
-         fieldBDate) %>%
-  drop_na("squirrel_id.x")
+colnames(litters)[1] <- "litter_id" #so that there's a common column
+colnames(litters)[25] <- "mom_id" #avoid confusion with squirrel_id
+colnames(juveniles)[17] <- "juv_id" #avoid confusion with squirrel_id
 
+juv_to_litter <- merge(juveniles,
+                       litters,
+                       by = "litter_id",
+                       all.x = TRUE)
 
-colnames(juvs_litters)[2] <- "squirrel_id"
-colnames(juvs_litters)[4] <- "mom_id"
-colnames(personality)[1] <- "squirrel_id"
-
-juvs_personality <- merge(juvs_litters,
-                          personality,
-                          by = "squirrel_id",
-                          all = TRUE) %>%
-  select(litter_id,
-         squirrel_id,
-         fieldBDate,
-         taglft,
-         tagrt,
-         colours,
-         sex.x,
-         mom_id,
-         grid.x,
-         yr,
-         oft1,
-         mis1) %>%
-  drop_na(oft1,
-          mis1)
+# STEP 2 ####
+## we need to find out who the moms are
+## match nest attendance to that table on moms
 
 colnames(nest_att)[4] <- "mom_id"
 
-master_table <- merge(juvs_personality,
-                      nest_att,
-                      by = "litter_id",
-                      all = TRUE) %>%
-  filter(yr > 2017) %>%
-  drop_na(bark) #gives all squirrels that have both personality and nest att data
+juvlitter_mom <- merge(juv_to_litter,
+                       nest_att,
+                       by = "mom_id",
+                       all.x = TRUE)
 
+# STEP 3 ####
+# match these to personality
+# match on juveniles
 
+colnames(personality)[1] <- "juv_id"
+
+master <- merge(juvlitter_mom,
+                personality,
+                by = "juv_id",
+                all.x = TRUE) %>% #now we clean
+  filter(yr > 2017,
+         grid.x %in% c("BT", "JO", "KL", "SU")) %>% #gets only 2018-2021 data
+  drop_na(oft1, #only those with personality data
+          mis1,
+          bark) %>% #only those with nest attendance data
+  select(juv_id,
+         litter_id.x,
+         mom_id,
+         sex.x,
+         grid.x,
+         age.x,
+         t_return,
+         t_move,
+         oft1,
+         mis1,
+         yr) #obtain consolidated table
+  

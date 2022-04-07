@@ -25,5 +25,6 @@ mis1_analysis <- lmer(mis1 ~ sex.x + grid.x + age + (1|litter_id),
 ##STEP 3: personality ~ maternal care
 
 
+
 ##STEP 4: aggression ~ LSR
 

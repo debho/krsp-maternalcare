@@ -24,6 +24,10 @@ nest_att$t_move[nest_att$t_move > 420] <- NA
 nest_att[is.na(nest_att$t_return), "m_return"] <- "n"
 nest_att[is.na(nest_att$t_move), "m_move"] <- "n"
 
+nest_att$t_return[is.na(nest_att$t_return)] <- 420
+nest_att$t_move[is.na(nest_att$t_move)] <- 420
+
+
 #converts dates to julian dates
 nest_att$date <- as.Date(nest_att$date,
                          "%m/%d/%y")
