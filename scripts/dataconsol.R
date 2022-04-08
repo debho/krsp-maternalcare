@@ -77,9 +77,6 @@ master$treatment[master$grid %in% c("BT", "KL", "SU")] <- 0
 ## group by litter
 ## no. of females/n_pups
 
-nests <- master %>%
-  group_by(litter_id,
-           sex) %>%
-  summarise(n_females = n()) #hmmm i think i need durther wrangling before i can do this
+
 
 

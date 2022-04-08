@@ -15,19 +15,32 @@ library(sjPlot) #for visualizing
 
 ##STEP 2: personality ~ grid * year
 
-pers_analysis <- lmer(oft1 + mis1 ~ sex + treatment + age + (1|litter_id),
+pers_model <- lmer(oft1 + mis1 ~ sex + treatment + age + (1|litter_id),
                       data = master)
-summary(pers_analysis)
+oft1_model <- lmer(oft1 ~ sex + treatment + age + (1|litter_id),
+                   data = master)
+mis1_model <- lmer(mis1~sex+treatment+age+(1|litter_id),
+                   data = master)
+summary(pers_model) #sig effect of sex
+summary(oft1_model) #sig effect of sex, males less active
+summary(mis1_model) #no sig effects
 
 ##STEP 3: personality ~ maternal care
 
-maternal_pers <- lmer(oft1 + mis1 ~ t_return + t_move * treatment + (1|litter_id),
+maternal_pers <- lmer(oft1 + mis1 ~ t_return + t_move + treatment + (1|litter_id),
                       data = master)
-maternal_pers_int <- lmer(oft1 * mis1 ~ t_return + t_move * treatment + (1|litter_id),
+maternal_oft1 <- lmer(oft1 ~ t_return + t_move + treatment + (1|litter_id),
                       data = master)
-summary(maternal_pers)
-summary(maternal_pers_int)
-##STEP 4: aggression ~ LSR
+maternal_mis1 <- lmer(mis1 ~ t_return + t_move + treatment + (1|litter_id),
+                      data = master)
+summary(maternal_pers) #no sig effects
+summary(maternal_oft1) #no sig effects
+summary(maternal_mis1) #no sig effects
+
+#i dont even know what these show rip
+#maybe i should watch the MLM lectures  
+
+##STEP 4: mis1 ~ LSR
 
 
 ##RUNNING RANDOM CORRELATION TESTS
