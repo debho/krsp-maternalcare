@@ -57,8 +57,8 @@ master <- merge(juvlitter_mom,
          oft1,
          mis1,
          yr,
-         n_pups) #obtain consolidated table
-  
+         n_pups) #consolidates table
+
 # STEP 4 ####
 ## clean up column names
 

@@ -75,5 +75,4 @@ personality$mis1 <- pca.mis$l1$RS1
 
 #looking at correlation between OFT and MIS scores
 cor.test(personality$oft1,
-         personality$mis1,
-         alternative = "greater") #p < .05
+         personality$mis1) #p < .05
