@@ -53,23 +53,3 @@ summary(maternal_mis1) #no sig effects
 ##STEP 4: mis1 ~ LSR
 
 
-##RUNNING RANDOM CORRELATION TESTS
-cor.test(master$oft1 + master$mis1,
-         master$t_return)
-cor.test(master$oft1 + master$mis1,
-         master$t_move)
-cor.test(master$oft1 + master$mis1,
-         master$treatment)
-cor.test(master$oft1 * master$mis1,
-         master$t_return)
-cor.test(master$oft1 * master$mis1,
-         master$t_move)
-cor.test(master$oft1 * master$mis1,
-         master$treatment)
-cor.test(master$t_return + master$t_move,
-         master$treatment)
-cor.test(master$t_return * master$t_move,
-         master$treatment)
-cor.test(master$oft1 * master$mis1,
-         master$t_return + master$t_move)
-
