@@ -26,3 +26,5 @@ cor.test(master$t_return * master$t_move,
          master$treatment)
 cor.test(master$oft1 * master$mis1,
          master$t_return + master$t_move)
+
+

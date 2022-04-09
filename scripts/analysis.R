@@ -29,23 +29,23 @@ pers_model <- lmer(oft1 + mis1 ~ sex + treatment + age + (1|litter_id),
                       data = master)
 oft1_model <- lmer(oft1 ~ sex + treatment + age + (1|litter_id),
                    data = master)
-mis1_model <- lmer(mis1~sex+treatment+age+(1|litter_id),
+mis1_model <- lmer(mis1 ~ sex + treatment + age + (1|litter_id),
                    data = master)
-summary(pers_model) #sig effect of sex
-summary(oft1_model) #sig effect of sex, males less active
-summary(mis1_model) #no sig effects
+summary(pers_model) 
+summary(oft1_model)
+summary(mis1_model)
 
 ##STEP 3: personality ~ maternal care
 
-maternal_pers <- lmer(oft1 + mis1 ~ t_return + t_move + treatment + (1|litter_id),
+maternal_pers <- lmer(oft1 + mis1 ~ t_return + t_move * treatment + (1|litter_id),
                       data = master)
-maternal_oft1 <- lmer(oft1 ~ t_return + t_move + treatment + (1|litter_id),
+maternal_oft1 <- lmer(oft1 ~ t_return + t_move * treatment + (1|litter_id),
                       data = master)
-maternal_mis1 <- lmer(mis1 ~ t_return + t_move + treatment + (1|litter_id),
+maternal_mis1 <- lmer(mis1 ~ t_return + t_move * treatment + (1|litter_id),
                       data = master)
-summary(maternal_pers) #no sig effects
-summary(maternal_oft1) #no sig effects
-summary(maternal_mis1) #no sig effects
+summary(maternal_pers)
+summary(maternal_oft1) 
+summary(maternal_mis1) 
 
 #i dont even know what these show rip
 #maybe i should watch the MLM lectures  

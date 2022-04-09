@@ -37,8 +37,7 @@ changed_ids <- tbl(con, "historic_squirrel_ids") %>%
   collect()
 
 census <- tbl(con, "census") %>%
-  collect() %>%
-  filter(squirrel_id %in% personality$sq_id)
+  collect()
 
 flastall <- tbl(con, "flastall2") %>% 
   collect()
