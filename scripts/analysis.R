@@ -12,6 +12,16 @@ library(sjPlot) #for visualizing
 
 ##STEP 1: survival ~ personality * density
 
+survival_pers <- lmer(survived_200d ~ (oft1 + mis1) + (1|litter_id),
+                      data = master)
+survival_oft1 <- lmer(survived_200d ~ oft1 + (1|litter_id),
+                      data = master)
+survival_mis1 <- lmer(survived_200d ~ mis1 + (1|litter_id),
+                      data = master)
+
+summary(survival_pers)
+summary(survival_oft1)
+summary(survival_mis1)
 
 ##STEP 2: personality ~ grid * year
 

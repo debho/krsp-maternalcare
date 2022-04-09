@@ -17,6 +17,9 @@ personality <- read.csv('data/personality-master.csv',
          Exclude_unless_video_reanalyzed == "N",
          Proceed_with_caution == "N") #eliminates any exclusions
 
+# drop duplicate squirrels
+personality <- personality[!duplicated(personality$sq_id),]
+
 behaviors <- mutate_if(personality,
                        is.character, as.numeric) #convert all to numbers
 
@@ -72,7 +75,3 @@ pca.mis$c1
 pca.mis$eig
 get_eig(pca.mis)
 personality$mis1 <- pca.mis$l1$RS1
-
-#looking at correlation between OFT and MIS scores
-cor.test(personality$oft1,
-         personality$mis1) #p < .05

@@ -40,8 +40,5 @@ census <- tbl(con, "census") %>%
   collect() %>%
   filter(squirrel_id %in% personality$sq_id)
 
-survival <- tbl(con, "flastall2") %>% 
-  collect() %>% 
-  filter(byear > 2017) %>%
-  mutate(age = as.integer(difftime(datee, dates, units = "days")),
-         survived_200d = age >= 200)
+flastall <- tbl(con, "flastall2") %>% 
+  collect()

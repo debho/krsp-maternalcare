@@ -47,11 +47,12 @@ master <- merge(juvlitter_mom,
           mis1,
           bark) %>% #only those with nest attendance data
   select(juv_id,
-         litter_id.x,
+         litter_id = litter_id.x,
+         fieldBDate,
          mom_id,
-         sex.x,
-         grid.x,
-         age.x,
+         sex = sex.x,
+         grid = grid.x,
+         age = age.x,
          t_return,
          t_move,
          oft1,
@@ -60,17 +61,25 @@ master <- merge(juvlitter_mom,
          n_pups) #consolidates table
 
 # STEP 4 ####
-## clean up column names
-
-colnames(master)[2] <- "litter_id"
-colnames(master)[4] <- "sex"
-colnames(master)[5] <- "grid"
-colnames(master)[6] <- "age"
-
-# STEP 5 ####
 ## combine all except for JO into control
 master$treatment[master$grid == "JO"] <- 1
 master$treatment[master$grid %in% c("BT", "KL", "SU")] <- 0
+
+# STEP 6 ####
+## drop duplicates
+master <- master[!duplicated(master$juv_id),]
+
+# STEP 7 ####
+## add in survival data
+
+master <- master %>%
+  left_join(survival, by = "juv_id")
+master$fieldBDate <- ifelse(is.na(master$fieldBDate),
+                            master$dates, master$fieldBDate)
+master <- master %>%
+  select(-dates)
+
+
 
 # STEP 6 ####
 ## obtain LSR, using F:M
