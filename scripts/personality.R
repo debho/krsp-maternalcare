@@ -14,9 +14,12 @@ personality <- read.csv('data/personality-master.csv',
   filter(cohort > 2017, #takes only 2018 to 2021
          ageclass == "J", #takes only juvs
          grid %in% c("BT", "KL", "JO", "SU"), 
-         Exclude_unless_video_reanalyzed == "N",
-         Proceed_with_caution == "N") #eliminates any exclusions
+         Exclude_unless_video_reanalyzed == "N",   #eliminates any exclusions
+         Proceed_with_caution == "N")
 
+personality$trialdate <- as.Date(personality$trialdate,
+                                 "%m/%d/%y")
+personality$julian_trialdate <- yday(personality$trialdate)
 
 behaviors <- mutate_if(personality,
                        is.character, as.numeric) #convert all to numbers
@@ -36,8 +39,8 @@ beh.oft <- transmute(behaviors,
 beh.mis <- transmute(behaviors,
                      front_prop = (front/mis_duration),
                      back_prop = (back/mis_duration),
-                     approachlat_prop = (mis_duration/approachlatency), #reversed because of rev corr with aggression
-                     attacklat_prop = (mis_duration/attacklatency), #reversed because of rev corr with aggression
+                     approachlat_prop = (approachlatency/mis_duration),
+                     attacklat_prop = (attacklatency/mis_duration),
                      attack_prop = (attack/mis_duration)
 )
 
@@ -56,9 +59,6 @@ pca.oft <- dudi.pca(beh.oft,
 
 pca.oft$c1 <- (pca.oft$c1 * -1)
 pca.oft$c1
-pca.oft$eig
-
-
 personality$oft1 <- (pca.oft$l1$RS1 * -1) #because loadings are reversed for some reason
 get_eig(pca.oft)
 
@@ -70,9 +70,5 @@ pca.mis <- dudi.pca(beh.mis,
                     nf = 5)
 
 pca.mis$c1
-pca.mis$eig
 get_eig(pca.mis)
 personality$mis1 <- pca.mis$l1$RS1
-
-# drop duplicate squirrels
-personality <- personality[!duplicated(personality$sq_id),]
