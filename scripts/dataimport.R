@@ -25,19 +25,18 @@ squirrels <- tbl(con, "squirrel") %>%
   collect() 
   
 litters <- tbl(con, "litter") %>%
-  collect() 
+  collect() %>%
+  filter(yr > 2017)
 
 juveniles <- tbl(con, "juvenile") %>%
-  collect() 
+  collect() %>%
+  filter(litter_id %in% litters$id)
 
 traps <- tbl(con, "trapping") %>%
   collect() 
-
-changed_ids <- tbl(con, "historic_squirrel_ids") %>%
-  collect()
 
 census <- tbl(con, "census") %>%
   collect()
 
 flastall <- tbl(con, "flastall2") %>% 
-  collect()
+  collect() 

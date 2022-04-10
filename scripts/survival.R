@@ -13,13 +13,15 @@ survival <- flastall %>%
   mutate(age_last = as.integer(difftime(datee, dates, units = "days")),
          survived_200d = age_last >= 200) %>%
   select(juv_id = squirrel_id,
-         dates,
-         datee,
+         start_date = dates,
+         end_date = datee,
+         last_fate = f2,
          age_last,
-         survived_200d) %>%
-  mutate(survived_200d = as.integer(survived_200d))
+         survived_200d,
+         byear)
 
+survival[!survival$last_fate %in% c(4, 5, 10, 11, 12) & survival$byear == 2021,
+         "survived_200d"] <- 1
 
-flastall_juv <- tbl(con, "flastall2") %>% 
-  select(squirrel_id, date_end = datee, fate_end = f2) %>% 
-  collect()
+survival$survived_200d <- as.integer(survival$survived_200d)
+

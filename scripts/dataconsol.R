@@ -11,81 +11,97 @@
 ## matching juveniles to litters
 ## should match on litter ID
 
-colnames(litters)[1] <- "litter_id" #so that there's a common column
-colnames(litters)[25] <- "mom_id" #avoid confusion with squirrel_id
-colnames(juveniles)[17] <- "juv_id" #avoid confusion with squirrel_id
+# but first lets clean up some column names to avoid confusion
+colnames(litters)[1] <- "litter_id"
+colnames(litters)[25] <- "mom_id"
+colnames(juveniles)[17] <- "juv_id"
 
-juv_to_litter <- merge(juveniles,
-                       litters,
-                       by = "litter_id",
-                       all.x = TRUE)
+juv_litter <- merge(juveniles,
+                    litters,
+                    by = "litter_id",
+                    all.x = TRUE) %>%
+  select(juv_id,
+         litter_id,
+         sex,
+         mom_id,
+         grid,
+         yr)
+
 
 # STEP 2 ####
-## we need to find out who the moms are
-## match nest attendance to that table on moms
+## now we match the moms and attentiveness data
 
-colnames(nest_att)[4] <- "mom_id"
-
-juvlitter_mom <- merge(juv_to_litter,
-                       nest_att,
-                       by = "mom_id",
-                       all.x = TRUE)
-
-# STEP 3 ####
-## match these to personality
-## match on juv_id
-
-colnames(personality)[1] <- "juv_id"
-
-master <- merge(juvlitter_mom,
-                personality,
-                by = "juv_id", 
-                all.x = TRUE) %>% #now we clean
-  filter(yr > 2017,
-         grid.x %in% c("BT", "JO", "KL", "SU")) %>% #gets only 2018-2021 data
-  drop_na(oft1, #only those with personality data
-          mis1,
-          bark) %>% #only those with nest attendance data
-  select(juv_id,
-         litter_id = litter_id.x,
-         fieldBDate,
+juv_care <- merge(juv_litter,
+                  nest_att,
+                  by = "litter_id",
+                  all.x = TRUE) %>%
+  select(litter_id,
+         juv_id,
+         birth_date,
+         julian_birth_date,
          mom_id,
-         sex = sex.x,
-         grid = grid.x,
-         age = age.x,
+         date,
+         julian_date,
          t_return,
          t_move,
+         bark)
+
+# STEP 3 ####
+## now for personality
+
+juv_personality <- merge(personality,
+                         juv_care,
+                         by = "juv_id",
+                         all.x = TRUE)%>%
+  select(litter_id,
+         mom_id,
+         t_return,
+         t_move,
+         year,
+         juv_id,
+         sex,
+         grid,
+         birth_date,
+         julian_birth_date,
          oft1,
          mis1,
-         yr,
-         n_pups) #consolidates table
+         trialdate,
+         julian_trialdate) %>%
+  drop_na(t_return,
+          t_move)
+
+juv_personality$age_trial <- (juv_personality$julian_trialdate -
+                               juv_personality$julian_birth_date)
 
 # STEP 4 ####
-## combine all except for JO into control
-master$treatment[master$grid == "JO"] <- 1
-master$treatment[master$grid %in% c("BT", "KL", "SU")] <- 0
+## add in survival and we have our master table!
 
-# STEP 6 ####
-## drop duplicates
-master <- master[!duplicated(master$juv_id),]
+master <- merge(juv_personality,
+                survival,
+                by = "juv_id",
+                all.x = TRUE) %>%
+  select(litter_id,
+         mom_id,
+         t_return,
+         t_move,
+         year,
+         juv_id,
+         sex,
+         grid,
+         birth_date,
+         julian_birth_date,
+         oft1,
+         mis1,
+         trialdate,
+         julian_trialdate,
+         age_trial,
+         age_last,
+         survived_200d)
 
-# STEP 7 ####
-## add in survival data
+# adding in treatments
+master$treatment <- as.integer(master$grid == "JO")
 
-master <- master %>%
-  left_join(survival, by = "juv_id")
-master$fieldBDate <- ifelse(is.na(master$fieldBDate),
-                            master$dates, master$fieldBDate)
-master <- master %>%
-  select(-dates)
-
-
-
-# STEP 6 ####
-## obtain LSR, using F:M
-## group by litter
-## no. of females/n_pups
-
-
-
-
+# cleaning up anything that looks weird
+master$age_last <- ifelse((master$age_last < master$age_trial),
+                          master$age_trial,
+                          master$age_last)

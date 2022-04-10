@@ -21,6 +21,8 @@ personality$trialdate <- as.Date(personality$trialdate,
                                  "%m/%d/%y")
 personality$julian_trialdate <- yday(personality$trialdate)
 
+colnames(personality)[1] <- "juv_id"
+
 behaviors <- mutate_if(personality,
                        is.character, as.numeric) #convert all to numbers
 

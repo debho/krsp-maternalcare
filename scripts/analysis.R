@@ -12,11 +12,11 @@ library(sjPlot) #for visualizing
 
 ##STEP 1: survival ~ personality * density
 
-survival_pers <- lmer(survived_200d ~ (oft1 + mis1) + (1|litter_id),
+survival_pers <- lmer(survived_200d ~ oft1 + mis1 + treatment + (1|litter_id),
                       data = master)
-survival_oft1 <- lmer(survived_200d ~ oft1 + (1|litter_id),
+survival_oft1 <- lmer(survived_200d ~ oft1 + treatment + (1|litter_id),
                       data = master)
-survival_mis1 <- lmer(survived_200d ~ mis1 + (1|litter_id),
+survival_mis1 <- lmer(survived_200d ~ mis1 + treatment + (1|litter_id),
                       data = master)
 
 summary(survival_pers)
@@ -25,11 +25,11 @@ summary(survival_mis1)
 
 ##STEP 2: personality ~ grid * year
 
-pers_model <- lmer(oft1 + mis1 ~ sex + treatment + age + (1|litter_id),
+pers_model <- lmer(oft1 + mis1 ~ sex + treatment + age_trial + (1|litter_id),
                       data = master)
-oft1_model <- lmer(oft1 ~ sex + treatment + age + (1|litter_id),
+oft1_model <- lmer(oft1 ~ sex + treatment + age_trial + (1|litter_id),
                    data = master)
-mis1_model <- lmer(mis1 ~ sex + treatment + age + (1|litter_id),
+mis1_model <- lmer(mis1 ~ sex + treatment + age_trial + (1|litter_id),
                    data = master)
 summary(pers_model) 
 summary(oft1_model)
@@ -37,11 +37,11 @@ summary(mis1_model)
 
 ##STEP 3: personality ~ maternal care
 
-maternal_pers <- lmer(oft1 + mis1 ~ t_return + t_move * treatment + (1|litter_id),
+maternal_pers <- lmer(oft1 + mis1 ~ t_return + t_move + treatment + (1|litter_id),
                       data = master)
-maternal_oft1 <- lmer(oft1 ~ t_return + t_move * treatment + (1|litter_id),
+maternal_oft1 <- lmer(oft1 ~ t_return + t_move + treatment + (1|litter_id),
                       data = master)
-maternal_mis1 <- lmer(mis1 ~ t_return + t_move * treatment + (1|litter_id),
+maternal_mis1 <- lmer(mis1 ~ t_return + t_move + treatment + (1|litter_id),
                       data = master)
 summary(maternal_pers)
 summary(maternal_oft1) 
