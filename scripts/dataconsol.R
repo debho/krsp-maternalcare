@@ -113,4 +113,5 @@ master$age_last <- ifelse((master$age_last < master$age_trial),
                           master$age_trial,
                           master$age_last)
 
-
+master$year <- as.factor(master$year)
+master$grid <- as.factor(master$grid)
