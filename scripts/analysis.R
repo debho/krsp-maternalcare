@@ -14,16 +14,16 @@ library(sjPlot) #for visualizing
 ## is personality influenced by anything other than maternal care?
 
 # model to see if BT is any diff from the other controls
-oft1_controls <- lmer(oft1 ~ sex + age_trial + grid + (1 | litter_id),
+oft1_controls <- lmer(oft1 ~ grid + (1 | litter_id),
                       data = master,
                       subset = !grid == "JO") 
-summary(oft1_controls) #sex is the only main effect, control type has no effect
+summary(oft1_controls) #no effect
 
 
-mis1_controls <- lmer(mis1 ~ sex + age_trial + grid + (1 | litter_id),
+mis1_controls <- lmer(mis1 ~ grid + (1 | litter_id),
                       data = master,
                       subset = !grid == "JO")
-summary(mis1_controls) #no fixed effects
+summary(mis1_controls) #no effect
 
 # ok, now to see what impacts personality
 oft1_analysis <- lmer(oft1 ~ age_trial + n_pups + treatment + (1 | litter_id),
