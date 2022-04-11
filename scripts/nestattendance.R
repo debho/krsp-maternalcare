@@ -27,12 +27,10 @@ nest_att[nest_att$m_move == "n",
          "t_move"] <- 420
 
 #converts dates to julian dates
-nest_att$date <- as.Date(nest_att$date,
-                         "%m/%d/%y")
-nest_att$julian_date <- yday(nest_att$date)
-nest_att$birth_date <- as.Date(nest_att$birth_date,
-                               "%m/%d/%y")
-nest_att$julian_birth_date <- yday(nest_att$birth_date)
+nest_att$julian_date <- yday(as.Date(nest_att$date,
+                         "%m/%d/%y"))
+nest_att$birth_date <- yday(as.Date(nest_att$birth_date,
+                               "%m/%d/%y"))
 
 #gets ages of pups, as.numeric to handle 0 day old pups
 nest_att$age <- as.integer(nest_att$julian_date - nest_att$julian_birth_date)

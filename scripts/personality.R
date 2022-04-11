@@ -17,10 +17,6 @@ personality <- read.csv('data/personality-master.csv',
          Exclude_unless_video_reanalyzed == "N",   #eliminates any exclusions
          Proceed_with_caution == "N")
 
-personality$trialdate <- as.Date(personality$trialdate,
-                                 "%m/%d/%y")
-personality$julian_trialdate <- yday(personality$trialdate)
-
 colnames(personality)[1] <- "juv_id"
 
 behaviors <- mutate_if(personality,

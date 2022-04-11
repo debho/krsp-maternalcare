@@ -17,9 +17,9 @@ colnames(litters)[25] <- "mom_id"
 colnames(juveniles)[17] <- "juv_id"
 
 juv_litter <- merge(juveniles,
-                    litters,
-                    by = "litter_id",
-                    all.x = TRUE) %>%
+              litters,
+              by = "litter_id",
+              all.x = TRUE) %>%
   select(juv_id,
          litter_id,
          sex,
@@ -65,16 +65,17 @@ juv_personality <- merge(personality,
          julian_birth_date,
          oft1,
          mis1,
-         trialdate,
-         julian_trialdate) %>%
+         trialdate) %>%
   drop_na(t_return,
           t_move)
 
+juv_personality$julian_trialdate <- yday(as.Date(juv_personality$trialdate,
+                                            "%m/%d/%y"))
 juv_personality$age_trial <- (juv_personality$julian_trialdate -
-                               juv_personality$julian_birth_date)
+                              juv_personality$julian_birth_date)
 
 # STEP 4 ####
-## add in survival and we have our master table!
+## add in survival and we have our master table
 
 master <- merge(juv_personality,
                 survival,
@@ -96,12 +97,15 @@ master <- merge(juv_personality,
          julian_trialdate,
          age_trial,
          age_last,
+         last_fate,
          survived_200d)
 
 # adding in treatments
 master$treatment <- as.integer(master$grid == "JO")
 
-# cleaning up anything that looks weird
+# cleaning up trial dates that occur before end dates
 master$age_last <- ifelse((master$age_last < master$age_trial),
                           master$age_trial,
                           master$age_last)
+
+

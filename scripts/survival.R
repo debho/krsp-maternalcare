@@ -21,7 +21,7 @@ survival <- flastall %>%
          byear)
 
 survival[!survival$last_fate %in% c(4, 5, 10, 11, 12) & survival$byear == 2021,
-         "survived_200d"] <- 1
+         "survived_200d"] <- 1 #ok i need to check on what exactly flastall is so i know what to do 
 
 survival$survived_200d <- as.integer(survival$survived_200d)
 
