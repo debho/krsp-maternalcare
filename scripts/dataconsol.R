@@ -36,6 +36,7 @@ juv_care <- merge(juv_litter,
                   by = "litter_id",
                   all.x = TRUE) %>%
   select(litter_id,
+         n_pups,
          juv_id,
          birth_date,
          julian_birth_date,
@@ -44,7 +45,9 @@ juv_care <- merge(juv_litter,
          julian_date,
          t_return,
          t_move,
-         bark)
+         bark) %>%
+  distinct(juv_id,
+           .keep_all = TRUE)
 
 # STEP 3 ####
 ## now for personality
@@ -54,6 +57,7 @@ juv_personality <- merge(personality,
                          by = "juv_id",
                          all.x = TRUE)%>%
   select(litter_id,
+         n_pups,
          mom_id,
          t_return,
          t_move,
@@ -91,6 +95,7 @@ master <- merge(juv_personality,
          grid,
          birth_date,
          julian_birth_date,
+         n_pups,
          oft1,
          mis1,
          trialdate,
