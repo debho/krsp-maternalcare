@@ -47,10 +47,7 @@ juv_care <- merge(juv_litter,
          t_move,
          m_return,
          m_move,
-         bark) %>%
-  distinct(juv_id,
-           .keep_all = TRUE) #drops duplicate juvs
-
+         bark) 
 # STEP 3 ####
 ## now for personality
 
@@ -120,7 +117,9 @@ master$age_last <- ifelse((master$age_last < master$age_trial),
                           master$age_last)
 
 master$year <- as.factor(master$year)
-master$grid <- as.factor(master$grid)
+master$gridtreat <- factor(master$grid,
+                      levels = c("JO","BT", "KL", "SU"),
+                      labels = c(2, 1, 0, 0))
 
 # STEP 5 ####
 ## add in LSR
