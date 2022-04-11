@@ -36,6 +36,12 @@ summary(mis1_analysis) #no effects
 
 ## STEP 2 ####
 ## how does treatment influence maternal care?
+
+return_move <- lm(t_move ~ t_return,
+                  data = master,
+                  subset = (m_return == "y" & m_move == "y"))
+summary(return_move) #time to return has a sig effect on time to move
+
 return_analysis <- lmer(t_return ~ treatment + n_pups + (1 | grid),
                         data = master)
 summary(return_analysis) #treatment has a sig effect on t_return
@@ -77,4 +83,5 @@ mis1_survival <- lmer(survived_200d ~ mis1 + year + (1 | grid),
 summary(mis1_survival)
 
 #wait idk if this survival code is even right
+#is my survival measure even right
         

@@ -45,9 +45,11 @@ juv_care <- merge(juv_litter,
          julian_date,
          t_return,
          t_move,
+         m_return,
+         m_move,
          bark) %>%
   distinct(juv_id,
-           .keep_all = TRUE)
+           .keep_all = TRUE) #drops duplicate juvs
 
 # STEP 3 ####
 ## now for personality
@@ -61,6 +63,8 @@ juv_personality <- merge(personality,
          mom_id,
          t_return,
          t_move,
+         m_return,
+         m_move,
          year,
          juv_id,
          sex,
@@ -71,7 +75,7 @@ juv_personality <- merge(personality,
          mis1,
          trialdate) %>%
   drop_na(t_return,
-          t_move)
+          t_move) #removes those with no nest attendance data
 
 juv_personality$julian_trialdate <- yday(as.Date(juv_personality$trialdate,
                                             "%m/%d/%y"))
@@ -89,11 +93,13 @@ master <- merge(juv_personality,
          mom_id,
          t_return,
          t_move,
+         m_return,
+         m_move,
          year,
          juv_id,
          sex,
          grid,
-         birth_date,
+         birth_date, #something went wrong with this and now it's also showing julian birth date
          julian_birth_date,
          n_pups,
          oft1,
@@ -106,7 +112,7 @@ master <- merge(juv_personality,
          survived_200d)
 
 # adding in treatments
-master$treatment <- as.integer(master$grid == "JO")
+master$treatment <- as.factor(as.integer((master$grid == "JO")))
 
 # cleaning up trial dates that occur before end dates
 master$age_last <- ifelse((master$age_last < master$age_trial),
@@ -115,3 +121,7 @@ master$age_last <- ifelse((master$age_last < master$age_trial),
 
 master$year <- as.factor(master$year)
 master$grid <- as.factor(master$grid)
+
+# STEP 5 ####
+## add in LSR
+## group by litter_id, find no. of females in each litter, then divide by n_pups to get proportion of females
