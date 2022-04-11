@@ -36,11 +36,11 @@ summary(mis1_analysis) #no effects
 
 ## STEP 2 ####
 ## how does treatment influence maternal care?
-return_analysis <- lmer(t_return ~ treatment + (1 | grid),
+return_analysis <- lmer(t_return ~ treatment + n_pups + (1 | grid),
                         data = master)
 summary(return_analysis) #treatment has a sig effect on t_return
 
-move_analysis <- lmer(t_move ~ treatment + (1 | grid),
+move_analysis <- lmer(t_move ~ treatment + n_pups + (1 | grid),
                       data = master)
 summary(move_analysis) #treatment has a sig effect on t_move
 
