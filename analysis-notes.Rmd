@@ -1,0 +1,38 @@
+---
+title: "data analysis notes"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Data Analysis
+
+This is to record what I did/what I plan to do so that I don't get confused and forget, and also for general organization and making this study replicatable.
+
+------------------------------------------------------------------------
+
+## Main question
+
+Do changes in maternal care induce adaptive plasticity effects on offspring personality in wild North American red squirrels?
+
+### Hypotheses & predictions
+
+-   Changes in maternal care induces adaptive plasticity effects on offspring personality traits to prepare them for competitive environments
+
+    -   Density cues will alter maternal care; direction unsure
+
+    -   Red squirrel mothers experiencing high density cues will produce less active and more aggressive offspring, shaping them through maternal care style
+
+-   These changes are adaptive
+
+    -   We will observe better survival in individuals with low activity and high aggression in high density years
+
+-   Sex-biased territory bequeathal (towards female offspring) causes LSR effects on aggression
+
+    -   More females means more competition for the territory, which could in a more antagonistic nest environment and increase aggression
+
+------------------------------------------------------------------------
+
+## Analyses
