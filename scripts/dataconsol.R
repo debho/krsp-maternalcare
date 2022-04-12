@@ -69,9 +69,7 @@ juv_personality <- merge(personality,
              julian_birth_date,
              oft1,
              mis1,
-             trialdate) %>%
-              drop_na(t_return,
-                      t_move) #removes those with no nest attendance data)
+             trialdate) 
 
 juv_personality$julian_trialdate <- yday(as.Date(juv_personality$trialdate,
                                             "%m/%d/%y"))

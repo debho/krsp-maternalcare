@@ -11,13 +11,14 @@
 personality <- read.csv('data/personality-master.csv',
                             header = T,
                             na.strings = c("", " ", "NA")) %>%
-  filter(cohort > 2017, #takes only 2018 to 2021
+  filter(cohort > 2017, #takes only 2018 to 2021 #use the whole dataset instead
          ageclass == "J", #takes only juvs
          grid %in% c("BT", "KL", "JO", "SU"), 
          Exclude_unless_video_reanalyzed == "N",   #eliminates any exclusions
-         Proceed_with_caution == "N") %>%
+         Proceed_with_caution == "N")  %>%
   distinct(sq_id,
            .keep_all = TRUE) #ensures that each squirrel is involved only once
+#put in trials and and choose trial 2s for ARM (KL 2018), and then trial 1 for that one 2021 squirrel
 
 colnames(personality)[1] <- "juv_id"
 

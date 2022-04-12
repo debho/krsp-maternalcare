@@ -8,7 +8,6 @@
 ### Script for running analyses
 
 library(lmerTest) #for linear models
-library(sjPlot) #for visualizing
 
 # STEP 1 ####
 ## is personality influenced by anything other than maternal care?
@@ -45,22 +44,26 @@ summary(return_move) #time to return has a sig effect on time to move
 return_analysis <- lm(t_return ~ treatment + n_pups,
                         data = master)
 summary(return_analysis) #treatment has a sig effect on t_return
+#boxplot this
 
 move_analysis <- lm(t_move ~ treatment + n_pups,
                     data = master)
 summary(move_analysis) #treatment has a sig effect on t_move
+#boxplot this
+
 
 ## STEP 3 ####
 ## how does maternal care influence personality?
+# check out diagnostics for lmer packages (lmer model diagnostics)
 
-oft1_return <- lmer(oft1 ~ t_return + sex + age_trial + treatment + (1 | litter_id),
+oft1_return <- lmer(oft1 ~  sex + age_trial + treatment + (1 | litter_id),
                     data = master)
-summary(oft1_return)
+summary(oft1_return) 
 
 mis1_return <- lmer(mis1 ~ t_return + sex + age_trial + treatment + (1 | litter_id),
                     data = master)
-summary(mis1_return)
 
+summary(mis1_return) 
 oft1_move <- lmer(oft1 ~ t_move + sex + age_trial + treatment + (1 | litter_id),
                  data = master)
 summary(oft1_move)
@@ -75,7 +78,7 @@ summary(mis1_move)
 oft1_survival <- lmer(survived_200d ~ oft1 + (1 | grid),
                       data = master,
                       subset = !year == 2021)
-summary(oft1_survival)
+summary(oft1_survival) #include all the data and not just 2018-2021, but exclude trial 1 for KL 2017-2018b by ARM
 
 mis1_survival <- lmer(survived_200d ~ mis1 + (1 | grid),
                       data = master,
@@ -92,3 +95,12 @@ mis_LSR <- lmer(mis1 ~ LSR + t_return + t_move + (1 | litter_id),
                 data = master,
                 subset = !is.na(LSR))
 summary(mis_LSR)        
+
+# for each table include sample size for both trials and individuals
+# always figure out where i'm losing trials
+
+# make a table with year, no. trials/juv, grid
+# DO SURVIVAL ANALYSIS FIRST
+# survived_200d ~ oft1 * mis1 * year + sex + (1 | litter_id)
+# ttry with everyonr first then try it excluding JO
+# write up results and figure 
