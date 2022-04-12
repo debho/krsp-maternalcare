@@ -84,4 +84,11 @@ summary(mis1_survival)
 
 #wait idk if this survival code is even right
 #is my survival measure even right
-        
+
+## STEP 5 ####
+## aggression ~ LSR
+
+mis_LSR <- lmer(mis1 ~ LSR + t_return + t_move + (1 | litter_id),
+                data = master,
+                subset = !is.na(LSR))
+summary(mis_LSR)        

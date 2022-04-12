@@ -128,4 +128,18 @@ master$gridtreat <- factor(master$grid,
 
 LSR <- master %>%
   group_by(litter_id) %>%
-  count(litter_id,sex)
+  count(litter_id,sex) %>%
+  filter(sex == "F")
+
+master <- merge(master,
+                LSR,
+                by = "litter_id",
+                all.x = TRUE) %>%
+  select(-sex.y)
+
+colnames(master)[9] <- "sex"
+colnames(master)[24] <- "n_females"
+master$LSR = (master$n_females / master$n_pups)
+
+
+                
