@@ -25,11 +25,6 @@ mis1_controls <- lmer(mis1 ~ gridtreat + (1 | litter_id),
                       subset = !grid == "JO")
 summary(mis1_controls) #no effect
 
-personality_controls <- lmer(oft1 + mis1 ~ gridtreat + (1 | litter_id),
-                             data = master,
-                             subset = !grid == "JO")
-summary(personality_controls)
-
 # ok, now to see what impacts personality
 oft1_analysis <- lmer(oft1 ~ sex + age_trial + treatment + (1 | litter_id),
                       data = master)
@@ -39,34 +34,26 @@ mis1_analysis <- lmer(mis1 ~ sex + age_trial + treatment + (1 | litter_id),
                       data = master)
 summary(mis1_analysis) #no effects
 
-personality_analysis <- lmer(oft1 + mis1 ~ sex + age_trial + treatment + (1 | litter_id),
-                             data = master)
-summary(personality_analysis)
-
 ## STEP 2 ####
 ## how does treatment influence maternal care?
 
 return_move <- lm(t_move ~ t_return,
                   data = master,
-                  subset = (m_return == "y"))
+                  subset = (m_return == "y" & m_move == "y"))
 summary(return_move) #time to return has a sig effect on time to move
 
-return_analysis <- lmer(t_return ~ treatment + n_pups + (1 | grid),
+return_analysis <- lm(t_return ~ treatment + n_pups,
                         data = master)
 summary(return_analysis) #treatment has a sig effect on t_return
 
-move_analysis <- lmer(t_move ~ treatment + n_pups + (1 | grid),
-                      data = master)
+move_analysis <- lm(t_move ~ treatment + n_pups,
+                    data = master)
 summary(move_analysis) #treatment has a sig effect on t_move
-
-care_analysis <- lmer(t_return + t_move ~ treatment + n_pups + (1 | grid),
-                      data = master)
-summary(care_analysis)
 
 ## STEP 3 ####
 ## how does maternal care influence personality?
 
-oft1_return <- lmer(oft1 ~ t_return + sex + age_trial + treatment +  (1 | litter_id),
+oft1_return <- lmer(oft1 ~ t_return + sex + age_trial + treatment + (1 | litter_id),
                     data = master)
 summary(oft1_return)
 
@@ -80,33 +67,20 @@ summary(oft1_move)
 
 mis1_move <- lmer(mis1 ~ t_move + sex + age_trial + treatment + (1 | litter_id),
                   data = master)
-summary(mis1_move) #latency to move pups has a significant effect on aggression
-
-oft1_care <- lmer(oft1 ~ t_return + t_move + sex + age_trial + treatment +  (1 | litter_id),
-                    data = master)
-summary(oft1_care)
-
-mis1_care <- lmer(mis1 ~ t_return + t_move + sex + age_trial + treatment +  (1 | litter_id),
-                  data = master)
-summary(mis1_care)
+summary(mis1_move)
 
 ## STEP 4 ####
 ## survival ~ personality
 
-oft1_survival <- lmer(survived_200d ~ oft1 + year + (1 | grid),
+oft1_survival <- lmer(survived_200d ~ oft1 + (1 | grid),
                       data = master,
                       subset = !year == 2021)
 summary(oft1_survival)
 
-mis1_survival <- lmer(survived_200d ~ mis1 + year + (1 | grid),
+mis1_survival <- lmer(survived_200d ~ mis1 + (1 | grid),
                       data = master,
                       subset = !year == 2021)
 summary(mis1_survival)
-
-personality_survival <- lmer(survived_200d ~ oft1 + mis1 + year + (1 | grid),
-                             data = master,
-                             subset = !year == 2021)
-summary(personality_survival)
 
 #wait idk if this survival code is even right
 #is my survival measure even right

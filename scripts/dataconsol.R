@@ -20,13 +20,12 @@ juv_litter <- merge(juveniles,
               litters,
               by = "litter_id",
               all.x = TRUE) %>%
-  select(juv_id,
-         litter_id,
-         sex,
-         mom_id,
-         grid,
-         yr)
-
+  transmute(juv_id,
+            litter_id,
+            sex,
+            mom_id,
+            grid,
+            yr)
 
 # STEP 2 ####
 ## now we match the moms and attentiveness data
@@ -35,19 +34,19 @@ juv_care <- merge(juv_litter,
                   nest_att,
                   by = "litter_id",
                   all.x = TRUE) %>%
-  select(litter_id,
-         n_pups,
-         juv_id,
-         birth_date,
-         julian_birth_date,
-         mom_id,
-         date,
-         julian_date,
-         t_return,
-         t_move,
-         m_return,
-         m_move,
-         bark) 
+  transmute(litter_id,
+            n_pups,
+            juv_id,
+            birth_date,
+            julian_birth_date,
+            mom_id,
+            date,
+            julian_date,
+            t_return,
+            t_move,
+            m_return,
+            m_move)
+
 # STEP 3 ####
 ## now for personality
 
@@ -55,24 +54,24 @@ juv_personality <- merge(personality,
                          juv_care,
                          by = "juv_id",
                          all.x = TRUE)%>%
-  select(litter_id,
-         n_pups,
-         mom_id,
-         t_return,
-         t_move,
-         m_return,
-         m_move,
-         year,
-         juv_id,
-         sex,
-         grid,
-         birth_date,
-         julian_birth_date,
-         oft1,
-         mis1,
-         trialdate) %>%
-  drop_na(t_return,
-          t_move) #removes those with no nest attendance data
+  transmute(litter_id,
+             n_pups,
+             mom_id,
+             t_return,
+             t_move,
+             m_return,
+             m_move,
+             year,
+             juv_id,
+             sex,
+             grid,
+             birth_date,
+             julian_birth_date,
+             oft1,
+             mis1,
+             trialdate) %>%
+              drop_na(t_return,
+                      t_move) #removes those with no nest attendance data)
 
 juv_personality$julian_trialdate <- yday(as.Date(juv_personality$trialdate,
                                             "%m/%d/%y"))
@@ -86,27 +85,29 @@ master <- merge(juv_personality,
                 survival,
                 by = "juv_id",
                 all.x = TRUE) %>%
-  select(litter_id,
-         mom_id,
-         t_return,
-         t_move,
-         m_return,
-         m_move,
-         year,
-         juv_id,
-         sex,
-         grid,
-         birth_date, #something went wrong with this and now it's also showing julian birth date
-         julian_birth_date,
-         n_pups,
-         oft1,
-         mis1,
-         trialdate,
-         julian_trialdate,
-         age_trial,
-         age_last,
-         last_fate,
-         survived_200d)
+  transmute(litter_id,
+            mom_id,
+            t_return,
+            t_move,
+            m_return,
+            m_move,
+            year,
+            juv_id,
+            sex,
+            grid,
+            birth_date, #something went wrong with this and now it's also showing julian birth date
+            julian_birth_date,
+            n_pups,
+            oft1,
+            mis1,
+            trialdate,
+            julian_trialdate,
+            age_trial,
+            age_last,
+            last_fate,
+            survived_200d) %>%
+  distinct(juv_id,
+           .keep_all = TRUE) #removes duplicates so that each juv is counted only once
 
 # adding in treatments
 master$treatment <- as.factor(as.integer((master$grid == "JO")))
@@ -124,3 +125,7 @@ master$gridtreat <- factor(master$grid,
 # STEP 5 ####
 ## add in LSR
 ## group by litter_id, find no. of females in each litter, then divide by n_pups to get proportion of females
+
+LSR <- master %>%
+  group_by(litter_id) %>%
+  count(litter_id,sex)

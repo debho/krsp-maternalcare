@@ -15,7 +15,9 @@ personality <- read.csv('data/personality-master.csv',
          ageclass == "J", #takes only juvs
          grid %in% c("BT", "KL", "JO", "SU"), 
          Exclude_unless_video_reanalyzed == "N",   #eliminates any exclusions
-         Proceed_with_caution == "N")
+         Proceed_with_caution == "N") %>%
+  distinct(sq_id,
+           .keep_all = TRUE) #ensures that each squirrel is involved only once
 
 colnames(personality)[1] <- "juv_id"
 
@@ -55,9 +57,8 @@ pca.oft <- dudi.pca(beh.oft,
                     nf = 7)
 
 
-pca.oft$c1 <- (pca.oft$c1 * -1)
 pca.oft$c1
-personality$oft1 <- (pca.oft$l1$RS1 * -1) #because loadings are reversed for some reason
+personality$oft1 <- pca.oft$l1$RS1 
 get_eig(pca.oft)
 
 # PCA loadings for MIS
