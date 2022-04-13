@@ -11,19 +11,41 @@
 personality <- read.csv('data/personality-master.csv',
                             header = T,
                             na.strings = c("", " ", "NA")) %>%
-  filter(cohort > 2017, #takes only 2018 to 2021 #use the whole dataset instead
-         ageclass == "J", #takes only juvs
-         grid %in% c("BT", "KL", "JO", "SU"), 
-         Exclude_unless_video_reanalyzed == "N",   #eliminates any exclusions
-         Proceed_with_caution == "N")  %>%
-  distinct(sq_id,
-           .keep_all = TRUE) #ensures that each squirrel is involved only once
-#put in trials and and choose trial 2s for ARM (KL 2018), and then trial 1 for that one 2021 squirrel
+  filter(ageclass == "J", #takes only juvs
+         grid %in% c("JO", "BT", "KL", "SU"), #takes only the grids in study
+         Exclude_unless_video_reanalyzed == "N", #eliminates any exclusions
+         Proceed_with_caution == "N", #eliminates SWK's GC squirrels and any other suspicious numbers
+         !(grid == "KL" & (year == 2018 | year == 2017) & trialnumber == 1), #those squirrels were too young
+         !(sq_id == "25287" & trialnumber == 1), #eliminates known exclusions
+         !(sq_id == "23686" & trialnumber == 1)) %>% #n = 268
+  distinct(sq_id, #ensures each indiv is counted only once
+           .keep_all = TRUE) #n = 257
 
-colnames(personality)[1] <- "juv_id"
+personality[is.na(personality$oft_duration),
+            "oft_duration"] <- 450.000
+personality[is.na(personality$mis_duration),
+            "mis_duration"] <- 300.000
 
-behaviors <- mutate_if(personality,
-                       is.character, as.numeric) #convert all to numbers
+colnames(personality)[1] <- "juv_id" #distinguish from squirrel_id in other tables since these are all juvs
+
+behaviors <- transmute(personality,
+                       juv_id,
+                       walk,
+                       jump,
+                       hole,
+                       hang,
+                       still,
+                       chew,
+                       groom,
+                       oft_duration,
+                       front,
+                       back,
+                       attack,
+                       attacklatency,
+                       approachlatency,
+                       mis_duration) %>%
+  mutate_if(is.character,
+            as.numeric)
 
 #extracts OFT behaviors
 beh.oft <- transmute(behaviors,
@@ -33,17 +55,14 @@ beh.oft <- transmute(behaviors,
                      hang_prop = (hang/oft_duration),
                      still_prop = (still/oft_duration),
                      chew_prop = (chew/oft_duration),
-                     groom_prop = (groom/oft_duration)
-)
+                     groom_prop = (groom/oft_duration))
 
-#extracts MIS behaviors
 beh.mis <- transmute(behaviors,
                      front_prop = (front/mis_duration),
                      back_prop = (back/mis_duration),
                      approachlat_prop = (approachlatency/mis_duration),
                      attacklat_prop = (attacklatency/mis_duration),
-                     attack_prop = (attack/mis_duration)
-)
+                     attack_prop = (attack/mis_duration))
 
 #PCA ####
 
@@ -59,7 +78,7 @@ pca.oft <- dudi.pca(beh.oft,
 
 
 pca.oft$c1
-personality$oft1 <- pca.oft$l1$RS1 
+#personality$oft1 <- pca.oft$l1$RS1 
 get_eig(pca.oft)
 
 # PCA loadings for MIS
@@ -71,4 +90,4 @@ pca.mis <- dudi.pca(beh.mis,
 
 pca.mis$c1
 get_eig(pca.mis)
-personality$mis1 <- pca.mis$l1$RS1
+#personality$mis1 <- pca.mis$l1$RS1
