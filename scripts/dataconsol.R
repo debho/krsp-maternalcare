@@ -17,9 +17,9 @@ colnames(litters)[25] <- "mom_id"
 colnames(juveniles)[17] <- "juv_id"
 
 juv_litter <- merge(juveniles,
-              litters,
-              by = "litter_id",
-              all.x = TRUE) %>%
+                    litters,
+                    by = "litter_id",
+                    all.x = TRUE) %>%
   transmute(juv_id,
             litter_id,
             sex,
@@ -115,10 +115,19 @@ master$age_last <- ifelse((master$age_last < master$age_trial),
                           master$age_trial,
                           master$age_last)
 
+recent4 <- master %>%
+  filter(year > 2017)
+
+
 master$year <- as.factor(master$year)
 master$gridtreat <- factor(master$grid,
                       levels = c("JO","BT", "KL", "SU"),
                       labels = c(2, 1, 0, 0))
+
+
+recent4$gridtreat <- factor(recent4$grid,
+                            levels = c("JO","BT", "KL", "SU"),
+                            labels = c(2, 1, 0, 0))
 
 # STEP 5 ####
 ## add in LSR
@@ -138,6 +147,7 @@ master <- merge(master,
 colnames(master)[9] <- "sex"
 colnames(master)[24] <- "n_females"
 master$LSR = (master$n_females / master$n_pups)
+
 
 
                 

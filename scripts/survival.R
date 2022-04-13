@@ -8,7 +8,7 @@
 ### Script for survival data
 
 survival <- flastall %>%
-  filter(byear > 2017,
+  filter(byear < 2021,
          bcert == "Y") %>%
   mutate(age_last = as.integer(difftime(datee, dates, units = "days")),
          survived_200d = age_last >= 200) %>%
@@ -20,8 +20,8 @@ survival <- flastall %>%
             survived_200d,
             byear)
 
-survival[!survival$last_fate %in% c(4, 5, 10, 11, 12) & survival$byear == 2021,
-         "survived_200d"] <- 1 #ok i need to check on what exactly flastall is so i know what to do 
+#if end date is earlier than late-sept/early oct of 2021 it means that squirrel
+#is presumed to be dead
 
 survival$survived_200d <- as.integer(survival$survived_200d)
 

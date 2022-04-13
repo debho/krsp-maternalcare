@@ -78,7 +78,7 @@ pca.oft <- dudi.pca(beh.oft,
 
 
 pca.oft$c1
-#personality$oft1 <- pca.oft$l1$RS1 
+personality$oft1 <- pca.oft$l1$RS1 
 get_eig(pca.oft)
 
 # PCA loadings for MIS
@@ -90,4 +90,4 @@ pca.mis <- dudi.pca(beh.mis,
 
 pca.mis$c1
 get_eig(pca.mis)
-#personality$mis1 <- pca.mis$l1$RS1
+personality$mis1 <- pca.mis$l1$RS1
