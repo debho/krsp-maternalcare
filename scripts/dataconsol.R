@@ -23,6 +23,7 @@ juv_litter <- merge(juveniles,
   transmute(juv_id,
             litter_id,
             sex,
+            fieldBDate,
             mom_id,
             grid,
             yr)
@@ -37,7 +38,7 @@ juv_care <- merge(juv_litter,
   transmute(litter_id,
             n_pups,
             juv_id,
-            birth_date,
+            birth_date = fieldBDate,
             julian_birth_date,
             mom_id,
             date,
@@ -71,6 +72,8 @@ juv_personality <- merge(personality,
              mis1,
              trialdate) 
 
+
+juv_personality$julian_birth_date <- yday(juv_personality$birth_date)
 juv_personality$julian_trialdate <- yday(as.Date(juv_personality$trialdate,
                                             "%m/%d/%y"))
 juv_personality$age_trial <- (juv_personality$julian_trialdate -
@@ -125,6 +128,7 @@ master$gridtreat <- factor(master$grid,
                       labels = c(2, 1, 0, 0))
 
 
+recent4$year <- as.factor(recent4$year)
 recent4$gridtreat <- factor(recent4$grid,
                             levels = c("JO","BT", "KL", "SU"),
                             labels = c(2, 1, 0, 0))

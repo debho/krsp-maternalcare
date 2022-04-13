@@ -7,7 +7,7 @@
 ##############################################################################
 ### Script for running analyses
 
-library(lmerTest) #for linear models
+library(lmerTest) #for linear mixed models
 
 # STEP 1 ####
 ## is personality influenced by anything other than maternal care?
@@ -42,14 +42,12 @@ return_move <- lm(t_move ~ t_return,
 summary(return_move) #time to return has a sig effect on time to move
 
 return_analysis <- lm(t_return ~ treatment + n_pups,
-                      data = recent4,
-                      subset = year > 2017)
+                      data = recent4)
 summary(return_analysis) #treatment has a sig effect on t_return
 #boxplot this
 
 move_analysis <- lm(t_move ~ treatment + n_pups,
-                    data = recent4,
-                    year > 2017)
+                    data = recent4)
 summary(move_analysis) #treatment has a sig effect on t_move
 #boxplot this
 
@@ -64,8 +62,8 @@ summary(oft1_return)
 
 mis1_return <- lmer(mis1 ~ t_return + sex + age_trial + treatment + (1 | litter_id),
                     data = master)
-
 summary(mis1_return) 
+
 oft1_move <- lmer(oft1 ~ t_move + sex + age_trial + treatment + (1 | litter_id),
                  data = master)
 summary(oft1_move)
@@ -74,26 +72,48 @@ mis1_move <- lmer(mis1 ~ t_move + sex + age_trial + treatment + (1 | litter_id),
                   data = master)
 summary(mis1_move)
 
+oft1_care <- lmer(oft1 ~ t_return + t_move + sex + age_trial + treatment + (1 | litter_id),
+                  data = master)
+summary(oft1_care)
+
+mis1_care <- lmer(mis1 ~ t_return + t_move + sex + age_trial + treatment + (1 | litter_id),
+                  data = master)
+summary(mis1_care)
+
 ## STEP 4 ####
 ## survival ~ personality
 
-oft1_survival <- lm(survived_200d ~ oft1,
-                    data = recent4)
-summary(oft1_survival)
+oft1_survival <- glm(survived_200d ~ oft1 + year,
+                    data = recent4,
+                    family = binomial)
+summary(oft1_survival) #n = 91
 
-mis1_survival <- lm(survived_200d ~ mis1,
-                    data = recent4)
-summary(mis1_survival)
+mis1_survival <- glm(survived_200d ~ mis1 + year,
+                    data = recent4,
+                    family = binomial)
+summary(mis1_survival) #n = 91
 
-oft1_survivalNOJO <- lm(survived_200d ~ oft1,
+personality_survival <- glm(survived_200d ~ oft1 + mis1 + year,
+                            data = recent4,
+                            family = binomial)
+summary(personality_survival) #n = 86
+# FOR THESE 3 MODELS, AIC WAS LOWEST WHEN I USED + INSTEAD OF INTERACTIONS AND WHEN I REMOVED SEX
+
+oft1_survivalNOJO <- glm(survived_200d ~ oft1 * year,
+                        data = recent4,
+                        family = binomial,
+                        subset = !grid == "JO")
+summary(oft1_survivalNOJO) #n = 45
+
+mis1_survivalNOJO <- glm(survived_200d ~ mis1 * year,
                         data = recent4,
                         subset = !grid == "JO")
-summary(oft1_survivalNOJO)
+summary(mis1_survivalNOJO) #n = 45
 
-mis1_survivalNOJO <- lm(survived_200d ~ mis1,
-                        data = recent4,
-                        subset = !grid == "JO")
-summary(mis1_survivalNOJO)
+personality_survivalNOJO <- lmer(survived_200d ~ oft1 * mis1 * year * sex + (1 | litter_id),
+                                  data = recent4 %>%
+                                    filter(!grid == "JO"))
+summary(personality_survivalNOJO) #n = 42
 
 #wait idk if this survival code is even right
 #is my survival measure even right

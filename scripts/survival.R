@@ -23,5 +23,5 @@ survival <- flastall %>%
 #if end date is earlier than late-sept/early oct of 2021 it means that squirrel
 #is presumed to be dead
 
-survival$survived_200d <- as.integer(survival$survived_200d)
+survival$survived_200d <- as.numeric(survival$survived_200d)
 
