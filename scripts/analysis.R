@@ -37,7 +37,7 @@ summary(mis1_analysis) #effect of age at trial time
 ## how does treatment influence maternal care?
 
 return_move <- lm(t_move ~ t_return,
-                  data = master,
+                  data = recent4,
                   subset = (m_return == "y" & m_move == "y"))
 summary(return_move) #time to return has a sig effect on time to move
 
