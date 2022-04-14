@@ -16,13 +16,13 @@ library(QuantPsyc)
 # model to see if BT is any diff from the other controls
 oft1_controls <- lmer(oft1 ~ gridtreat + (1 | litter_id),
                       data = master,
-                      subset = !grid == "JO") #n = 191
+                      subset = !gridtreat == 2) #n = 191
 summary(oft1_controls) #no effect
 
 
 mis1_controls <- lmer(mis1 ~ gridtreat + (1 | litter_id),
                       data = master,
-                      subset = !grid == "JO") #n = 191
+                      subset = !gridtreat == 2) #n = 191
 summary(mis1_controls) #no effect
 
 # ok, now to see what impacts personality
@@ -128,7 +128,7 @@ summary(personality_survivalNOJO) #n = 42
 #use all data for survival data
 # step  1 (all data)
 #survived_200d ~ (oft1 * spring grid density) + "(mis1 * sprig grid density) + mastyear(y/n) + (! | litter_id)
-#grid effects/treatment effects focus on 2018-2021
+# step 2: grid effects/treatment effects focus on 2018-2021
 #oft1 ~ (treatment * sex) + growthrate + year (factor) + (1 | litter_id)
 #add mastyear column, no for all except 2005 and 2019
 #add another column for grid density (look at andrew's code or ask lauren)

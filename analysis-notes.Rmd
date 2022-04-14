@@ -35,7 +35,7 @@ Do changes in maternal care induce adaptive plasticity effects on offspring pers
 
 ------------------------------------------------------------------------
 
-## DATA WRANGLING
+## DATA WRANGLING  4/14/22 12:14 NEED TO UPDATE SAMPLE SIZES AFTER INCLUDING RR AND SUX
 
 ### Personality
 
@@ -47,13 +47,13 @@ Filters:
 
 -   Those that did not indicate that they needed to be excluded/used with caution (n = 423)
 
--   Excluded Trial 1 for KL 2017-2018 squirrels as they were too young at the time, Trial 2 for squirrels that had 2 trials (n = 339)
+-   Excluded Trial 1 for KL 2017-2018 squirrels as they were too young at the time, Trial 2 for squirrels that had 2 trials, removed squirrel_id = 19257 because it was too young at time of trial (n = 339)
 
--   Made sure each squirrel was counted only once (n = 275)
+-   Made sure each squirrel was counted only once (n = 274)
 
--   Removed the ones that had no OFT/MIS (n = 256)
+-   Removed the ones that had no OFT/MIS (n = 255)
 
-Ran PCA using *ade4* package on the 256 remaining individuals
+Ran PCA using *ade4* package on the 255 remaining individuals
 
 ### Nest Attendance
 
@@ -71,7 +71,7 @@ Set all \>420/NA latencies to 420 and coded the binary var of whether mom return
 
 ## Datasets:
 
-master: includes everything (n = 256)
+master: includes everything (n = 255)
 
 recent4: only 2018-2021 (n = 123)
 
@@ -81,7 +81,7 @@ no. of unique juvs with nest attendance data: 102
 
 -   moved (y/n): 37/65
 
-no nest attendance data: 154
+no nest attendance data: 153
 
 all juvs in the tables have both oft and mis data
 
@@ -89,16 +89,38 @@ all juvs in the tables have both oft and mis data
 
 ## Analyses
 
-### Using master:
+### \#1: Survival \~ Personality
 
--   comparing control conditions
+-   DATASET: master
 
--   personality \~ maternal care/treatment
+-   MODEL: glmer
 
--   everything except...
+-   FORMULA: survived_200d \~ (oft1 \* grid density) + (mis1 \* grid density) + mastyear + (1 \| litter_id)
 
-### Using recent4:
+### \#2: Personality \~ Treatments
 
--   maternal care \~ treatment
+-   DATASET: recent4
 
--   survival
+-   MODEL: lmer
+
+-   FORMULA: personality \~ (treatment \* sex) + growthrate + year (factor) + (1 \| litter_id)
+
+    -   separate model for oft1 and mis1
+
+### \#3: Personality \~ Maternal Care
+
+-   DATASET: master
+
+-   MODEL: lmer
+
+-   FORMULA: personality \~ return,move (binary response) + sex + (1 \| year) + (1 \| litter_id)
+
+### \#4: Maternal Care \~ Treatment
+
+-   DATASET: master
+
+-   MODEL: lmer (or glmer if i use the binary for return/move)
+
+-   FORMULA: care \~ treatment + n_pups
+
+    -   separate model for each

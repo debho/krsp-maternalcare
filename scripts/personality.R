@@ -12,14 +12,15 @@ personality <- read.csv('data/personality-master.csv',
                             header = T,
                             na.strings = c("", " ", "NA")) %>%
   filter(ageclass == "J", #takes only juvs
-         grid %in% c("JO", "BT", "KL", "SU"), #takes only the grids in study
+         grid %in% c("JO", "BT", "KL", "SU", "RR", "SUX"), #takes only the grids in study
          Exclude_unless_video_reanalyzed == "N", #eliminates any exclusions
          Proceed_with_caution == "N", #eliminates SWK's GC squirrels and any other suspicious numbers
          !(grid == "KL" & (year == 2018 | year == 2017) & trialnumber == 1), #those squirrels were too young
          !(sq_id == "25287" & trialnumber == 1), #eliminates known exclusions
-         !(sq_id == "23686" & trialnumber == 1)) %>% #n = 339
+         !(sq_id == "23686" & trialnumber == 1),
+         !sq_id == "19257") %>% #n = 335
   distinct(sq_id, #ensures each indiv is counted only once
-           .keep_all = TRUE) #n = 275
+           .keep_all = TRUE) #n = 274
 
 colnames(personality)[1] <- "juv_id" #distinguish from squirrel_id in other tables since these are all juvs
 
@@ -29,14 +30,14 @@ personality[is.na(personality$mis_duration),
           "mis_duration"] <- 300.000
 
 ## year counts pre-removal of those missing either OFT/MIS
-# '05: 44; '09: 2; '12: 51; '16: 1; '17: 54; '18: 40; '19: 18; '20: 37; '21: 28
+# '05: 44; '09: 2; '12: 50; '16: 1; '17: 54; '18: 40; '19: 18; '20: 37; '21: 28
 
 personality <- personality %>%
   drop_na(walk, #eliminates no OFT 
           front) #eliminates no MIS
 
-##n = 256
-# '12: 32
+##n = 255
+# '12: 31
 
 behaviors <- transmute(personality,
                        juv_id,
@@ -66,7 +67,7 @@ beh.oft <- transmute(behaviors,
                      still_prop = (still/oft_duration),
                      chew_prop = (chew/oft_duration),
                      groom_prop = (groom/oft_duration)) %>%
-  drop_na() #n = 275
+  drop_na()
 
 beh.mis <- transmute(behaviors,
                      front_prop = (front/mis_duration),
@@ -74,7 +75,7 @@ beh.mis <- transmute(behaviors,
                      approachlat_prop = (approachlatency/mis_duration),
                      attacklat_prop = (attacklatency/mis_duration),
                      attack_prop = (attack/mis_duration)) %>%
-  drop_na() #n = 257
+  drop_na()
 
 #PCA ####
 

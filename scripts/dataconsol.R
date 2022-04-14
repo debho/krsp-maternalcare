@@ -111,7 +111,8 @@ master <- merge(juv_personality,
            .keep_all = TRUE) #removes duplicates so that each juv is counted only once
 
 # adding in treatments
-master$treatment <- as.factor(as.integer((master$grid == "JO")))
+master$treatment <- as.factor(as.integer((master$grid == "JO") |
+                                           (master$grid == "RR")))
 
 # cleaning up trial dates that occur before end dates
 master$age_last <- ifelse((master$age_last < master$age_trial),
@@ -124,24 +125,21 @@ recent4 <- master %>%
 
 master$year <- as.factor(master$year)
 master$gridtreat <- factor(master$grid,
-                      levels = c("JO","BT", "KL", "SU"),
-                      labels = c(2, 1, 0, 0))
+                      levels = c("JO", "RR", "BT", "KL", "SU", "SUX"),
+                      labels = c(2, 2, 1, 0, 0, 0))
 
 
 recent4$year <- as.factor(recent4$year)
 recent4$gridtreat <- factor(recent4$grid,
-                            levels = c("JO","BT", "KL", "SU"),
-                            labels = c(2, 1, 0, 0))
+                            levels = c("JO", "RR", "BT", "KL", "SU", "SUX"),
+                            labels = c(2, 2, 1, 0, 0, 0))
 
 # STEP 5 ####
 ## add in LSR
-## group by litter_id, find no. of females in each litter, then divide by n_pups to get proportion of females
+## group by litter_id, find no. of females in each litter
+## then divide by n_pups to get proportion of females
 
 LSR <- master %>%
   group_by(litter_id) %>%
   count(litter_id,sex) %>%
   filter(sex == "F")
-
-
-
-                
