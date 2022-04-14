@@ -119,11 +119,11 @@ ggplot(master %>%
        x = "Activity")
 
 # survival ~ aggression + year
-ggplot(recent4 %>%
+ggplot(master %>%
          filter(!year == 2021),
        aes(mis1,
            survived_200d,
-           col = year)) +
+           col = year)) + #replace year with density, plot residuals esp is results are sig
   geom_point(size = 3,
              alpha = 0.5) +
   scale_color_paletteer_d("vapeplot::vaporwave") + 

@@ -26,8 +26,8 @@ mis1_controls <- lmer(mis1 ~ gridtreat + (1 | litter_id),
 summary(mis1_controls) #no effect
 
 # ok, now to see what impacts personality
-oft1_analysis <- lmer(oft1 ~ sex + age_trial + treatment + (1 | litter_id),
-                      data = master)
+oft1_analysis <- lmer(mis1 ~ sex + treatment + (1 | litter_id) (1 | year),
+                      data = recent4)
 summary(oft1_analysis) #effect of treatment
 
 mis1_analysis <- lmer(mis1 ~ sex + age_trial + treatment + (1 | litter_id),
@@ -84,8 +84,8 @@ summary(mis1_care)
 ## STEP 4 ####
 ## survival ~ personality
 
-oft1_survival <- glm(survived_200d ~ oft1 + year,
-                    data = recent4,
+oft1_survival <- glmer(survived_200d ~ oft1 * year + sex + (1 | litter_id),
+                    data = master,
                     family = binomial)
 summary(oft1_survival) #n = 91
 
@@ -116,14 +116,27 @@ personality_survivalNOJO <- lmer(survived_200d ~ oft1 * mis1 * year * sex + (1 |
                                     filter(!grid == "JO"))
 summary(personality_survivalNOJO) #n = 42
 
-#wait idk if this survival code is even right
-#is my survival measure even right
 
 # for each table include sample size for both trials and individuals
 # always figure out where i'm losing trials
 
 # make a table with year, no. trials/juv, grid
 # DO SURVIVAL ANALYSIS FIRST
-# survived_200d ~ oft1 * mis1 * year + sex + (1 | litter_id)
-# ttry with everyonr first then try it excluding JO
-# write up results and figure 
+
+# APRIL 14 2022
+#for personality ~ treatment use only the 4 years
+#use all data for survival data
+# step  1 (all data)
+#survived_200d ~ (oft1 * spring grid density) + "(mis1 * sprig grid density) + mastyear(y/n) + (! | litter_id)
+#grid effects/treatment effects focus on 2018-2021
+#oft1 ~ (treatment * sex) + growthrate + year (factor) + (1 | litter_id)
+#add mastyear column, no for all except 2005 and 2019
+#add another column for grid density (look at andrew's code or ask lauren)
+#step 3 (all years)
+#of1/mis1 ~ latency to retireve (or binary response) + sex + (1 | year) + (1 | litter_id)
+#oft and mis in separate models and use just those 4 years
+#step 4 (all years)
+#effects of treatment on latency to return/move
+#argue that under high density, high growth rate is favored and attentiveness increases growth rate
+#RR is rattle and SUX is control
+#ignore age for this thesis but report that about 50 didnt have an age (couldnt be confirmed at this tiem) and its like 20% of all trials
