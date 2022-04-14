@@ -10,25 +10,37 @@
 library(sjPlot)
 library(sjmisc)
 
-
 # plotting oft1 ~ mis1 correlation by grid
-personality_grid <- ggplot(personality, aes(oft1, mis1, col = grid)) +
-  geom_point(size = 3) + 
+personality_grid <- ggplot(master, aes(oft1, mis1, col = grid)) +
+  geom_point() + 
   labs(y = "Aggression", x = "Activity") +
-  geom_smooth(method = "lm", se = F) +
-  geom_smooth(method = "lm", se = T, aes(group = 1))
+  geom_smooth(method = "lm", se = F)
 personality_grid
 
-# boxplots treatment 0 vs 1
-ggplot(master, aes(treatment, oft1, col = grid,)) +
+ggplot(master %>%
+         filter(!gridtreat == 2), aes(gridtreat, oft1)) +
   geom_boxplot() +
   scale_color_paletteer_d("vapeplot::sunset") + 
   geom_jitter(color = "black",
               size = 0.4,
               alpha = 0.5) +
-  ggtitle("Effects of treatment on activity")
+  ggtitle("Effects of control on activity") + 
+  labs(y = "Activity",
+       x = "Type of control")
 
-ggplot(master, aes(treatment, mis1, col = grid)) +
+ggplot(master %>%
+         filter(!gridtreat == 2), aes(gridtreat, mis1)) +
+  geom_boxplot() +
+  scale_color_paletteer_d("vapeplot::jazzcup") + 
+  geom_jitter(color = "black",
+              size = 0.4,
+              alpha = 0.5) +
+  ggtitle("Effects of control on aggression") + 
+  labs(y = "Aggression",
+       x = "Type of control")
+
+
+ggplot(master, aes(treatment, mis1)) +
   geom_boxplot() +
   scale_color_paletteer_d("vapeplot::jazzcup") + 
   geom_jitter(color = "black",
@@ -36,7 +48,24 @@ ggplot(master, aes(treatment, mis1, col = grid)) +
               alpha = 0.5) +
   ggtitle("Effects of treatment on aggression")
 
-ggplot(master, aes(treatment, oft1 + mis1, col = grid)) +
+# boxplots treatment 0 vs 1
+ggplot(master, aes(oft1, treatment, col = grid)) +
+  geom_point() +
+  scale_color_paletteer_d("vapeplot::sunset") + 
+  geom_jitter(color = "black",
+              size = 0.4,
+              alpha = 0.5) +
+  ggtitle("Effects of treatment on activity")
+
+ggplot(master, aes(treatment, mis1, col = treatment)) +
+  geom_boxplot() +
+  scale_color_paletteer_d("vapeplot::jazzcup") + 
+  geom_jitter(color = "black",
+              size = 0.4,
+              alpha = 0.5) +
+  ggtitle("Effects of treatment on aggression")
+
+ggplot(master, aes(treatment, oft1 + mis1, col = treatment)) +
   geom_boxplot() +
   scale_color_paletteer_d("vapeplot::seapunk") + 
   geom_jitter(color = "black",
@@ -46,7 +75,8 @@ ggplot(master, aes(treatment, oft1 + mis1, col = grid)) +
 
 
 # return ~ move
-ggplot(master, aes(t_return, t_move, col = treatment)) +
+ggplot(master %>%
+         filter(m_return == "y"), aes(t_return, t_move, col = treatment)) +
   geom_point(size = 3) + 
   labs(y = "Latency to move pups", x = "Latency to return") +
   scale_color_paletteer_d("vapeplot::cool") +
@@ -54,10 +84,18 @@ ggplot(master, aes(t_return, t_move, col = treatment)) +
   geom_smooth(method = "lm", se = F, aes(group = 1))
 
 #return ~ treatment
-ggplot(master, aes(treatment, t_return, col = grid)) +
+ggplot(recent4, aes(grid, t_return, col = treatment)) +
+  geom_boxplot() +
+  scale_color_paletteer_d("vapeplot::seapunk") + 
+  geom_jitter(color = "black",
+              size = 0.4,
+              alpha = 0.5) +
+  ggtitle("Effects of treatment on latency to return")
+
+ggplot(recent4, aes(grid, t_move, col = treatment)) +
   geom_point() +
   scale_color_paletteer_d("vapeplot::seapunk") + 
-  ggtitle("Effects of treatment on latency to return")
+  ggtitle("Effects of treatment on latency to move")
 
 
 # survival ~ activity + year

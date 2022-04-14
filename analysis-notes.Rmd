@@ -35,4 +35,70 @@ Do changes in maternal care induce adaptive plasticity effects on offspring pers
 
 ------------------------------------------------------------------------
 
+## DATA WRANGLING
+
+### Personality
+
+All juvenile personality data from the master file (n = 559 trials)
+
+Filters:
+
+-   Only those in JO, BT, KL, or SU (n = 534)
+
+-   Those that did not indicate that they needed to be excluded/used with caution (n = 423)
+
+-   Excluded Trial 1 for KL 2017-2018 squirrels as they were too young at the time, Trial 2 for squirrels that had 2 trials (n = 339)
+
+-   Made sure each squirrel was counted only once (n = 275)
+
+-   Removed the ones that had no OFT/MIS (n = 256)
+
+Ran PCA using *ade4* package on the 256 remaining individuals
+
+### Nest Attendance
+
+### Used all available data (n = 824)
+
+Filters:
+
+-   Only used Nest 1 (n = 451)
+
+-   Removed the observation with no observations (n = 450)
+
+Set all \>420/NA latencies to 420 and coded the binary var of whether mom returned or not to "n"
+
+------------------------------------------------------------------------
+
+## Datasets:
+
+master: includes everything (n = 256)
+
+recent4: only 2018-2021 (n = 123)
+
+no. of unique juvs with nest attendance data: 102
+
+-   returned (y/n): 52/50
+
+-   moved (y/n): 37/65
+
+no nest attendance data: 154
+
+all juvs in the tables have both oft and mis data
+
+------------------------------------------------------------------------
+
 ## Analyses
+
+### Using master:
+
+-   comparing control conditions
+
+-   personality \~ maternal care/treatment
+
+-   everything except...
+
+### Using recent4:
+
+-   maternal care \~ treatment
+
+-   survival

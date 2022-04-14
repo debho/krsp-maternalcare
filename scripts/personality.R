@@ -17,7 +17,7 @@ personality <- read.csv('data/personality-master.csv',
          Proceed_with_caution == "N", #eliminates SWK's GC squirrels and any other suspicious numbers
          !(grid == "KL" & (year == 2018 | year == 2017) & trialnumber == 1), #those squirrels were too young
          !(sq_id == "25287" & trialnumber == 1), #eliminates known exclusions
-         !(sq_id == "23686" & trialnumber == 1)) %>% #n = 340
+         !(sq_id == "23686" & trialnumber == 1)) %>% #n = 339
   distinct(sq_id, #ensures each indiv is counted only once
            .keep_all = TRUE) #n = 275
 

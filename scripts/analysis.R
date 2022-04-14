@@ -8,6 +8,7 @@
 ### Script for running analyses
 
 library(lmerTest) #for linear mixed models
+library(QuantPsyc)
 
 # STEP 1 ####
 ## is personality influenced by anything other than maternal care?
@@ -117,14 +118,6 @@ summary(personality_survivalNOJO) #n = 42
 
 #wait idk if this survival code is even right
 #is my survival measure even right
-
-## STEP 5 ####
-## aggression ~ LSR
-
-mis_LSR <- lmer(mis1 ~ LSR + (1 | litter_id),
-                data = master,
-                subset = !is.na(LSR))
-summary(mis_LSR)        
 
 # for each table include sample size for both trials and individuals
 # always figure out where i'm losing trials

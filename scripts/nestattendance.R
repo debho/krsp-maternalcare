@@ -10,19 +10,21 @@
 #reading in nest attendance data and cleans it
 nest_att <- read.csv("data/AllNests.csv",
                      header = TRUE,
-                     sep = ",") %>% #n = 824
-  filter(!pups_bled == "y") # take out pups_bled bc of interaction with sampling
-#n = 681 after removing nest 2 observations
+                     sep = ",",
+                     na.strings = c("", " ", "NA")) %>% #n = 824
+  filter(nest == "1") %>% #n = 451
+  drop_na(m_return)
+  
 
 # censors all >420 and NA latencies to 420
-nest_att[nest_att$t_return > 420 | is.na(nest_att$t_return),
-         "m_return"] <- "n"
-nest_att[nest_att$t_move > 420 | is.na(nest_att$t_move),
-         "m_move"] <- "n"
+nest_att[(nest_att$t_return > 421 | is.na(nest_att$t_return)),
+         "m_return"] <- "n" #if i put 420 it makes all my 420s "n" for some reason
 nest_att[nest_att$m_return == "n",
-         "t_return"] <- 420
+         "t_return"] <- 421 #if i put 420 it turns all my 420 + "y" to "n"
+nest_att[(nest_att$t_move > 421 | is.na(nest_att$t_move)),
+         "m_move"] <- "n" #if i put 420 it makes all my 420s "n" for some reason
 nest_att[nest_att$m_move == "n",
-         "t_move"] <- 420
+         "t_move"] <- 421
 
 #converts dates to julian dates
 nest_att$julian_date <- yday(as.Date(nest_att$date,
