@@ -9,13 +9,15 @@
 
 library(sjPlot)
 library(sjmisc)
+library(lattice)
 
 # plotting oft1 ~ mis1 correlation by grid
-personality_grid <- ggplot(master, aes(oft1, mis1, col = grid)) +
-  geom_point() + 
+ggplot(master, aes(oft1, mis1, col = grid)) +
+  geom_point() +
+  scale_color_paletteer_d("vapeplot::sunset") + 
   labs(y = "Aggression", x = "Activity") +
-  geom_smooth(method = "lm", se = F)
-personality_grid
+  geom_smooth(method = "lm", se = F) +
+  geom_smooth(method = "lm", se = T, aes(group = 1))
 
 ggplot(master %>%
          filter(!gridtreat == 2), aes(gridtreat, oft1)) +
@@ -93,20 +95,23 @@ ggplot(recent4, aes(grid, t_return, col = treatment)) +
   ggtitle("Effects of treatment on latency to return")
 
 ggplot(recent4, aes(grid, t_move, col = treatment)) +
-  geom_point() +
+  geom_boxplot() +
+  geom_jitter(color = "black",
+              size = 0.4,
+              alpha = 0.5) +
   scale_color_paletteer_d("vapeplot::seapunk") + 
   ggtitle("Effects of treatment on latency to move")
 
 
 # survival ~ activity + year
-ggplot(recent4 %>%
+ggplot(master %>%
          filter(!year == 2021),
        aes(oft1,
            survived_200d,
            col = year)) +
   geom_point(size = 3,
              alpha = 0.5) +
-  scale_color_paletteer_d("vapeplot::macplus") + 
+  scale_color_paletteer_d("vapeplot::vaporwave") + 
   stat_smooth(method = "glm",
               se = F,
               method.args = list(family = binomial)) +
@@ -136,8 +141,12 @@ ggplot(recent4 %>%
            col = year)) +
   geom_point(size = 3,
              alpha = 0.5) +
+  scale_color_paletteer_d("vapeplot::vaporwave") + 
   stat_smooth(method = "glm",
               se = F,
               method.args = list(family = binomial)) +
   labs(y = "Probability of surviving at least 200 days",
        x = "Activity + Aggression")
+
+#maternal care and personality
+
