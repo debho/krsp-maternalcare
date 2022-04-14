@@ -24,6 +24,9 @@ personality <- read.csv('data/personality-master.csv',
 
 colnames(personality)[1] <- "juv_id" #distinguish from squirrel_id in other tables since these are all juvs
 
+personality$trialdate <- as.Date(personality$trialdate,
+                                 "%m/%d/%y")
+
 personality[is.na(personality$oft_duration),
           "oft_duration"] <- 450.000
 personality[is.na(personality$mis_duration),

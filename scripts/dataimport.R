@@ -34,7 +34,16 @@ traps <- tbl(con, "trapping") %>%
   collect() 
 
 census <- tbl(con, "census") %>%
-  collect()
+  collect() %>%
+  mutate(locx = loc_to_numeric(locx),
+         locy = loc_to_numeric(locy)) %>%
+  filter(!sq_fate == 7)
 
 flastall <- tbl(con, "flastall2") %>% 
   collect() 
+
+middens <- tbl(con, "dbamidden") %>%
+  collect() %>%
+  mutate(locX = loc_to_numeric(locX),
+         locY = loc_to_numeric(locY))
+

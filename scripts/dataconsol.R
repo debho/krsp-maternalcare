@@ -106,33 +106,34 @@ master <- merge(juv_personality,
             age_trial,
             age_last,
             last_fate,
-            survived_200d) %>%
-  distinct(juv_id,
-           .keep_all = TRUE) #removes duplicates so that each juv is counted only once
+            survived_200d)
 
 # adding in treatments
 master$treatment <- as.factor(as.integer((master$grid == "JO") |
                                            (master$grid == "RR")))
+master$gridtreat <- factor(master$grid,
+                           levels = c("JO", "RR", "BT", "KL", "SU", "SUX"),
+                           labels = c(2, 2, 1, 0, 0, 0))
 
 # cleaning up trial dates that occur before end dates
 master$age_last <- ifelse((master$age_last < master$age_trial),
                           master$age_trial,
                           master$age_last)
 
+master$mastyear <- as.integer(master$year == 2005 | master$year == 2019)
+master <- merge(master, grids_density,
+                by = "grid",
+                all.x = TRUE) %>%
+  rename(year = year.x)  %>%
+  distinct(juv_id,
+           .keep_all = TRUE)
+
+master$yearF <- as.factor(master$year)
+master$m_return <- as.integer(master$m_return == "y")
+master$m_move <- as.integer(master$m_move == "y")
+
 recent4 <- master %>%
   filter(year > 2017)
-
-
-master$year <- as.factor(master$year)
-master$gridtreat <- factor(master$grid,
-                      levels = c("JO", "RR", "BT", "KL", "SU", "SUX"),
-                      labels = c(2, 2, 1, 0, 0, 0))
-
-
-recent4$year <- as.factor(recent4$year)
-recent4$gridtreat <- factor(recent4$grid,
-                            levels = c("JO", "RR", "BT", "KL", "SU", "SUX"),
-                            labels = c(2, 2, 1, 0, 0, 0))
 
 # STEP 5 ####
 ## add in LSR
