@@ -43,7 +43,9 @@ juv_care <- merge(juv_litter,
             mom_id,
             date,
             julian_date,
+            t_return,
             return_lat,
+            t_move,
             move_lat,
             m_return,
             m_move)
@@ -58,7 +60,9 @@ juv_personality <- merge(personality,
   transmute(litter_id,
              n_pups,
              mom_id,
+             t_return,
              return_lat,
+             t_move,
              move_lat,
              m_return,
              m_move,
@@ -86,9 +90,11 @@ master <- merge(juv_personality,
                 all.x = TRUE) %>%
   transmute(litter_id,
             mom_id,
+            t_return,
             return_lat,
-            move_lat,
             m_return,
+            t_move,
+            move_lat,
             m_move,
             year,
             juv_id,
@@ -140,6 +146,12 @@ master <- merge(master, grids_density,
          sex = as.factor(sex),
          survived_200d = as.factor(survived_200d))
 
+# adding in growth rate data
+master <- merge(master,
+                growthrate,
+                by = "juv_id",
+                all.x = TRUE)
+
 recent4 <- master %>%
   filter(year %in% c(2018, 2019, 2020, 2021))
 
@@ -157,3 +169,5 @@ LSR <- master %>%
   group_by(litter_id) %>%
   count(litter_id,sex) %>%
   filter(sex == "F")
+
+
