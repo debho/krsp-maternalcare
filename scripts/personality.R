@@ -16,16 +16,18 @@ personality <- read.csv('data/personality-master.csv',
          Exclude_unless_video_reanalyzed == "N", #eliminates any exclusions
          Proceed_with_caution == "N", #eliminates SWK's GC squirrels and any other suspicious numbers
          !(grid == "KL" & (year == 2018 | year == 2017) & trialnumber == 1), #those squirrels were too young
-         !(sq_id == "25287" & trialnumber == 1), #eliminates known exclusions
-         !(sq_id == "23686" & trialnumber == 1),
-         !sq_id == "19257") %>% #n = 335
-  distinct(sq_id, #ensures each indiv is counted only once
-           .keep_all = TRUE) #n = 274
+         !(sq_id == "25287" & trialnumber == 2), #eliminates known exclusions
+         !(sq_id == "23686" & trialnumber == 2),
+         !(sq_id == "19257" & trialnumber == 1)) %>% 
+  distinct(sq_id,
+           .keep_all = TRUE)
+
 
 colnames(personality)[1] <- "juv_id" #distinguish from squirrel_id in other tables since these are all juvs
 
 personality$trialdate <- as.Date(personality$trialdate,
                                  "%m/%d/%y")
+personality$julian_trialdate <- yday(personality$trialdate)
 
 personality[is.na(personality$oft_duration),
           "oft_duration"] <- 450.000
@@ -93,8 +95,9 @@ pca.oft <- dudi.pca(beh.oft,
                     nf = 7)
 
 
+pca.oft$c1 <- (pca.oft$c1 * -1)
 pca.oft$c1
-personality$oft1 <- pca.oft$l1$RS1 
+personality$oft1 <- (pca.oft$l1$RS1 * -1)
 get_eig(pca.oft)
 
 # PCA loadings for MIS

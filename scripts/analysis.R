@@ -24,7 +24,7 @@ mis1_controls <- lmer(mis1 ~ gridtreat + (1 | litter_id),
 summary(mis1_controls) #no effect
 
 ## ANALYSIS #1 ####
-# SURVIVAL ~ PERSONALITY + OTHER EFFECTS
+# SURVIVAL ~ PERSONALITY + DENSITY + MAST + (1 | LITTER_ID)
 # still missing densities for BT, RR, SUX
 oft_survival <- glmer(survived_200d ~ oft1 * spr_density + mastyear + (1 | litter_id),
                      data = master,
@@ -55,21 +55,35 @@ summary(mis_predictors) #n = 113
 ## ANALYSIS #3 ####
 # PERSONALITY ~ MATERNALCARE + SEX + (1 | YEAR) + (1 + LITTER_ID)
 
-oft_care <- lmer(oft1 ~ (t_return + t_move) * treatment + (1 | yearF) + (1 | litter_id),
+oft_care <- lmer(oft1 ~ (m_return + m_move) + sex + (1 | year) + (1 | litter_id),
                  data = master)
 summary(oft_care) #n = 104
 
-mis_care <- lmer(mis1 ~ (t_return + t_move) * treatment + (1 | yearF) + (1 | litter_id),
+mis_care <- lmer(mis1 ~ (m_return + m_move) + sex + (1 | year) + (1 | litter_id),
                  data = master)
 summary(mis_care) #n = 104
 
-personality_care <- lmer(oft1 + mis1 ~ (t_return + t_move) * treatment + (1 | yearF) + (1 | litter_id),
+personality_care <- lmer(oft1 + mis1 ~ (m_return + m_move) + sex + (1 | year) + (1 | litter_id),
                          data = master)
 summary(personality_care) #n = 104
 
 ## ANALYSIS #4 ####
 # MATERNAL CARE ~ TREATMENT
 
+return_treatment <- lm(return_lat ~ treatment + n_pups + year,
+                       data = master %>%
+                         filter(m_return == 1))
+summary(return_treatment)
+
+move_treatment <- lm(move_lat ~ treatment + n_pups + year,
+                     data = master %>%
+                       filter(m_move == 1))
+summary(move_treatment)
+
+care_treatment <- lm(return_lat + move_lat ~ treatment + n_pups + year,
+                     data = master %>%
+                       filter(m_return == 1 & m_move == 1))
+summary(care_treatment)
 
 # for each table include sample size for both trials and individuals
 # always figure out where i'm losing trials

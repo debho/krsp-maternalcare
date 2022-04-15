@@ -35,7 +35,7 @@ Do changes in maternal care induce adaptive plasticity effects on offspring pers
 
 ------------------------------------------------------------------------
 
-## DATA WRANGLING  4/14/22 12:14 NEED TO UPDATE SAMPLE SIZES AFTER INCLUDING RR AND SUX
+## DATA WRANGLING 4/14/22 12:14 NEED TO UPDATE SAMPLE SIZES AFTER INCLUDING RR AND SUX
 
 ### Personality
 
@@ -43,29 +43,35 @@ All juvenile personality data from the master file (n = 559 trials)
 
 Filters:
 
--   Only those in JO, BT, KL, or SU (n = 534)
+-   Only those in JO, RR, BT, KL, SU, SUX: n = 544
 
--   Those that did not indicate that they needed to be excluded/used with caution (n = 423)
+-   Those that did not indicate that they needed to be excluded/used with caution (n = 430)
 
--   Excluded Trial 1 for KL 2017-2018 squirrels as they were too young at the time, Trial 2 for squirrels that had 2 trials, removed squirrel_id = 19257 because it was too young at time of trial (n = 339)
+-   Excluded Trial 1 for KL 2017-2018 squirrels as they were too young at the time, Trial 2 for squirrels that had 2 trials, removed squirrel_id = 19257 trial 1 because it was too young at time of trial (n = 348)
 
--   Made sure each squirrel was counted only once (n = 274)
+-   Made sure each squirrel was counted only once (n = 281)
 
--   Removed the ones that had no OFT/MIS (n = 255)
+-   Removed the ones that had no OFT/MIS (n = 261)
 
-Ran PCA using *ade4* package on the 255 remaining individuals
+Ran PCA using *ade4* package on the 261 remaining individuals
+
+OFT loadings were flipped so multiplied by -1
 
 ### Nest Attendance
 
 ### Used all available data (n = 824)
 
+Based on what SWK did, copy and make new file to add column for censored latencies
+
+NA values/mom did not return were set to 420
+
+m_return and m_move were recoded to binary variables indicating whether mom returned/moved (1) or not (0)
+
 Filters:
 
--   Only used Nest 1 (n = 451)
+-   only used Nest 1 (n = 451)
 
--   Removed the observation with no observations (n = 450)
-
-Set all \>420/NA latencies to 420 and coded the binary var of whether mom returned or not to "n"
+-   removed ambiguous cases where m_return/move were coded as "y" but there was no time stated for whatever reason (n = 428)
 
 ------------------------------------------------------------------------
 

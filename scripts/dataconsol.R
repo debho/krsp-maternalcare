@@ -43,8 +43,8 @@ juv_care <- merge(juv_litter,
             mom_id,
             date,
             julian_date,
-            t_return,
-            t_move,
+            return_lat,
+            move_lat,
             m_return,
             m_move)
 
@@ -58,24 +58,22 @@ juv_personality <- merge(personality,
   transmute(litter_id,
              n_pups,
              mom_id,
-             t_return,
-             t_move,
+             return_lat,
+             move_lat,
              m_return,
              m_move,
              year,
              juv_id,
              sex,
              grid,
-             birth_date,
+             birth_date = as.Date(birth_date, "%Y-%m-%d"),
              julian_birth_date,
              oft1,
              mis1,
-             trialdate) 
+             trialdate,
+             julian_trialdate) %>%
+  mutate(julian_birth_date = yday(birth_date))
 
-
-juv_personality$julian_birth_date <- yday(juv_personality$birth_date)
-juv_personality$julian_trialdate <- yday(as.Date(juv_personality$trialdate,
-                                            "%m/%d/%y"))
 juv_personality$age_trial <- (juv_personality$julian_trialdate -
                               juv_personality$julian_birth_date)
 
@@ -88,15 +86,15 @@ master <- merge(juv_personality,
                 all.x = TRUE) %>%
   transmute(litter_id,
             mom_id,
-            t_return,
-            t_move,
+            return_lat,
+            move_lat,
             m_return,
             m_move,
             year,
             juv_id,
             sex,
             grid,
-            birth_date, #something went wrong with this and now it's also showing julian birth date
+            birth_date,
             julian_birth_date,
             n_pups,
             oft1,
@@ -120,20 +118,35 @@ master$age_last <- ifelse((master$age_last < master$age_trial),
                           master$age_trial,
                           master$age_last)
 
-master$mastyear <- as.integer(master$year == 2005 | master$year == 2019)
+#add in missing age_trials
+master$birth_date <- as.Date(master$birth_date,
+                             "%y/%m/%d")
+master$julian_birth_date <- yday(master$birth_date)
+
+master$mastyear <- as.factor(as.integer(master$year == 2005 |
+                                          master$year == 2019))
 master <- merge(master, grids_density,
                 by = "grid",
                 all.x = TRUE) %>%
   rename(year = year.x)  %>%
   distinct(juv_id,
-           .keep_all = TRUE)
-
-master$yearF <- as.factor(master$year)
-master$m_return <- as.integer(master$m_return == "y")
-master$m_move <- as.integer(master$m_move == "y")
+           .keep_all = TRUE) %>% 
+  select(-year.y) %>%
+  mutate(grid = as.factor(grid),
+         litter_id = as.factor(litter_id),
+         mom_id = as.factor(mom_id),
+         year = as.factor(year),
+         juv_id = as.factor(juv_id),
+         sex = as.factor(sex),
+         survived_200d = as.factor(survived_200d))
 
 recent4 <- master %>%
-  filter(year > 2017)
+  filter(year %in% c(2018, 2019, 2020, 2021))
+
+
+# squirrels with no  dates of birth:
+# 24809 23788 24830 24680 24753 24729 24730 24745 23797 23889 23906 24594 23856
+# 23931 13235 23256 23894 23903
 
 # STEP 5 ####
 ## add in LSR
