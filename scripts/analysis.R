@@ -14,67 +14,70 @@ library(QuantPsyc)
 # model to see if BT is any diff from the other controls
 oft_controls <- lmer(oft1 ~ gridtreat + (1 | litter_id),
                       data = recent4,
-                      subset = !gridtreat == 2) #n = 63
+                      subset = !gridtreat == "rattle") #n = 64
 summary(oft_controls) #no effect
 
 
 mis_controls <- lmer(mis1 ~ gridtreat + (1 | litter_id),
                       data = recent4,
-                      subset = !gridtreat == 2) #n = 63
+                      subset = !gridtreat == "rattle") #n = 64
 summary(mis_controls) #no effect
 
 ## ANALYSIS #1 ####
 # SURVIVAL ~ PERSONALITY + DENSITY + (1 | LITTER_ID)
 # only uses JO KL SU (no densities for BT RR SUX)
 # all years except 2021
-oft_survival <- glmer(survived_200d ~ (oft1 * spr_density) + (1 | litter_id),
+oft_survival <- glmer(alive_aug ~ (oft1 * spr_density) +
+                        (1 | litter_id) + (1 | gridyear),
                       data = master,
                       family = "binomial")
 vif(oft_survival)
-summary(oft_survival) #n = 206
+summary(oft_survival) #n = 226
 
-mis_survival <- glmer(survived_200d ~ (mis1 * spr_density) + (1 | litter_id),
+mis_survival <- glmer(alive_aug ~ (mis1 * spr_density) +
+                        (1 | litter_id) + (1 | gridyear),
                       data = master,
                       family = "binomial")
 vif(mis_survival)
-summary(mis_survival) #n = 206
+summary(mis_survival) #n = 226
 
-personality_survival <- glmer(survived_200d ~ (oft1 + mis1) * spr_density + (1 | litter_id),
+personality_survival <- glmer(alive_aug ~ (oft1 + mis1) * spr_density +
+                                (1 | litter_id) + (1 | gridyear),
                               data = master,
                               family = "binomial")
 vif(personality_survival)
-summary(personality_survival) #n = 206
+summary(personality_survival) #n = 226
 
 ## ANALYSIS #2 ####
 # PERSONALITY ~ TREATMENT
 
-oft_predictors <- lmer(oft1 ~ (treatment * sex) + growthrate + (1 | litter_id),
+oft_predictors <- lmer(oft1 ~ (treatment * sex) + growthrate + year + (1 | litter_id),
                        data = recent4)
 vif(oft_predictors)
-summary(oft_predictors) #n = 101
+summary(oft_predictors) #n = 102
 
-mis_predictors <- lmer(mis1 ~ (treatment * sex) + growthrate  + (1 | litter_id),
+mis_predictors <- lmer(mis1 ~ (treatment * sex) + growthrate + year + (1 | litter_id),
                        data = recent4)
 vif(mis_predictors)
-summary(mis_predictors) #n = 101
+summary(mis_predictors) #n = 102
 
 ## ANALYSIS #3 ####
 # PERSONALITY ~ MATERNALCARE + SEX + (1 | YEAR) + (1 + LITTER_ID)
 
-oft_care <- lmer(oft1 ~ (m_return + m_move) + sex + (1 | year) + (1 | litter_id),
-                 data = master)
+oft_care <- lmer(oft1 ~ m_return + sex + year + (1 | litter_id),
+                 data = recent4)
 vif(oft_care)
-summary(oft_care) #n = 104
+summary(oft_care) #n = 108
 
-mis_care <- lmer(mis1 ~ (m_return + m_move) + sex + (1 | year) + (1 | litter_id),
-                 data = master)
+mis_care <- lmer(mis1 ~ m_return + sex + year + (1 | litter_id),
+                 data = recent4)
 vif(mis_care)
-summary(mis_care) #n = 104
+summary(mis_care) #n = 108
 
-personality_care <- lmer(oft1 + mis1 ~ (m_return + m_move) + sex + (1 | year) + (1 | litter_id),
-                         data = master)
+personality_care <- lmer(oft1 + mis1 ~ m_return + sex + year + (1 | litter_id),
+                         data = recent4)
 vif(personality_care)
-summary(personality_care) #n = 104
+summary(personality_care) #n = 108
 
 ## ANALYSIS #4 ####
 # MATERNAL CARE ~ TREATMENT
@@ -110,11 +113,11 @@ summary(care_treatment)
 #survived_200d ~ (oft1 * spring grid density) + (mis1 * spring grid density) + mastyear(y/n) + (! | litter_id)
 
 # step 2: grid effects/treatment effects focus on 2018-2021
-#oft1 ~ (treatment * sex) + growthrate + year (factor) + (1 | litter_id)
+#oft1 ~ (treatment * sex) + growth rate + year (factor) + (1 | litter_id)
 #oft and mis in separate models and use just those 4 years
 
 #step 3 (all years)
-#of1/mis1 ~ latency to retireve (or binary response) + sex + (1 | year) + (1 | litter_id)
+#of1/mis1 ~ latency to retrieve (or binary response) + sex + (1 | year) + (1 | litter_id)
 
 #step 4 (all years)
 #effects of treatment on latency to return/move

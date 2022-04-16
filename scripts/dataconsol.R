@@ -135,19 +135,31 @@ master <- merge(juv_personality,
             age_trial,
             age_last,
             last_fate,
-            survived_200d)
-
-# adding in treatments
-master$treatment <- as.factor(as.integer((master$grid == "JO") |
-                                           (master$grid == "RR")))
-master$gridtreat <- factor(master$grid,
-                           levels = c("JO", "RR", "BT", "KL", "SU", "SUX"),
-                           labels = c(2, 2, 1, 0, 0, 0))
+            end_date,
+            survived_200d,
+            survived_70d)
 
 # cleaning up trial dates that occur before end dates
 master$age_last <- ifelse((master$age_last < master$age_trial),
-                          master$age_trial,
-                          master$age_last)
+                           master$age_trial,
+                           master$age_last)
+
+master <- master %>% 
+  mutate(aug_census = make_date(year, 08, 15),
+  age_census = as.integer(difftime(aug_census, birth_date, units = "days")),
+  alive_aug = as.integer((end_date >= aug_census) & #were they alive on Aug 15 of their birth year?
+                           (age_census >= 70 | #were they at least 70 days then? 
+                              age_last >= 70 | survived_70d == 1))) #if not, are they known to have lived more than 70 days?
+#NA for those with end date after census but age unknown (ie. can't tell if they're >= 70 days old on census day)
+
+# adding in treatments
+master$gridtreat <- factor(master$grid,
+                           levels = c("JO", "RR", "BT", "KL", "SU", "SUX"),
+                           labels = c("rattle", "rattle", "chickadee", "control", "control", "control"))
+
+master$treatment <- factor(master$grid,
+                           levels = c("JO", "RR", "BT", "KL", "SU", "SUX"),
+                           labels = c("rattle", "rattle", "control", "control", "control", "control"))
 
 #add in missing age_trials
 master$birth_date <- as.Date(master$birth_date,
@@ -159,14 +171,25 @@ master$mastyear <- as.factor(as.integer(master$year == 2005 |
 master <- merge(master, grids_density,
                 by = c("grid", "year"),
                 all.x = TRUE) %>%
-  distinct(juv_id,
-           .keep_all = TRUE) %>% 
   mutate(grid = as.factor(grid),
          litter_id = as.factor(litter_id),
          mom_id = as.factor(mom_id),
          year = as.factor(year),
          juv_id = as.factor(juv_id),
-         sex = as.factor(sex))
+         sex = as.factor(sex),
+         m_return = as.factor(m_return),
+         m_move = as.factor(m_move),
+         alive_aug = as.factor(alive_aug),
+         gridyear = as.factor(paste(grid, year))) %>%
+  mutate(oft1 = scale(oft1),
+         mis1 = scale(mis1),
+         growthrate = scale(growthrate),
+         spr_density = scale(spr_density),
+         return_lat = scale(return_lat),
+         move_lat = scale(move_lat),
+         n_pups = scale(n_pups)) %>%
+  distinct(juv_id,
+           .keep_all = TRUE)
 
 recent4 <- master %>%
   filter(year %in% c(2018, 2019, 2020, 2021))

@@ -17,14 +17,14 @@ library(lattice)
 
 ## EFFECTS OF CHICKADEE PLAYBACKS ####
 ggplot(recent4 %>%
-         filter(!gridtreat == 2),
+         filter(!gridtreat == "rattle"),
        aes(gridtreat, oft1, col = gridtreat)) + 
   stat_boxplot(geom = "errorbar", width = 0.6) +
   geom_boxplot(position = "dodge") + 
   geom_jitter(color = "black",
               size = 0.4,
               alpha = 0.5) + 
-  scale_colour_viridis_d()
+  scale_colour_viridis_d() #put in p-val
 
 ## ANALYSIS #1 PLOTS ####
 ## SURVIVAL DATA
@@ -33,38 +33,44 @@ plot(oft_survival)
 plot(mis_survival)
 plot(personality_survival)
 
-survivalres <- master %>%
-  filter(!is.na(survived_200d),
+survivalres <- masterSCALED %>%
+  filter(!is.na(alive_aug),
          !is.na(spr_density),
          !is.na(litter_id)) %>%
-  mutate(oft_pred = predict(oft_survival),
-         oft_resid = resid(oft_survival),
-         mis_pred = predict(mis_survival),
-         mis_resid = resid(mis_survival),
-         personality_pred = predict(personality_survival),
-         personality_resid = resid(personality_survival)) #all standardized residuals are here
+  mutate(oft_pred = scale(predict(oft_survival)),
+         oft_resid = scale(resid(oft_survival)),
+         mis_pred = scale(predict(mis_survival)),
+         mis_resid = scale(resid(mis_survival)),
+         personality_pred = scale(predict(personality_survival)),
+         personality_resid = scale(resid(personality_survival))) #all standardized residuals are here
 
-ggplot(master %>%
-         filter(!is.na(survived_200d),
-                !is.na(spr_density)), aes(oft1, survived_200d, col = spr_density)) +
+ggplot(survivalres ,aes(oft1, alive_aug, col = spr_density)) + #replace year with density, plot residuals esp if results are sig
+  geom_point(size = 3,
+             alpha = 0.5) +
+  stat_smooth(method = "glm",
+              se = F,
+              method.args = list(family = binomial)) +
+  stat_smooth(aes(oft_resid, alive_aug, color = oft_resid),
+              method = "glm",
+              se = F,
+              method.args = list(family = binomial))
+
+ggplot(master,aes(mis1, alive_aug, col = spr_density)) + #replace year with density, plot residuals esp if results are sig
+  geom_point(size = 3,
+             alpha = 0.5) +
+  stat_smooth(method = "glm",
+              se = F,
+              method.args = list(family = binomial)) 
+
+ggplot(survivalres, aes(spr_density, alive_aug, col = spr_density)) +
   geom_point(size = 3,
              alpha = 0.8) +
-  stat_smooth(aes(oft1, survived_200d, color = spr_density),
+  stat_smooth(aes(spr_density, alive_aug, color = spr_density),
               method = "glm",
               se = F,
               method.args = list(family = binomial)) + 
-  scale_color_viridis_c() +
-  facet_wrap(~ spr_density)
-
-ggplot(master %>%
-         filter(!is.na(survived_200d),
-                !is.na(spr_density)), aes(mis1, survived_200d, col = spr_density)) +
-  geom_point(size = 3,
-             alpha = 0.8) +
-  stat_smooth(aes(mis1, survived_200d, color = spr_density),
+  stat_smooth(aes(mis1, alive_aug, color = spr_density),
               method = "glm",
               se = F,
               method.args = list(family = binomial)) + 
-  scale_color_viridis_c() +
-  facet_wrap(~ spr_density)
-
+  scale_color_viridis_c()

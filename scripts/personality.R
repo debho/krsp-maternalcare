@@ -14,18 +14,21 @@ personality <- read.csv('data/personality-master.csv',
   filter(ageclass == "J", #takes only juvs
          grid %in% c("JO", "BT", "KL", "SU", "RR", "SUX"), #takes only the grids in study
          Exclude_unless_video_reanalyzed == "N", #eliminates any exclusions
-         Proceed_with_caution == "N", #eliminates SWK's GC squirrels and any other suspicious numbers
+         Proceed_with_caution == "N",
          !(grid == "KL" & (year == 2018 | year == 2017) & trialnumber == 1), #those squirrels were too young
          !(sq_id == "25287" & trialnumber == 2), #eliminates known exclusions
          !(sq_id == "23686" & trialnumber == 2),
-         !(sq_id == "19257" & trialnumber == 1)) 
+         !(sq_id == "19257" & trialnumber == 1),
+         !is.na(sq_id),
+         !observer == "SWK") #because of GC experiment
 
 colnames(personality)[1] <- "juv_id" #distinguish from squirrel_id in other tables since these are all juvs
 
 personality$trialdate <- as.Date(personality$trialdate,
                                  "%m/%d/%y")
 personality$julian_trialdate <- yday(personality$trialdate)
-
+personality$videodate <- as.Date(personality$videodate,
+                                 "%m/%d/%y")
 personality[is.na(personality$oft_duration),
           "oft_duration"] <- 450.000
 personality[is.na(personality$mis_duration),
