@@ -9,10 +9,22 @@
 
 library(paletteer) #for colors
 library(ggplot2) #for figures and graphs
+library(ggprism)
 library(ggResidpanel)
 library(sjPlot)
 library(sjmisc)
 library(lattice)
+
+## EFFECTS OF CHICKADEE PLAYBACKS ####
+ggplot(recent4 %>%
+         filter(!gridtreat == 2),
+       aes(gridtreat, oft1, col = gridtreat)) + 
+  stat_boxplot(geom = "errorbar", width = 0.6) +
+  geom_boxplot(position = "dodge") + 
+  geom_jitter(color = "black",
+              size = 0.4,
+              alpha = 0.5) + 
+  scale_colour_viridis_d()
 
 ## ANALYSIS #1 PLOTS ####
 ## SURVIVAL DATA
@@ -30,33 +42,29 @@ survivalres <- master %>%
          mis_pred = predict(mis_survival),
          mis_resid = resid(mis_survival),
          personality_pred = predict(personality_survival),
-         personality_resid = resid(personality_survival))
+         personality_resid = resid(personality_survival)) #all standardized residuals are here
 
-ggplot(survivalres, aes(oft1 * spr_density, oft_resid)) +
-  geom_point(aes(colour = mastyear)) + 
-  geom_smooth(aes(color = mastyear),  method = "lm", se = F) +
-  labs(x = "Interaction between activity and grid density",
-       y = "Survival to 200 days",
-       title = "Relationship between activity, grid density, and survival")
+ggplot(master %>%
+         filter(!is.na(survived_200d),
+                !is.na(spr_density)), aes(oft1, survived_200d, col = spr_density)) +
+  geom_point(size = 3,
+             alpha = 0.8) +
+  stat_smooth(aes(oft1, survived_200d, color = spr_density),
+              method = "glm",
+              se = F,
+              method.args = list(family = binomial)) + 
+  scale_color_viridis_c() +
+  facet_wrap(~ spr_density)
 
-ggplot(survivalres, aes(mis1 * spr_density, mis_resid)) +
-  geom_point(aes(colour = mastyear)) + 
-  geom_smooth(aes(color = mastyear),  method = "lm", se = F) +
-  labs(x = "Interaction between aggression and grid density",
-       y = "Survival to 200 days",
-       title = "Relationship between aggression, grid density, and survival")
+ggplot(master %>%
+         filter(!is.na(survived_200d),
+                !is.na(spr_density)), aes(mis1, survived_200d, col = spr_density)) +
+  geom_point(size = 3,
+             alpha = 0.8) +
+  stat_smooth(aes(mis1, survived_200d, color = spr_density),
+              method = "glm",
+              se = F,
+              method.args = list(family = binomial)) + 
+  scale_color_viridis_c() +
+  facet_wrap(~ spr_density)
 
-ggplot(survivalres, aes((oft1 + mis1) * spr_density, personality_resid)) +
-  geom_point(aes(colour = mastyear)) + 
-  geom_smooth(aes(oft1 * spr_density, oft_resid, color = mastyear),  method = "lm", se = F) + 
-  geom_smooth(aes(mis1 * spr_density, mis_resid, color = mastyear),  method = "lm", se = F) +
-  labs(x = "Interaction between activity, aggression and grid density",
-       y = "Survival to 200 days",
-       title = "Relationship between personality, grid density, and survival")
-
-# plots density by year
-ggplot(grids_density %>%
-         filter(year > 2004), aes(year, spr_density)) + 
-  geom_point(aes(color = year)) + 
-  geom_line() +
-  facet_wrap(~ grid)

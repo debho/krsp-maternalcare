@@ -203,7 +203,11 @@ ggplot(master %>%
        aes(oft1,
            survived_200d,
            col = year)) +
-  geom_boxplot() +
+  geom_point(size = 3,
+             alpha = 0.5) +
+  stat_smooth(method = "glm",
+              se = F,
+              method.args = list(family = binomial)) +
   scale_color_paletteer_d("vapeplot::vaporwave") + 
   geom_jitter(color = "black",
               size = 0.4,
@@ -216,10 +220,10 @@ ggplot(master %>%
          filter(!year == 2021),
        aes(mis1,
            survived_200d,
-           col = density)) + #replace year with density, plot residuals esp if results are sig
+           col = spr_density)) + #replace year with density, plot residuals esp if results are sig
   geom_point(size = 3,
              alpha = 0.5) +
-  scale_color_paletteer_d("vapeplot::vaporwave") + 
+  scale_color_paletteer_c("viridis::viridis") + 
   stat_smooth(method = "glm",
               se = F,
               method.args = list(family = binomial)) +

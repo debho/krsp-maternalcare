@@ -13,14 +13,14 @@ library(QuantPsyc)
 ## CONTROLS ####
 # model to see if BT is any diff from the other controls
 oft_controls <- lmer(oft1 ~ gridtreat + (1 | litter_id),
-                      data = master,
-                      subset = !gridtreat == 2) #n = 191
+                      data = recent4,
+                      subset = !gridtreat == 2) #n = 63
 summary(oft_controls) #no effect
 
 
 mis_controls <- lmer(mis1 ~ gridtreat + (1 | litter_id),
-                      data = master,
-                      subset = !gridtreat == 2) #n = 191
+                      data = recent4,
+                      subset = !gridtreat == 2) #n = 63
 summary(mis_controls) #no effect
 
 ## ANALYSIS #1 ####
@@ -28,8 +28,8 @@ summary(mis_controls) #no effect
 # only uses JO KL SU (no densities for BT RR SUX)
 # all years except 2021
 oft_survival <- glmer(survived_200d ~ (oft1 * spr_density) + (1 | litter_id),
-                     data = master,
-                     family = "binomial")
+                      data = master,
+                      family = "binomial")
 vif(oft_survival)
 summary(oft_survival) #n = 206
 
@@ -40,8 +40,8 @@ vif(mis_survival)
 summary(mis_survival) #n = 206
 
 personality_survival <- glmer(survived_200d ~ (oft1 + mis1) * spr_density + (1 | litter_id),
-                      data = master,
-                      family = "binomial")
+                              data = master,
+                              family = "binomial")
 vif(personality_survival)
 summary(personality_survival) #n = 206
 
@@ -62,8 +62,7 @@ summary(mis_predictors) #n = 101
 # PERSONALITY ~ MATERNALCARE + SEX + (1 | YEAR) + (1 + LITTER_ID)
 
 oft_care <- lmer(oft1 ~ (m_return + m_move) + sex + (1 | year) + (1 | litter_id),
-                 data = master %>%
-                   filter(!(year == 2009 | year == 2016)))
+                 data = master)
 vif(oft_care)
 summary(oft_care) #n = 104
 
@@ -81,23 +80,20 @@ summary(personality_care) #n = 104
 # MATERNAL CARE ~ TREATMENT
 
 #how soon after returning did moms move their pups?
-return_move <- lm(t_move ~ t_return,
+return_move <- lm(move_lat ~ return_lat,
                   data = master)
 summary(return_move)
 
-return_treatment <- lm(return_lat ~ treatment + n_pups + year,
-                       data = master %>%
-                         filter(m_return == 1))
+return_treatment <- lmer(return_lat ~ treatment + n_pups + (1 | year),
+                         data = recent4)
 summary(return_treatment)
 
-move_treatment <- lm(move_lat ~ treatment + n_pups + year,
-                     data = master %>%
-                       filter(m_move == 1))
+move_treatment <- lmer(move_lat ~ treatment + n_pups + (1 | year),
+                       data = recent4)
 summary(move_treatment)
 
-care_treatment <- lm(return_lat + move_lat ~ treatment + n_pups + year,
-                     data = master %>%
-                       filter(m_return == 1 & m_move == 1))
+care_treatment <- lmer(return_lat + move_lat ~ treatment + n_pups + (1 | year),
+                     data = recent4)
 summary(care_treatment)
 
 # for each table include sample size for both trials and individuals
@@ -112,8 +108,6 @@ summary(care_treatment)
 #use all data for survival data
 # step  1 (all data)
 #survived_200d ~ (oft1 * spring grid density) + (mis1 * spring grid density) + mastyear(y/n) + (! | litter_id)
-#add mastyear column, no for all except 2005 and 2019
-#add another column for grid density (look at andrew's code or ask lauren)
 
 # step 2: grid effects/treatment effects focus on 2018-2021
 #oft1 ~ (treatment * sex) + growthrate + year (factor) + (1 | litter_id)

@@ -18,10 +18,7 @@ personality <- read.csv('data/personality-master.csv',
          !(grid == "KL" & (year == 2018 | year == 2017) & trialnumber == 1), #those squirrels were too young
          !(sq_id == "25287" & trialnumber == 2), #eliminates known exclusions
          !(sq_id == "23686" & trialnumber == 2),
-         !(sq_id == "19257" & trialnumber == 1)) %>% 
-  distinct(sq_id,
-           .keep_all = TRUE)
-
+         !(sq_id == "19257" & trialnumber == 1)) 
 
 colnames(personality)[1] <- "juv_id" #distinguish from squirrel_id in other tables since these are all juvs
 
@@ -63,7 +60,7 @@ behaviors <- transmute(personality,
   mutate_if(is.character,
             as.numeric)
 
-#extracts OFT behaviors
+#extracts for each trait
 beh.oft <- transmute(behaviors,
                      walk_prop = (walk/oft_duration),
                      jump_prop = (jump/oft_duration),
@@ -71,16 +68,14 @@ beh.oft <- transmute(behaviors,
                      hang_prop = (hang/oft_duration),
                      still_prop = (still/oft_duration),
                      chew_prop = (chew/oft_duration),
-                     groom_prop = (groom/oft_duration)) %>%
-  drop_na()
+                     groom_prop = (groom/oft_duration)) 
 
 beh.mis <- transmute(behaviors,
                      front_prop = (front/mis_duration),
                      back_prop = (back/mis_duration),
                      approachlat_prop = (approachlatency/mis_duration),
                      attacklat_prop = (attacklatency/mis_duration),
-                     attack_prop = (attack/mis_duration)) %>%
-  drop_na()
+                     attack_prop = (attack/mis_duration)) 
 
 #PCA ####
 

@@ -41,4 +41,3 @@ grid_area <- data.frame(grid, grid_area)
 
 grids_density <- left_join(grids_density, grid_area, by = "grid") %>% 
   mutate(spr_density = spr_number/grid_area) #annual grid density for SU, JO, and KL
-

@@ -166,8 +166,7 @@ master <- merge(master, grids_density,
          mom_id = as.factor(mom_id),
          year = as.factor(year),
          juv_id = as.factor(juv_id),
-         sex = as.factor(sex),
-         survived_200d = as.factor(survived_200d))
+         sex = as.factor(sex))
 
 recent4 <- master %>%
   filter(year %in% c(2018, 2019, 2020, 2021))
@@ -176,15 +175,3 @@ recent4 <- master %>%
 # squirrels with no  dates of birth:
 # 24809 23788 24830 24680 24753 24729 24730 24745 23797 23889 23906 24594 23856
 # 23931 13235 23256 23894 23903
-
-# STEP 5 ####
-## add in LSR
-## group by litter_id, find no. of females in each litter
-## then divide by n_pups to get proportion of females
-
-LSR <- master %>%
-  group_by(litter_id) %>%
-  count(litter_id,sex) %>%
-  filter(sex == "F")
-
-
