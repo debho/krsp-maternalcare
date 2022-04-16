@@ -8,8 +8,7 @@
 ### Script for survival data
 
 survival <- flastall %>%
-  filter(byear < 2021,
-         bcert == "Y") %>%
+  filter(byear < 2021) %>%
   mutate(age_last = as.integer(difftime(datee, dates, units = "days")),
          survived_200d = age_last >= 200) %>%
   transmute(juv_id = squirrel_id,

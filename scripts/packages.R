@@ -10,8 +10,6 @@
 
 ## ALWAYS RUN THIS BEFORE ANYTHING OR CODE WONT WORK PROPERLY
 
-library(paletteer) #for pretty colors
-library(ggplot2) #for figures and graphs
 library(dplyr) #for data manipulation
 library(tidyverse) #for data cleaning
 library(lubridate) #for handling dates

@@ -7,146 +7,56 @@
 ##############################################################################
 ### Script for plots
 
+library(paletteer) #for colors
+library(ggplot2) #for figures and graphs
+library(ggResidpanel)
 library(sjPlot)
 library(sjmisc)
 library(lattice)
 
-# plotting oft1 ~ mis1 correlation by grid
-ggplot(master, aes(oft1, mis1, col = grid)) +
-  geom_point() +
-  scale_color_paletteer_d("vapeplot::sunset") + 
-  labs(y = "Aggression", x = "Activity") +
-  geom_smooth(method = "lm", se = F) +
-  geom_smooth(method = "lm", se = T, aes(group = 1))
+## ANALYSIS #1 PLOTS ####
+## SURVIVAL DATA
+# plots of glmer models
+plot(oft_survival)
+plot(mis_survival)
+plot(personality_survival)
 
-ggplot(master %>%
-         filter(!gridtreat == 2), aes(gridtreat, oft1)) +
-  geom_boxplot() +
-  scale_color_paletteer_d("vapeplot::sunset") + 
-  geom_jitter(color = "black",
-              size = 0.4,
-              alpha = 0.5) +
-  ggtitle("Effects of control on activity") + 
-  labs(y = "Activity",
-       x = "Type of control")
+survivalres <- master %>%
+  filter(!is.na(survived_200d),
+         !is.na(spr_density),
+         !is.na(litter_id)) %>%
+  mutate(oft_pred = predict(oft_survival),
+         oft_resid = resid(oft_survival),
+         mis_pred = predict(mis_survival),
+         mis_resid = resid(mis_survival),
+         personality_pred = predict(personality_survival),
+         personality_resid = resid(personality_survival))
 
-ggplot(master %>%
-         filter(!gridtreat == 2), aes(gridtreat, mis1)) +
-  geom_boxplot() +
-  scale_color_paletteer_d("vapeplot::jazzcup") + 
-  geom_jitter(color = "black",
-              size = 0.4,
-              alpha = 0.5) +
-  ggtitle("Effects of control on aggression") + 
-  labs(y = "Aggression",
-       x = "Type of control")
+ggplot(survivalres, aes(oft1 * spr_density, oft_resid)) +
+  geom_point(aes(colour = mastyear)) + 
+  geom_smooth(aes(color = mastyear),  method = "lm", se = F) +
+  labs(x = "Interaction between activity and grid density",
+       y = "Survival to 200 days",
+       title = "Relationship between activity, grid density, and survival")
 
+ggplot(survivalres, aes(mis1 * spr_density, mis_resid)) +
+  geom_point(aes(colour = mastyear)) + 
+  geom_smooth(aes(color = mastyear),  method = "lm", se = F) +
+  labs(x = "Interaction between aggression and grid density",
+       y = "Survival to 200 days",
+       title = "Relationship between aggression, grid density, and survival")
 
-ggplot(master, aes(treatment, mis1)) +
-  geom_boxplot() +
-  scale_color_paletteer_d("vapeplot::jazzcup") + 
-  geom_jitter(color = "black",
-              size = 0.4,
-              alpha = 0.5) +
-  ggtitle("Effects of treatment on aggression")
+ggplot(survivalres, aes((oft1 + mis1) * spr_density, personality_resid)) +
+  geom_point(aes(colour = mastyear)) + 
+  geom_smooth(aes(oft1 * spr_density, oft_resid, color = mastyear),  method = "lm", se = F) + 
+  geom_smooth(aes(mis1 * spr_density, mis_resid, color = mastyear),  method = "lm", se = F) +
+  labs(x = "Interaction between activity, aggression and grid density",
+       y = "Survival to 200 days",
+       title = "Relationship between personality, grid density, and survival")
 
-# boxplots treatment 0 vs 1
-ggplot(master, aes(oft1, treatment, col = grid)) +
-  geom_point() +
-  scale_color_paletteer_d("vapeplot::sunset") + 
-  geom_jitter(color = "black",
-              size = 0.4,
-              alpha = 0.5) +
-  ggtitle("Effects of treatment on activity")
-
-ggplot(master, aes(treatment, mis1, col = treatment)) +
-  geom_boxplot() +
-  scale_color_paletteer_d("vapeplot::jazzcup") + 
-  geom_jitter(color = "black",
-              size = 0.4,
-              alpha = 0.5) +
-  ggtitle("Effects of treatment on aggression")
-
-ggplot(master, aes(treatment, oft1 + mis1, col = treatment)) +
-  geom_boxplot() +
-  scale_color_paletteer_d("vapeplot::seapunk") + 
-  geom_jitter(color = "black",
-              size = 0.4,
-              alpha = 0.5) +
-  ggtitle("Effects of treatment on personality")
-
-
-# return ~ move
-ggplot(master %>%
-         filter(m_return == "y"), aes(t_return, t_move, col = treatment)) +
-  geom_point(size = 3) + 
-  labs(y = "Latency to move pups", x = "Latency to return") +
-  scale_color_paletteer_d("vapeplot::cool") +
-  geom_smooth(method = "lm", se = F) +
-  geom_smooth(method = "lm", se = F, aes(group = 1))
-
-#return ~ treatment
-ggplot(recent4, aes(grid, t_return, col = treatment)) +
-  geom_boxplot() +
-  scale_color_paletteer_d("vapeplot::seapunk") + 
-  geom_jitter(color = "black",
-              size = 0.4,
-              alpha = 0.5) +
-  ggtitle("Effects of treatment on latency to return")
-
-ggplot(recent4, aes(grid, t_move, col = treatment)) +
-  geom_boxplot() +
-  geom_jitter(color = "black",
-              size = 0.4,
-              alpha = 0.5) +
-  scale_color_paletteer_d("vapeplot::seapunk") + 
-  ggtitle("Effects of treatment on latency to move")
-
-
-# survival ~ activity + year
-ggplot(master %>%
-         filter(!year == 2021),
-       aes(oft1,
-           survived_200d,
-           col = year)) +
-  geom_point(size = 3,
-             alpha = 0.5) +
-  scale_color_paletteer_d("vapeplot::vaporwave") + 
-  stat_smooth(method = "glm",
-              se = F,
-              method.args = list(family = binomial)) +
-  labs(y = "Probability of surviving at least 200 days",
-       x = "Activity")
-
-# survival ~ aggression + year
-ggplot(master %>%
-         filter(!year == 2021),
-       aes(mis1,
-           survived_200d,
-           col = year)) + #replace year with density, plot residuals esp is results are sig
-  geom_point(size = 3,
-             alpha = 0.5) +
-  scale_color_paletteer_d("vapeplot::vaporwave") + 
-  stat_smooth(method = "glm",
-              se = F,
-              method.args = list(family = binomial)) +
-  labs(y = "Probability of surviving at least 200 days",
-       x = "Aggression")
-
-# survival ~ activity + aggression + year
-ggplot(recent4 %>%
-         filter(!year == 2021),
-       aes(oft1 + mis1,
-           survived_200d,
-           col = year)) +
-  geom_point(size = 3,
-             alpha = 0.5) +
-  scale_color_paletteer_d("vapeplot::vaporwave") + 
-  stat_smooth(method = "glm",
-              se = F,
-              method.args = list(family = binomial)) +
-  labs(y = "Probability of surviving at least 200 days",
-       x = "Activity + Aggression")
-
-#maternal care and personality
-
+# plots density by year
+ggplot(grids_density %>%
+         filter(year > 2004), aes(year, spr_density)) + 
+  geom_point(aes(color = year)) + 
+  geom_line() +
+  facet_wrap(~ grid)

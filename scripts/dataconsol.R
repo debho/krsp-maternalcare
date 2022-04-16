@@ -26,7 +26,17 @@ juv_litter <- merge(juveniles,
             fieldBDate,
             mom_id,
             grid,
-            yr)
+            yr,
+            date1,
+            date2 = tagDt,
+            n_days = as.numeric(difftime(date2, date1,
+                                         units = "days")),
+            weight,
+            tagWT,
+            growth = (tagWT - weight)) %>%
+  naniar::replace_with_na(replace = list(n_days = 0)) %>%
+  mutate(growthrate = (growth / n_days))
+            
 
 # STEP 2 ####
 ## now we match the moms and attentiveness data
@@ -48,7 +58,12 @@ juv_care <- merge(juv_litter,
             t_move,
             move_lat,
             m_return,
-            m_move)
+            m_move,
+            n_days,
+            weight,
+            tagWT,
+            growth,
+            growthrate)
 
 # STEP 3 ####
 ## now for personality
@@ -72,6 +87,11 @@ juv_personality <- merge(personality,
              grid,
              birth_date = as.Date(birth_date, "%Y-%m-%d"),
              julian_birth_date,
+             n_days,
+             weight,
+             tagWT,
+             growth,
+             growthrate,
              oft1,
              mis1,
              trialdate,
@@ -90,6 +110,7 @@ master <- merge(juv_personality,
                 all.x = TRUE) %>%
   transmute(litter_id,
             mom_id,
+            n_pups,
             t_return,
             return_lat,
             m_return,
@@ -102,7 +123,11 @@ master <- merge(juv_personality,
             grid,
             birth_date,
             julian_birth_date,
-            n_pups,
+            n_days,
+            weight,
+            tagWT,
+            growth,
+            growthrate,
             oft1,
             mis1,
             trialdate,
@@ -132,12 +157,10 @@ master$julian_birth_date <- yday(master$birth_date)
 master$mastyear <- as.factor(as.integer(master$year == 2005 |
                                           master$year == 2019))
 master <- merge(master, grids_density,
-                by = "grid",
+                by = c("grid", "year"),
                 all.x = TRUE) %>%
-  rename(year = year.x)  %>%
   distinct(juv_id,
            .keep_all = TRUE) %>% 
-  select(-year.y) %>%
   mutate(grid = as.factor(grid),
          litter_id = as.factor(litter_id),
          mom_id = as.factor(mom_id),
@@ -145,12 +168,6 @@ master <- merge(master, grids_density,
          juv_id = as.factor(juv_id),
          sex = as.factor(sex),
          survived_200d = as.factor(survived_200d))
-
-# adding in growth rate data
-master <- merge(master,
-                growthrate,
-                by = "juv_id",
-                all.x = TRUE)
 
 recent4 <- master %>%
   filter(year %in% c(2018, 2019, 2020, 2021))

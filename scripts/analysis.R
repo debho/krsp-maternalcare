@@ -24,45 +24,46 @@ mis_controls <- lmer(mis1 ~ gridtreat + (1 | litter_id),
 summary(mis_controls) #no effect
 
 ## ANALYSIS #1 ####
-# SURVIVAL ~ PERSONALITY + DENSITY + MAST + (1 | LITTER_ID)
-# still missing densities for BT, RR, SUX
-oft_survival <- glmer(survived_200d ~ oft1 * spr_density + mastyear + (1 | litter_id),
+# SURVIVAL ~ PERSONALITY + DENSITY + (1 | LITTER_ID)
+# only uses JO KL SU (no densities for BT RR SUX)
+# all years except 2021
+oft_survival <- glmer(survived_200d ~ (oft1 * spr_density) + (1 | litter_id),
                      data = master,
                      family = "binomial")
 vif(oft_survival)
-summary(oft_survival) #n = 207
+summary(oft_survival) #n = 206
 
-mis_survival <- glmer(survived_200d ~ mis1 * spr_density + mastyear + (1 | litter_id),
+mis_survival <- glmer(survived_200d ~ (mis1 * spr_density) + (1 | litter_id),
                       data = master,
                       family = "binomial")
 vif(mis_survival)
-summary(mis_survival) #n = 207
+summary(mis_survival) #n = 206
 
-personality_survival <- glmer(survived_200d ~ (oft1 + mis1) * spr_density + mastyear + (1 | litter_id),
+personality_survival <- glmer(survived_200d ~ (oft1 + mis1) * spr_density + (1 | litter_id),
                       data = master,
                       family = "binomial")
 vif(personality_survival)
-summary(personality_survival) #n = 207
+summary(personality_survival) #n = 206
 
 ## ANALYSIS #2 ####
 # PERSONALITY ~ TREATMENT
 
-oft_predictors <- lmer(oft1 ~ (treatment * sex) + dailygrowth + (1 | litter_id),
+oft_predictors <- lmer(oft1 ~ (treatment * sex) + growthrate + (1 | litter_id),
                        data = recent4)
 vif(oft_predictors)
-summary(oft_predictors) #n = 24
+summary(oft_predictors) #n = 101
 
-mis_predictors <- lmer(mis1 ~ (treatment * sex) + dailygrowth  + (1 | litter_id),
+mis_predictors <- lmer(mis1 ~ (treatment * sex) + growthrate  + (1 | litter_id),
                        data = recent4)
 vif(mis_predictors)
-summary(mis_predictors) #n = 24
-#GROWTH RATE DATA VERY LIMITED
+summary(mis_predictors) #n = 101
 
 ## ANALYSIS #3 ####
 # PERSONALITY ~ MATERNALCARE + SEX + (1 | YEAR) + (1 + LITTER_ID)
 
 oft_care <- lmer(oft1 ~ (m_return + m_move) + sex + (1 | year) + (1 | litter_id),
-                 data = master)
+                 data = master %>%
+                   filter(!(year == 2009 | year == 2016)))
 vif(oft_care)
 summary(oft_care) #n = 104
 
@@ -79,6 +80,7 @@ summary(personality_care) #n = 104
 ## ANALYSIS #4 ####
 # MATERNAL CARE ~ TREATMENT
 
+#how soon after returning did moms move their pups?
 return_move <- lm(t_move ~ t_return,
                   data = master)
 summary(return_move)
