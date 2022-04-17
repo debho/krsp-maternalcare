@@ -9,6 +9,7 @@
 
 library(lmerTest) #for linear mixed models
 library(QuantPsyc)
+library(performance)
 
 ## CONTROLS ####
 # model to see if BT is any diff from the other controls
@@ -64,7 +65,7 @@ summary(mis_predictors) #n = 61
 personality_predictors <- lmer(oft1 * mis1 ~ (treatment * sex) + year + (1 | litter_id),
                                data = recent4)
 vif(personality_predictors)
-summary(personality_pred)
+summary(personality_predictors)
 
 ## ANALYSIS #3 ####
 # PERSONALITY ~ MATERNALCARE + SEX + (1 | YEAR) + (1 + LITTER_ID)

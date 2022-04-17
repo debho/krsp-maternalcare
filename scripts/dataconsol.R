@@ -7,6 +7,8 @@
 ##############################################################################
 ### Script for consolidating data
 
+library(standardize) #to standardize continuous variables by groups
+
 # STEP 1 ####
 ## matching juveniles to litters
 ## should match on litter ID
@@ -149,9 +151,9 @@ master <- master %>%
   mutate(aug_census = make_date(year, 08, 15),
   age_census = as.integer(difftime(aug_census, birth_date, units = "days")),
   alive_aug = as.integer((end_date >= aug_census) & #were they alive on Aug 15 of their birth year?
-                           (age_census >= 70 | #were they at least 70 days then? 
-                              age_last >= 70 | survived_70d == 1))) #if not, are they known to have lived more than 70 days?
-#NA for those with end date after census but age unknown (ie. can't tell if they're >= 70 days old on census day)
+                           (age_census >= 60 | #were they at least 60 days then? 
+                              age_last >= 60 | survived_60d == 1))) #if not, are they known to have lived more than 60 days?
+#NA for those with end date after census but age unknown (ie. can't tell if they're >= 60 days old on census day)
 
 # adding in treatments
 master$gridtreat <- factor(master$grid,
@@ -172,7 +174,7 @@ master$mastyear <- as.factor(as.integer(master$year == 2005 |
 master <- merge(master, grids_density,
                 by = c("grid", "year"),
                 all.x = TRUE) %>%
-  mutate(grid = as.factor(grid),
+  mutate(grid = as.factor(grid), #making all categorical variables factors
          litter_id = as.factor(litter_id),
          mom_id = as.factor(mom_id),
          year = as.factor(year),
@@ -181,10 +183,11 @@ master <- merge(master, grids_density,
          m_return = as.factor(m_return),
          m_move = as.factor(m_move),
          alive_aug = as.factor(alive_aug),
+         mastyear = as.factor(mastyear),
          gridyear = as.factor(paste(grid, year))) %>%
-  mutate(oft1 = scale(oft1),
-         mis1 = scale(mis1),
-         growthrate = scale(growthrate),
+  mutate(oft1 = (scale(oft1), by = gridyear),
+         mis1 = (scale(mis1), by = gridyear),
+         growthrate = (scale(growthrate), by = gridyear),
          spr_density = scale(spr_density),
          return_lat = scale(return_lat),
          move_lat = scale(move_lat),

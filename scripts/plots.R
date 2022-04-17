@@ -79,3 +79,5 @@ ggplot(survivalres, aes(spr_density, alive_aug, col = spr_density)) +
               se = F,
               method.args = list(family = binomial)) + 
   scale_color_viridis_c()
+
+
