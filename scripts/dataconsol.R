@@ -71,7 +71,8 @@ juv_care <- merge(juv_litter,
 juv_personality <- merge(personality,
                          juv_care,
                          by = "juv_id",
-                         all.x = TRUE)%>%
+                         all = TRUE)%>%
+  filter(!grid == "AG") %>% #removes food-supplemented grid
   transmute(litter_id,
              n_pups,
              mom_id,
@@ -187,7 +188,11 @@ master <- merge(master, grids_density,
          spr_density = scale(spr_density),
          return_lat = scale(return_lat),
          move_lat = scale(move_lat),
-         n_pups = scale(n_pups))
+         n_pups = scale(n_pups)) %>%
+  filter(age_trial >= 60,
+         age_trial <= 80) %>%
+  distinct(juv_id,
+           .keep_all = T)
 
 recent4 <- master %>%
   filter(year %in% c(2018, 2019, 2020, 2021))

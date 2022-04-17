@@ -54,12 +54,17 @@ summary(personality_survival) #n = 120
 oft_predictors <- lmer(oft1 ~ (treatment * sex) + growthrate + year + (1 | litter_id),
                        data = recent4)
 vif(oft_predictors)
-summary(oft_predictors) #n = 102
+summary(oft_predictors) #n = 61
 
 mis_predictors <- lmer(mis1 ~ (treatment * sex) + growthrate + year + (1 | litter_id),
                        data = recent4)
 vif(mis_predictors)
-summary(mis_predictors) #n = 102
+summary(mis_predictors) #n = 61
+
+personality_predictors <- lmer(oft1 * mis1 ~ (treatment * sex) + year + (1 | litter_id),
+                               data = recent4)
+vif(personality_predictors)
+summary(personality_pred)
 
 ## ANALYSIS #3 ####
 # PERSONALITY ~ MATERNALCARE + SEX + (1 | YEAR) + (1 + LITTER_ID)
@@ -67,17 +72,17 @@ summary(mis_predictors) #n = 102
 oft_care <- lmer(oft1 ~ return_lat + move_lat + sex + (1 | year) + (1 | litter_id),
                  data = master)
 vif(oft_care)
-summary(oft_care) #n = 108
+summary(oft_care) #n = 67
 
 mis_care <- lmer(mis1 ~ return_lat + move_lat + sex + (1 | year) + (1 | litter_id),
                  data = master)
 vif(mis_care)
-summary(mis_care) #n = 108
+summary(mis_care) #n = 67
 
 personality_care <- lmer(oft1 + mis1 ~ return_lat + move_lat + sex + (1 | year) + (1 | litter_id),
                          data = master)
 vif(personality_care)
-summary(personality_care) #n = 108
+summary(personality_care) #n = 67
 
 ## ANALYSIS #4 ####
 # MATERNAL CARE ~ TREATMENT
@@ -85,19 +90,19 @@ summary(personality_care) #n = 108
 #how soon after returning did moms move their pups?
 return_move <- lm(move_lat ~ return_lat,
                   data = master)
-summary(return_move)
+summary(return_move) #n = 67
 
 return_treatment <- lmer(return_lat ~ treatment + n_pups + (1 | year),
                          data = recent4)
-summary(return_treatment)
+summary(return_treatment) #n = 33
 
-move_treatment <- lmer(move_lat ~ treatment + n_pups + (1 | year),
+move_treatment <- lmer(move_lat ~ treatment  + n_pups + (1 | year),
                        data = recent4)
-summary(move_treatment)
+summary(move_treatment) #n = 33
 
-care_treatment <- lmer(return_lat + move_lat ~ treatment + n_pups + (1 | year),
+care_treatment <- lmer(return_lat * move_lat ~ treatment  + n_pups + (1 | year),
                      data = recent4)
-summary(care_treatment)
+summary(care_treatment) #n = 33
 
 # for each table include sample size for both trials and individuals
 # always figure out where i'm losing trials
@@ -121,6 +126,7 @@ summary(care_treatment)
 
 #step 4 (all years)
 #effects of treatment on latency to return/move
+#should i add in spring density???
 #argue that under high density, high growth rate is favored and attentiveness increases growth rate
 #RR is rattle and SUX is control
 #ignore age for this thesis but report that about 50 didnt have an age (couldnt be confirmed at this tiem) and its like 20% of all trials

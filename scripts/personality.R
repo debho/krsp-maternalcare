@@ -21,7 +21,12 @@ personality <- read.csv('data/personality-master.csv',
          !(sq_id == "19257" & trialnumber == 1),
          !is.na(sq_id),
          !observer == "SWK", #because of GC experiment
-         sq_id %in% weaned_juvs) 
+         sq_id %in% weaned_juvs,
+         !(sq_id == "22684" & trialnumber == 2), #remove all the known young ones
+         !(sq_id == "22964" & trialnumber == 1),
+         !(sq_id == "22966" & trialnumber == 1),
+         !(sq_id == "22979" & trialnumber == 1),
+         !(tagrt == "M6964")) 
   
   
 

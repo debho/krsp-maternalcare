@@ -26,6 +26,17 @@ ggplot(recent4 %>%
               alpha = 0.5) + 
   scale_colour_viridis_d() #put in p-val
 
+ggplot(recent4 %>%
+         filter(!gridtreat == "rattle"),
+       aes(gridtreat, mis1, col = gridtreat)) + 
+  stat_boxplot(geom = "errorbar", width = 0.6) +
+  geom_boxplot(position = "dodge") + 
+  geom_jitter(color = "black",
+              size = 0.4,
+              alpha = 0.5) + 
+  scale_colour_viridis_d() #put in p-val
+
+
 ## ANALYSIS #1 PLOTS ####
 ## SURVIVAL DATA
 # plots of glmer models
@@ -44,29 +55,23 @@ survivalres <- masterSCALED %>%
          personality_pred = scale(predict(personality_survival)),
          personality_resid = scale(resid(personality_survival))) #all standardized residuals are here
 
-ggplot(survivalres ,aes(oft1, alive_aug, col = spr_density)) + #replace year with density, plot residuals esp if results are sig
+ggplot(survivalres, aes(spr_density, alive_aug, col = spr_density)) + #replace year with density, plot residuals esp if results are sig
   geom_point(size = 3,
              alpha = 0.5) +
   stat_smooth(method = "glm",
               se = F,
               method.args = list(family = binomial)) +
-  stat_smooth(aes(oft_resid, alive_aug, color = oft_resid),
+  stat_smooth(aes(oft1, alive_aug, color = oft_resid),
               method = "glm",
               se = F,
-              method.args = list(family = binomial))
+              method.args = list(family = binomial)) + 
+  scale_color_viridis_c()
 
-ggplot(master,aes(mis1, alive_aug, col = spr_density)) + #replace year with density, plot residuals esp if results are sig
-  geom_point(size = 3,
-             alpha = 0.5) +
-  stat_smooth(method = "glm",
-              se = F,
-              method.args = list(family = binomial)) 
 
 ggplot(survivalres, aes(spr_density, alive_aug, col = spr_density)) +
   geom_point(size = 3,
              alpha = 0.8) +
-  stat_smooth(aes(spr_density, alive_aug, color = spr_density),
-              method = "glm",
+  stat_smooth(method = "glm",
               se = F,
               method.args = list(family = binomial)) + 
   stat_smooth(aes(mis1, alive_aug, color = spr_density),
