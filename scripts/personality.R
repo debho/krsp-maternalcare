@@ -20,7 +20,10 @@ personality <- read.csv('data/personality-master.csv',
          !(sq_id == "23686" & trialnumber == 2),
          !(sq_id == "19257" & trialnumber == 1),
          !is.na(sq_id),
-         !observer == "SWK") #because of GC experiment
+         !observer == "SWK", #because of GC experiment
+         sq_id %in% weaned_juvs) 
+  
+  
 
 colnames(personality)[1] <- "juv_id" #distinguish from squirrel_id in other tables since these are all juvs
 

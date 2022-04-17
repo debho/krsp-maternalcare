@@ -32,3 +32,8 @@ nest_att <- nest_attALL %>%
   filter(nest == 1) %>%
   drop_na(return_lat,
           move_lat) #removes the ambiguous cases where it was coded as y but no times
+
+nest1 <- nest_attALL %>%
+  filter(nest == 1)
+nest2 <- nest_attALL %>%
+  filter(nest == 2)

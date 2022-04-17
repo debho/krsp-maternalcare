@@ -187,9 +187,7 @@ master <- merge(master, grids_density,
          spr_density = scale(spr_density),
          return_lat = scale(return_lat),
          move_lat = scale(move_lat),
-         n_pups = scale(n_pups)) %>%
-  distinct(juv_id,
-           .keep_all = TRUE)
+         n_pups = scale(n_pups))
 
 recent4 <- master %>%
   filter(year %in% c(2018, 2019, 2020, 2021))

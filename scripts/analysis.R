@@ -14,13 +14,13 @@ library(QuantPsyc)
 # model to see if BT is any diff from the other controls
 oft_controls <- lmer(oft1 ~ gridtreat + (1 | litter_id),
                       data = recent4,
-                      subset = !gridtreat == "rattle") #n = 64
+                      subset = !gridtreat == "rattle") #n = 37
 summary(oft_controls) #no effect
 
 
 mis_controls <- lmer(mis1 ~ gridtreat + (1 | litter_id),
                       data = recent4,
-                      subset = !gridtreat == "rattle") #n = 64
+                      subset = !gridtreat == "rattle") #n = 37
 summary(mis_controls) #no effect
 
 ## ANALYSIS #1 ####
@@ -32,21 +32,21 @@ oft_survival <- glmer(alive_aug ~ (oft1 * spr_density) +
                       data = master,
                       family = "binomial")
 vif(oft_survival)
-summary(oft_survival) #n = 226
+summary(oft_survival) #n = 120, spr_density has an effect
 
 mis_survival <- glmer(alive_aug ~ (mis1 * spr_density) +
                         (1 | litter_id) + (1 | gridyear),
                       data = master,
                       family = "binomial")
 vif(mis_survival)
-summary(mis_survival) #n = 226
+summary(mis_survival) #n = 120
 
 personality_survival <- glmer(alive_aug ~ (oft1 + mis1) * spr_density +
                                 (1 | litter_id) + (1 | gridyear),
                               data = master,
                               family = "binomial")
 vif(personality_survival)
-summary(personality_survival) #n = 226
+summary(personality_survival) #n = 120
 
 ## ANALYSIS #2 ####
 # PERSONALITY ~ TREATMENT
@@ -64,18 +64,18 @@ summary(mis_predictors) #n = 102
 ## ANALYSIS #3 ####
 # PERSONALITY ~ MATERNALCARE + SEX + (1 | YEAR) + (1 + LITTER_ID)
 
-oft_care <- lmer(oft1 ~ m_return + sex + year + (1 | litter_id),
-                 data = recent4)
+oft_care <- lmer(oft1 ~ return_lat + move_lat + sex + (1 | year) + (1 | litter_id),
+                 data = master)
 vif(oft_care)
 summary(oft_care) #n = 108
 
-mis_care <- lmer(mis1 ~ m_return + sex + year + (1 | litter_id),
-                 data = recent4)
+mis_care <- lmer(mis1 ~ return_lat + move_lat + sex + (1 | year) + (1 | litter_id),
+                 data = master)
 vif(mis_care)
 summary(mis_care) #n = 108
 
-personality_care <- lmer(oft1 + mis1 ~ m_return + sex + year + (1 | litter_id),
-                         data = recent4)
+personality_care <- lmer(oft1 + mis1 ~ return_lat + move_lat + sex + (1 | year) + (1 | litter_id),
+                         data = master)
 vif(personality_care)
 summary(personality_care) #n = 108
 
