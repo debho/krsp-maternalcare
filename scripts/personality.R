@@ -22,35 +22,28 @@ personality <- read.csv('data/personality-master.csv',
          !is.na(sq_id),
          !observer == "SWK", #because of GC experiment
          sq_id %in% weaned_juvs,
-         !(sq_id == "22684" & trialnumber == 2), #remove all the known young ones
-         !(sq_id == "22964" & trialnumber == 1),
-         !(sq_id == "22966" & trialnumber == 1),
-         !(sq_id == "22979" & trialnumber == 1),
-         !(tagrt == "M6964")) 
+         !(sq_id == "22684" & trialnumber == 2), #too old on this trial
+         !(sq_id == "22964" & trialnumber == 1), #too young
+         !(sq_id == "22966" & trialnumber == 1), #too young
+         !(sq_id == "22979" & trialnumber == 1), #too young
+         !(tagrt == "M6964"), #too young
+         !(sq_id == "22985" & trialnumber == 2), #trial 2 only 8 days after trial 1 
+         !(sq_id == "23052" & trialnumber == 2)) #trial 2 only 13 days after trial 1
   
-  
-
 colnames(personality)[1] <- "juv_id" #distinguish from squirrel_id in other tables since these are all juvs
 
 personality$trialdate <- as.Date(personality$trialdate,
                                  "%m/%d/%y")
-personality$julian_trialdate <- yday(personality$trialdate)
-personality$videodate <- as.Date(personality$videodate,
-                                 "%m/%d/%y")
+personality$julian_trialdate <- yday(personality$trialdate) #to get juv age at trial
+
 personality[is.na(personality$oft_duration),
           "oft_duration"] <- 450.000
 personality[is.na(personality$mis_duration),
           "mis_duration"] <- 300.000
 
-## year counts pre-removal of those missing either OFT/MIS
-# '05: 44; '09: 2; '12: 50; '16: 1; '17: 54; '18: 40; '19: 18; '20: 37; '21: 28
-
 personality <- personality %>%
   drop_na(walk, #eliminates no OFT 
           front) #eliminates no MIS
-
-##n = 255
-# '12: 31
 
 behaviors <- transmute(personality,
                        juv_id,
@@ -91,9 +84,9 @@ beh.mis <- transmute(behaviors,
 #PCA ####
 
 library(ade4) #for PCA loadings
-library(factoextra) #to get variance and all that good stuff
+library(factoextra) #to get variance
 
-#PCA loadings for OFT
+#PCA for OFT
 
 pca.oft <- dudi.pca(beh.oft,
                     scale = TRUE,
@@ -101,12 +94,12 @@ pca.oft <- dudi.pca(beh.oft,
                     nf = 7)
 
 
-pca.oft$c1 <- (pca.oft$c1 * -1)
+pca.oft$c1 <- (pca.oft$c1 * -1) #loadings were reversed
 pca.oft$c1
-personality$oft1 <- (pca.oft$l1$RS1 * -1)
+personality$oft1 <- (pca.oft$l1$RS1 * -1) 
 get_eig(pca.oft)
 
-# PCA loadings for MIS
+# PCA for MIS
 
 pca.mis <- dudi.pca(beh.mis,
                     scale = TRUE,

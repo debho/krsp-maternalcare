@@ -140,7 +140,9 @@ master <- merge(juv_personality,
             last_fate,
             end_date,
             survived_200d,
-            survived_70d)
+            survived_60d) %>%
+  filter(age_trial >= 60,
+           age_trial <= 80) #removes juvs that were too young
 
 # cleaning up trial dates that occur before end dates
 master$age_last <- ifelse((master$age_last < master$age_trial),
@@ -185,22 +187,29 @@ master <- merge(master, grids_density,
          alive_aug = as.factor(alive_aug),
          mastyear = as.factor(mastyear),
          gridyear = as.factor(paste(grid, year))) %>%
-  mutate(oft1 = (scale(oft1), by = gridyear),
-         mis1 = (scale(mis1), by = gridyear),
-         growthrate = (scale(growthrate), by = gridyear),
-         spr_density = scale(spr_density),
-         return_lat = scale(return_lat),
-         move_lat = scale(move_lat),
-         n_pups = scale(n_pups)) %>%
-  filter(age_trial >= 60,
-         age_trial <= 80) %>%
   distinct(juv_id,
-           .keep_all = T)
+           .keep_all = TRUE)
 
 recent4 <- master %>%
-  filter(year %in% c(2018, 2019, 2020, 2021))
+  filter(year %in% c(2018, 2019, 2020, 2021)) #for treatment analyses
 
+#standardizing all variables
+master <- master %>%
+  mutate(oft1 = scale_by(oft1 ~ gridyear), #grid-year
+         mis1 = scale_by(mis1 ~ gridyear), #grid-year
+         growthrate = scale_by(growthrate ~ gridyear), #grid-year
+         spr_density = scale(spr_density), #globally
+         return_lat = scale(return_lat), #globally
+         move_lat = scale(move_lat), #globally
+         n_pups = scale_by(n_pups ~ gridyear), #grid-year
+         age_trial = scale(age_trial)) #globally
 
-# squirrels with no  dates of birth:
-# 24809 23788 24830 24680 24753 24729 24730 24745 23797 23889 23906 24594 23856
-# 23931 13235 23256 23894 23903
+recent4 <- recent4 %>%
+  mutate(oft1 = scale_by(oft1 ~ gridyear), #grid-year
+         mis1 = scale_by(mis1 ~ gridyear), #grid-year
+         growthrate = scale_by(growthrate ~ gridyear), #grid-year
+         spr_density = scale(spr_density), #globally
+         return_lat = scale(return_lat), #globally
+         move_lat = scale(move_lat), #globally
+         n_pups = scale_by(n_pups ~ gridyear), #grid-year
+         age_trial = scale(age_trial)) #globally

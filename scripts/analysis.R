@@ -28,76 +28,78 @@ summary(mis_controls) #no effect
 # SURVIVAL ~ PERSONALITY + DENSITY + (1 | LITTER_ID)
 # only uses JO KL SU (no densities for BT RR SUX)
 # all years except 2021
-oft_survival <- glmer(alive_aug ~ (oft1 * spr_density) +
-                        (1 | litter_id) + (1 | gridyear),
+oft_survival <- glmer(alive_aug ~ (oft1 * spr_density) + year + 
+                        (1 | litter_id) + (1 | gridyear) + (1 | age_trial),
                       data = master,
                       family = "binomial")
 vif(oft_survival)
-summary(oft_survival) #n = 120, spr_density has an effect
+summary(oft_survival) #n = 116
 
 mis_survival <- glmer(alive_aug ~ (mis1 * spr_density) +
-                        (1 | litter_id) + (1 | gridyear),
+                        (1 | litter_id) + (1 | gridyear) + (1 | age_trial),
                       data = master,
                       family = "binomial")
 vif(mis_survival)
-summary(mis_survival) #n = 120
+summary(mis_survival) #n = 116
 
-personality_survival <- glmer(alive_aug ~ (oft1 + mis1) * spr_density +
-                                (1 | litter_id) + (1 | gridyear),
+personality_survival <- glmer(alive_aug ~ (oft1 + mis1) * spr_density + 
+                                (1 | litter_id) + (1 | gridyear) + (1 | age_trial), 
                               data = master,
                               family = "binomial")
 vif(personality_survival)
-summary(personality_survival) #n = 120
+summary(personality_survival) #n = 116
 
+                              
 ## ANALYSIS #2 ####
 # PERSONALITY ~ TREATMENT
 
-oft_predictors <- lmer(oft1 ~ (treatment * sex) + growthrate + year + (1 | litter_id),
+oft_predictors <- lmer(oft1 ~ (treatment * sex) + growthrate + age_trial + year +
+                         (1 | litter_id),
                        data = recent4)
 vif(oft_predictors)
 summary(oft_predictors) #n = 61
 
-mis_predictors <- lmer(mis1 ~ (treatment * sex) + growthrate + year + (1 | litter_id),
+mis_predictors <- lmer(mis1 ~ (treatment * sex) + growthrate + age_trial + year +
+                         + (1 | litter_id),
                        data = recent4)
 vif(mis_predictors)
 summary(mis_predictors) #n = 61
 
-personality_predictors <- lmer(oft1 * mis1 ~ (treatment * sex) + year + (1 | litter_id),
+personality_predictors <- lmer((oft1 * mis1) ~ (treatment * sex) + growthrate + age_trial + year +
+                                 + (1 | litter_id),
                                data = recent4)
-vif(personality_predictors)
-summary(personality_predictors)
+vif(mis_predictors)
+summary(mis_predictors) #n = 61
 
 ## ANALYSIS #3 ####
 # PERSONALITY ~ MATERNALCARE + SEX + (1 | YEAR) + (1 + LITTER_ID)
 
-oft_care <- lmer(oft1 ~ return_lat + move_lat + sex + (1 | year) + (1 | litter_id),
+oft_care <- lmer(oft1 ~ return_lat + move_lat +
+                   (1 | year) + (1 | litter_id),
                  data = master)
 vif(oft_care)
 summary(oft_care) #n = 67
 
-mis_care <- lmer(mis1 ~ return_lat + move_lat + sex + (1 | year) + (1 | litter_id),
+mis_care <- lmer(mis1 ~ return_lat + move_lat + 
+                   (1 | year) + (1 | litter_id),
                  data = master)
 vif(mis_care)
 summary(mis_care) #n = 67
-
-personality_care <- lmer(oft1 + mis1 ~ return_lat + move_lat + sex + (1 | year) + (1 | litter_id),
-                         data = master)
-vif(personality_care)
-summary(personality_care) #n = 67
 
 ## ANALYSIS #4 ####
 # MATERNAL CARE ~ TREATMENT
 
 #how soon after returning did moms move their pups?
-return_move <- lm(move_lat ~ return_lat,
+return_move <- lm(t_move ~ t_return,
                   data = master)
-summary(return_move) #n = 67
+summary(return_move) #n = 25, looking at uncensored latencies
 
-return_treatment <- lmer(return_lat ~ treatment + n_pups + (1 | year),
+return_treatment <- lmer(return_lat ~ treatment + n_pups +
+                           (1 | year),
                          data = recent4)
 summary(return_treatment) #n = 33
 
-move_treatment <- lmer(move_lat ~ treatment  + n_pups + (1 | year),
+move_treatment <- lmer(move_lat ~ treatment + n_pups + (1 | year),
                        data = recent4)
 summary(move_treatment) #n = 33
 
@@ -115,8 +117,8 @@ summary(care_treatment) #n = 33
 
 #for personality ~ treatment use only the 4 years
 #use all data for survival data
-# step  1 (all data)
-#survived_200d ~ (oft1 * spring grid density) + (mis1 * spring grid density) + mastyear(y/n) + (! | litter_id)
+# step 1 (all data)
+#survived_200d ~ (oft1 * spring grid density) + (mis1 * spring grid density) + (1 | litter_id)
 
 # step 2: grid effects/treatment effects focus on 2018-2021
 #oft1 ~ (treatment * sex) + growth rate + year (factor) + (1 | litter_id)
@@ -130,8 +132,6 @@ summary(care_treatment) #n = 33
 #should i add in spring density???
 #argue that under high density, high growth rate is favored and attentiveness increases growth rate
 #RR is rattle and SUX is control
-#ignore age for this thesis but report that about 50 didnt have an age (couldnt be confirmed at this tiem) and its like 20% of all trials
-
 
 
 
