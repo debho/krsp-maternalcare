@@ -28,22 +28,9 @@ summary(mis_controls) #no effect
 # SURVIVAL ~ PERSONALITY + DENSITY + (1 | LITTER_ID)
 # only uses JO KL SU (no densities for BT RR SUX)
 # all years except 2021
-oft_survival <- glmer(alive_aug ~ (oft1 * spr_density) + year + 
-                        (1 | litter_id) + (1 | gridyear) + (1 | age_trial),
-                      data = master,
-                      family = "binomial")
-vif(oft_survival)
-summary(oft_survival) #n = 116
-
-mis_survival <- glmer(alive_aug ~ (mis1 * spr_density) +
-                        (1 | litter_id) + (1 | gridyear) + (1 | age_trial),
-                      data = master,
-                      family = "binomial")
-vif(mis_survival)
-summary(mis_survival) #n = 116
 
 personality_survival <- glmer(alive_aug ~ (oft1 + mis1) * spr_density + 
-                                (1 | litter_id) + (1 | gridyear) + (1 | age_trial), 
+                                (1 | litter_id) + (1 | gridyear), 
                               data = master,
                               family = "binomial")
 vif(personality_survival)
@@ -53,21 +40,15 @@ summary(personality_survival) #n = 116
 ## ANALYSIS #2 ####
 # PERSONALITY ~ TREATMENT
 
-oft_predictors <- lmer(oft1 ~ (treatment * sex) + growthrate + age_trial + year +
+oft_predictors <- lmer(oft1 ~ (treatment * sex) + growthrate + year +
                          (1 | litter_id),
                        data = recent4)
 vif(oft_predictors)
 summary(oft_predictors) #n = 61
 
-mis_predictors <- lmer(mis1 ~ (treatment * sex) + growthrate + age_trial + year +
+mis_predictors <- lmer(mis1 ~ (treatment * sex) + growthrate + year +
                          + (1 | litter_id),
                        data = recent4)
-vif(mis_predictors)
-summary(mis_predictors) #n = 61
-
-personality_predictors <- lmer((oft1 * mis1) ~ (treatment * sex) + growthrate + age_trial + year +
-                                 + (1 | litter_id),
-                               data = recent4)
 vif(mis_predictors)
 summary(mis_predictors) #n = 61
 
@@ -102,10 +83,6 @@ summary(return_treatment) #n = 33
 move_treatment <- lmer(move_lat ~ treatment + n_pups + (1 | year),
                        data = recent4)
 summary(move_treatment) #n = 33
-
-care_treatment <- lmer(return_lat * move_lat ~ treatment  + n_pups + (1 | year),
-                     data = recent4)
-summary(care_treatment) #n = 33
 
 # for each table include sample size for both trials and individuals
 # always figure out where i'm losing trials
