@@ -68,8 +68,8 @@ ggplot(recent4 %>%
   geom_boxplot() +
   geom_jitter(color = "black",
               size = 0.4,
-              alpha = 0.5) + 
-  scale_color_paletteer_d("colorblindr::OkabeIto") + #how do i add p-vals
+              alpha = 0.5) + #how do i add p-vals
+  scale_color_paletteer_d("colorblindr::OkabeIto") + 
   labs(x = "Control type",
        y = "Activity",
        title = "Effects of chickadee playbacks on offspring activity",
@@ -83,8 +83,8 @@ ggplot(recent4 %>%
   geom_boxplot() + 
   geom_jitter(color = "black",
               size = 0.4,
-              alpha = 0.5) + 
-  scale_color_paletteer_d("colorblindr::OkabeIto") + #how do i add p-vals
+              alpha = 0.5) + #how do i add p-vals
+  scale_color_paletteer_d("colorblindr::OkabeIto") + 
   labs(x = "Control type",
        y = "Aggression",
        title = "Effects of chickadee playbacks on offspring aggression",
@@ -98,8 +98,8 @@ ggplot(recent4,
   geom_boxplot() + 
   geom_jitter(color = "black",
               size = 0.4,
-              alpha = 0.5) + 
-  scale_color_paletteer_d("colorblindr::OkabeIto") + #how do i add p-vals
+              alpha = 0.5) + #how do i add p-vals
+  scale_color_paletteer_d("colorblindr::OkabeIto") + 
   labs(x = "Treatment",
        y = "Activity",
        title = "Effects of density cues on offspring activity",
@@ -112,13 +112,13 @@ ggplot(recent4,
   geom_boxplot() + 
   geom_jitter(color = "black",
               size = 0.4,
-              alpha = 0.5) + 
-  scale_color_paletteer_d("colorblindr::OkabeIto") + #how do i add p-vals
+              alpha = 0.5) + #how do i add p-vals
+  scale_color_paletteer_d("colorblindr::OkabeIto") +
   labs(x = "Treatment",
        y = "Aggression",
        title = "Effects of density cues on offspring aggression",
        col = "Treatment",
-       tag = "(a)")
+       tag = "(b)")
 
 # activity x aggression corr
 ggplot(survivalres, aes(oft1, mis1, col = treatment)) + 
@@ -138,42 +138,29 @@ ggplot(survivalres, aes(oft1, mis1, col = treatment)) +
 
 ## EFFECTS OF MATERNAL BEHAVIOR ON OFFSPRING PERSOPNALITY
 ggplot(master,
-       aes(return_lat, oft1, col = treatment)) + 
+       aes(return_lat, oft1, col = year)) + 
   geom_point(size = 3,
              alpha = 0.5) + 
   geom_smooth(method = "lm",
               se = F) +
-  scale_color_paletteer_d("colorblindr::OkabeIto") + #how do i add p-vals
-  labs(x = "Maternal latency to return (Censored)",
+  scale_color_paletteer_d("colorBlindness::paletteMartin") + 
+  labs(x = "Standardized maternal latency to return",
        y = "Activity",
        title = "Effects of maternal attentiveness on offspring activity",
-       col = "Treatment",
+       col = "Year",
        tag = "(a)")
 
 ggplot(master,
-       aes(return_lat, mis1, col = treatment)) + 
+       aes(return_lat, mis1, col = year)) + 
   geom_point(size = 3,
              alpha = 0.5) + 
   geom_smooth(method = "lm",
               se = F) +
-  scale_color_paletteer_d("colorblindr::OkabeIto") + #how do i add p-vals
-  labs(x = "Maternal latency to return (Censored)",
+  scale_color_paletteer_d("colorBlindness::paletteMartin") + 
+  labs(x = "Standardized maternal latency to return",
        y = "Aggression",
        title = "Effects of maternal attentiveness on offspring aggression",
-       col = "Treatment",
-       tag = "(b)")
-
-ggplot(master,
-       aes(return_lat, oft1 * mis1, col = treatment)) + 
-  geom_point(size = 3,
-             alpha = 0.5) + 
-  geom_smooth(method = "lm",
-              se = F) +
-  scale_color_paletteer_d("colorblindr::OkabeIto") + #how do i add p-vals
-  labs(x = "Maternal latency to return (Censored)",
-       y = "Aggression",
-       title = "Effects of maternal attentiveness on offspring aggression",
-       col = "Treatment",
+       col = "Year",
        tag = "(b)")
 
 ## EFFECTS OF TREATMENT ON MATERNAL BEHAVIOR ####
@@ -185,26 +172,8 @@ ggplot(recent4 %>%
   geom_boxplot() + 
   geom_jitter(color = "black",
               size = 0.4,
-              alpha = 0.5) + 
-  scale_colour_viridis_d() + #viridis is colorblind-friendly
+              alpha = 0.5) + #how do i add p-vals
+  scale_color_paletteer_d("colorBlindness::paletteMartin") + 
   labs(x = "Treatment",
-       y = "Standardized latency to return to pups (Censored)",
+       y = "Standardized latency to return",
        title = "Effect of density cues on maternal latency to return to pups") 
-
-
-
-
-
-ggplot(survivalres, aes(mis1, alive_aug, col = spr_density_binned)) + 
-  geom_point(size = 3,
-             alpha = 0.5) +
-  stat_smooth(aes(color = spr_density_binned),
-              method = "glm",
-              se = F,
-              method.args = list(family = binomial)) +
-  scale_color_paletteer_d("colorblindr::OkabeIto") + 
-  labs(x = "Aggression",
-       y = "Probability of survival to autumn",
-       title = "Effects of offspring aggression on survival to autumn",
-       col = "Grid density (Spring)",
-       tag = "(b)")
