@@ -10,19 +10,7 @@
 library(lmerTest) #for linear mixed models
 library(QuantPsyc)
 library(performance)
-
-## CONTROLS ####
-# model to see if BT is any diff from the other controls
-oft_controls <- lmer(oft1 ~ gridtreat + (1 | litter_id),
-                      data = recent4,
-                      subset = !gridtreat == "rattle") #n = 37
-summary(oft_controls) #no effect
-
-
-mis_controls <- lmer(mis1 ~ gridtreat + (1 | litter_id),
-                      data = recent4,
-                      subset = !gridtreat == "rattle") #n = 37
-summary(mis_controls) #no effect
+library(sjlabelled)
 
 ## ANALYSIS #1 ####
 # SURVIVAL ~ PERSONALITY + DENSITY + (1 | LITTER_ID)
@@ -30,7 +18,7 @@ summary(mis_controls) #no effect
 # all years except 2021
 
 personality_survival <- glmer(alive_aug ~ (oft1 + mis1) * spr_density + 
-                                (1 | litter_id) + (1 | gridyear), 
+                                (1 | litter_id), 
                               data = master,
                               family = "binomial")
 vif(personality_survival)
@@ -40,14 +28,29 @@ summary(personality_survival) #n = 116
 ## ANALYSIS #2 ####
 # PERSONALITY ~ TREATMENT
 
+## CONTROLS ####
+# model to see if BT is any diff from the other controls
+oft_controls <- lmer(oft1 ~ gridtreat +
+                       (1 | litter_id),
+                     data = recent4,
+                     subset = !gridtreat == "rattle") #n = 37
+summary(oft_controls) #no effect
+
+
+mis_controls <- lmer(mis1 ~ gridtreat +
+                       (1 | litter_id),
+                     data = recent4,
+                     subset = !gridtreat == "rattle") #n = 37
+summary(mis_controls) #no effect
+
 oft_predictors <- lmer(oft1 ~ (treatment * sex) + growthrate + year +
-                         (1 | litter_id),
+                         (1 | litter_id) + (1 | gridyear),
                        data = recent4)
 vif(oft_predictors)
 summary(oft_predictors) #n = 61
 
 mis_predictors <- lmer(mis1 ~ (treatment * sex) + growthrate + year +
-                         + (1 | litter_id),
+                         + (1 | litter_id) + (1 | gridyear),
                        data = recent4)
 vif(mis_predictors)
 summary(mis_predictors) #n = 61
@@ -80,7 +83,8 @@ return_treatment <- lmer(return_lat ~ treatment + n_pups +
                          data = recent4)
 summary(return_treatment) #n = 33
 
-move_treatment <- lmer(move_lat ~ treatment + n_pups + (1 | year),
+move_treatment <- lmer(move_lat ~ treatment + n_pups +
+                         (1 | year),
                        data = recent4)
 summary(move_treatment) #n = 33
 
@@ -109,7 +113,3 @@ summary(move_treatment) #n = 33
 #should i add in spring density???
 #argue that under high density, high growth rate is favored and attentiveness increases growth rate
 #RR is rattle and SUX is control
-
-
-
-
