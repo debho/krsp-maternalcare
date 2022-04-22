@@ -14,6 +14,8 @@ library(ggResidpanel)
 library(sjPlot)
 library(sjmisc)
 library(lattice)
+library(gridExtra) #for putting plots onto a grid
+library(ggpubr) #for putting p-values onto plots
 
 ## EFFECTS OF PERSONALITY ON SURVIVAL ####
 survivalres <- master %>%
@@ -32,7 +34,12 @@ survivalres <- master %>%
                                      labels = c("Low density", "High density")),
          spr_density_quant = gtools::quantcut(spr_density, q = 3))
 
-ggplot(survivalres, aes(oft1, alive_aug, col = spr_density_binned)) + 
+
+# survivalres is the master table with added columns for standardized residuals for survival data
+# and it has densities binned instead of just continuous
+
+oft_survivalPLOT <- ggplot(survivalres, aes(oft1, alive_aug, col = spr_density_binned)) + 
+  theme_classic() +
   geom_point(size = 3,
              alpha = 0.5) +
   stat_smooth(aes(color = spr_density_binned),
@@ -46,7 +53,8 @@ ggplot(survivalres, aes(oft1, alive_aug, col = spr_density_binned)) +
        col = "Grid density (Spring)",
        tag = "(a)")
 
-ggplot(survivalres, aes(mis1, alive_aug, col = spr_density_binned)) + 
+mis_survivalPLOT <- ggplot(survivalres, aes(mis1, alive_aug, col = spr_density_binned)) + 
+  theme_classic() +
   geom_point(size = 3,
              alpha = 0.5) +
   stat_smooth(aes(color = spr_density_binned),
@@ -61,43 +69,55 @@ ggplot(survivalres, aes(mis1, alive_aug, col = spr_density_binned)) +
        tag = "(b)")
 
 ## EFFECTS OF CHICKADEE PLAYBACKS ####
-ggplot(recent4 %>%
-         filter(!gridtreat == "rattle"),
-       aes(gridtreat, oft1, col = gridtreat)) + 
+oft_controlsPLOT <- ggplot(recent4 %>%
+                             filter(!gridtreat == "rattle"),
+                           aes(gridtreat, oft1, col = gridtreat)) + 
+  theme_classic() +
   stat_boxplot(geom = "errorbar", width = 0.6) +
   geom_boxplot() +
   geom_jitter(color = "black",
-              size = 0.4,
+              size = 2,
               alpha = 0.5) + #how do i add p-vals
   scale_color_paletteer_d("colorblindr::OkabeIto") + 
   labs(x = "Control type",
        y = "Activity",
        title = "Effects of chickadee playbacks on offspring activity",
        col = "Control type",
-       tag = "(a)")
+       tag = "(a)") + 
+  stat_compare_means(method = "t.test",
+                     aes(label = "p.format"))
 
-ggplot(recent4 %>%
-         filter(!gridtreat == "rattle"),
-       aes(gridtreat, mis1, col = gridtreat)) + 
+mis_controlsPLOT <- ggplot(recent4 %>%
+                             filter(!gridtreat == "rattle"),
+                           aes(gridtreat, mis1, col = gridtreat)) + 
+  theme_classic() +
   stat_boxplot(geom = "errorbar", width = 0.6) +
   geom_boxplot() + 
   geom_jitter(color = "black",
-              size = 0.4,
+              size = 2,
               alpha = 0.5) + #how do i add p-vals
   scale_color_paletteer_d("colorblindr::OkabeIto") + 
   labs(x = "Control type",
        y = "Aggression",
        title = "Effects of chickadee playbacks on offspring aggression",
        col = "Control type",
-       tag = "(b)")
+       tag = "(b)") + 
+  stat_compare_means(method = "t.test",
+                     aes(label = "p.format"))
+
+ggsave("output/personality~controls_boxplot.png",
+       arrangeGrob(oft_controlsPLOT, mis_controlsPLOT,
+                   ncol = 2))
 
 ## EFFECTS OF TREATMENT ON OFFSPRING PERSONALITY
-ggplot(recent4,
-       aes(treatment, oft1, col = treatment)) + 
+
+oft_treatmentPLOT <- ggplot(recent4,
+                            aes(treatment, oft1, col = treatment)) + 
+  theme_classic() +
   stat_boxplot(geom = "errorbar", width = 0.6) +
   geom_boxplot() + 
   geom_jitter(color = "black",
-              size = 0.4,
+              size = 2,
               alpha = 0.5) + #how do i add p-vals
   scale_color_paletteer_d("colorblindr::OkabeIto") + 
   labs(x = "Treatment",
@@ -106,12 +126,13 @@ ggplot(recent4,
        col = "Treatment",
        tag = "(a)")
 
-ggplot(recent4,
-       aes(treatment, mis1, col = treatment)) + 
+mis_treatmentPLOT <- ggplot(recent4,
+                            aes(treatment, mis1, col = treatment)) + 
+  theme_classic() +
   stat_boxplot(geom = "errorbar", width = 0.6) +
   geom_boxplot() + 
   geom_jitter(color = "black",
-              size = 0.4,
+              size = 2,
               alpha = 0.5) + #how do i add p-vals
   scale_color_paletteer_d("colorblindr::OkabeIto") +
   labs(x = "Treatment",
@@ -120,29 +141,21 @@ ggplot(recent4,
        col = "Treatment",
        tag = "(b)")
 
-# activity x aggression corr
-ggplot(survivalres, aes(oft1, mis1, col = treatment)) + 
-  geom_point(size = 3,
-             alpha = 0.5) +
-  stat_smooth(aes(color = treatment),
-              method = "lm",
-              se = F) +
-  stat_smooth(method = "lm",
-              se = F,
-              aes(group = 1)) + 
-  scale_color_paletteer_d("colorblindr::OkabeIto") + 
-  labs(x = "Activity",
-       y = "Aggression",
-       title = "Relationship between activity and aggression",
-       col = "Grid density (Spring)")
+ggsave("output/personality~treatment_boxplot.png",
+       arrangeGrob(oft_treatmentPLOT, mis_treatmentPLOT,
+                   ncol = 2))
 
-## EFFECTS OF MATERNAL BEHAVIOR ON OFFSPRING PERSOPNALITY
-ggplot(master,
-       aes(return_lat, oft1, col = year)) + 
+## EFFECTS OF MATERNAL BEHAVIOR ON OFFSPRING PERSONALITY
+
+oft_carePLOT <- ggplot(master %>%
+                         filter(!is.na(m_return)), #takes out the years with no maternal behavior data
+                       aes(return_lat, oft1, col = year)) + 
+  theme_classic() +
   geom_point(size = 3,
-             alpha = 0.5) + 
+             alpha = 0.8) + 
   geom_smooth(method = "lm",
-              se = F) +
+              se = F,
+              aes(group = 1)) + #plots overall regression line
   scale_color_paletteer_d("colorBlindness::paletteMartin") + 
   labs(x = "Standardized maternal latency to return",
        y = "Activity",
@@ -150,12 +163,15 @@ ggplot(master,
        col = "Year",
        tag = "(a)")
 
-ggplot(master,
-       aes(return_lat, mis1, col = year)) + 
+mis_carePLOT <- ggplot(master %>%
+                         filter(!is.na(m_return)), #takes out the years with no maternal behavior data
+                       aes(return_lat, mis1, col = year)) + 
+  theme_classic() +
   geom_point(size = 3,
-             alpha = 0.5) + 
+             alpha = 0.8) + 
   geom_smooth(method = "lm",
-              se = F) +
+              se = F,
+              aes(group = 1)) + #plots overall regression line
   scale_color_paletteer_d("colorBlindness::paletteMartin") + 
   labs(x = "Standardized maternal latency to return",
        y = "Aggression",
@@ -163,17 +179,26 @@ ggplot(master,
        col = "Year",
        tag = "(b)")
 
+ggsave("output/personality~care_scatter.png",
+       arrangeGrob(oft_carePLOT, mis_carePLOT,
+                   ncol = 2))
+
 ## EFFECTS OF TREATMENT ON MATERNAL BEHAVIOR ####
-ggplot(recent4 %>%
-         filter(!is.na(m_return)),
-       aes(treatment, return_lat, col = gridyear)) + 
+return_treatmentPLOT <- ggplot(recent4 %>%
+                                 filter(!is.na(m_return)),
+                               aes(treatment, return_lat, col = gridyear)) + 
+  theme_classic() +
   labs(col = "Grid by year") +
   stat_boxplot(geom = "errorbar", width = 0.6) +
   geom_boxplot() + 
   geom_jitter(color = "black",
-              size = 0.4,
+              size = 2,
               alpha = 0.5) + #how do i add p-vals
   scale_color_paletteer_d("colorBlindness::paletteMartin") + 
   labs(x = "Treatment",
        y = "Standardized latency to return",
        title = "Effect of density cues on maternal latency to return to pups") 
+
+
+ggsave("output/return~treatment_boxplot.png",
+       plot = return_treatmentPLOT)

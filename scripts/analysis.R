@@ -87,29 +87,3 @@ move_treatment <- lmer(move_lat ~ treatment + n_pups +
                          (1 | year),
                        data = recent4)
 summary(move_treatment) #n = 33
-
-# for each table include sample size for both trials and individuals
-# always figure out where i'm losing trials
-
-# make a table with year, no. trials/juv, grid
-# DO SURVIVAL ANALYSIS FIRST
-
-# APRIL 14 2022
-
-#for personality ~ treatment use only the 4 years
-#use all data for survival data
-# step 1 (all data)
-#survived_200d ~ (oft1 * spring grid density) + (mis1 * spring grid density) + (1 | litter_id)
-
-# step 2: grid effects/treatment effects focus on 2018-2021
-#oft1 ~ (treatment * sex) + growth rate + year (factor) + (1 | litter_id)
-#oft and mis in separate models and use just those 4 years
-
-#step 3 (all years)
-#of1/mis1 ~ latency to retrieve (or binary response) + sex + (1 | year) + (1 | litter_id)
-
-#step 4 (all years)
-#effects of treatment on latency to return/move
-#should i add in spring density???
-#argue that under high density, high growth rate is favored and attentiveness increases growth rate
-#RR is rattle and SUX is control
