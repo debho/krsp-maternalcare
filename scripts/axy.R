@@ -1,11 +1,9 @@
+
 ##############################################################################
-############### Maternal care effects on offspring personality ###############
+############ AMDP Thesis - Deborah Ho, University of Michigan 2022 ###########
 ##############################################################################
-### How does maternal care style influence the development of offspring
-### personality and what are the fitness effects on offspring?
-### offspring personality ~ maternal care * density + other stuff
-##############################################################################
-### Script for handling axy data
+
+# SCRIPT NOT IN USE FOR NOW 
 
 sq_11256 <- read_csv("data/axy/11256_006_20150424.csv") %>%
   filter(nest == "Nest",

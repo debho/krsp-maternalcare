@@ -1,12 +1,9 @@
-##############################################################################
-############### Maternal care effects on offspring personality ###############
-##############################################################################
-### How does maternal care style influence the development of offspring
-### personality and what are the fitness effects on offspring?
-### offspring personality ~ maternal care * density + other stuff
-##############################################################################
-### Random script scraps
 
+##############################################################################
+############ AMDP Thesis - Deborah Ho, University of Michigan 2022 ###########
+##############################################################################
+
+# SCRIPT WHERE I TOSSED IN CODE SCRAPS, CAN PROBABLY BE DELETED
 
 #PREV ANALYSIS STUFF
 # ok, now to see what impacts personality

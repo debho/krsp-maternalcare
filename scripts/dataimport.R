@@ -1,16 +1,16 @@
-##############################################################################
-############### Maternal care effects on offspring personality ###############
-##############################################################################
-### How does maternal care style influence the development of offspring
-### personality and what are the fitness effects on offspring?
-### offspring personality ~ maternal care * density + other stuff
-##############################################################################
-### Script for importing data from krsp database
 
-#library for krsp functions
+##############################################################################
+############ AMDP Thesis - Deborah Ho, University of Michigan 2022 ###########
+##############################################################################
+
+# EXPLANATION ####
+# this script is where I import tables from the KRSP database to consolidate
+# data for all analyses
+
+# library for krsp functions
 library(krsp)
 
-#connecting to database
+# connecting to database
 con <- krsp_connect(
   host = "krsp.cepb5cjvqban.us-east-2.rds.amazonaws.com",
   dbname ="krsp",
@@ -18,9 +18,10 @@ con <- krsp_connect(
   password = Sys.getenv("krsp_password")
 )
 
-#pulling tables from database
+# lists available tables
 krsp_tables(con)
 
+# pulling tables from database
 squirrels <- tbl(con, "squirrel") %>%
   collect() 
   

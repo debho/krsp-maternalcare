@@ -1,21 +1,10 @@
-##############################################################################
-############### Maternal care effects on offspring personality ###############
-##############################################################################
-### How does maternal care style influence the development of offspring
-### personality and what are the fitness effects on offspring?
-### offspring personality ~ maternal care * density + other stuff
-##############################################################################
-### Script for plots
 
-library(paletteer) #for colors
-library(ggplot2) #for figures and graphs
-library(ggprism)
-library(ggResidpanel)
-library(sjPlot)
-library(sjmisc)
-library(lattice)
-library(gridExtra) #for putting plots onto a grid
-library(ggpubr) #for putting p-values onto plots
+##############################################################################
+############ AMDP Thesis - Deborah Ho, University of Michigan 2022 ###########
+##############################################################################
+
+# EXPLANATION ####
+
 
 ## EFFECTS OF PERSONALITY ON SURVIVAL ####
 survivalres <- master %>%
@@ -51,7 +40,9 @@ oft_survivalPLOT <- ggplot(survivalres, aes(oft1, alive_aug, col = spr_density_b
        y = "Probability of survival to autumn",
        title = "Effects of offspring activity on survival to autumn",
        col = "Grid density (Spring)",
-       tag = "(a)")
+       tag = "(a)") + 
+  theme(axis.text = element_text(size = 14)) +
+  theme(legend.position = "none")
 
 mis_survivalPLOT <- ggplot(survivalres, aes(mis1, alive_aug, col = spr_density_binned)) + 
   theme_classic() +
@@ -66,7 +57,13 @@ mis_survivalPLOT <- ggplot(survivalres, aes(mis1, alive_aug, col = spr_density_b
        y = "Probability of survival to autumn",
        title = "Effects of offspring aggression on survival to autumn",
        col = "Grid density (Spring)",
-       tag = "(b)")
+       tag = "(b)") +
+  theme(axis.text = element_text(size = 14)) +
+  theme(legend.text = element_text(size = 12)) 
+
+ggsave("output/survival~personality_scatter.png",
+       arrangeGrob(oft_survivalPLOT, mis_survivalPLOT,
+                   ncol = 2))
 
 ## EFFECTS OF CHICKADEE PLAYBACKS ####
 oft_controlsPLOT <- ggplot(recent4 %>%
@@ -77,7 +74,7 @@ oft_controlsPLOT <- ggplot(recent4 %>%
   geom_boxplot() +
   geom_jitter(color = "black",
               size = 2,
-              alpha = 0.5) + #how do i add p-vals
+              alpha = 0.5) + 
   scale_color_paletteer_d("colorblindr::OkabeIto") + 
   labs(x = "Control type",
        y = "Activity",
@@ -85,7 +82,9 @@ oft_controlsPLOT <- ggplot(recent4 %>%
        col = "Control type",
        tag = "(a)") + 
   stat_compare_means(method = "t.test",
-                     aes(label = "p.format"))
+                     aes(label = "p.format")) +
+  theme(axis.text = element_text(size = 14)) +
+  theme(legend.position = "none")
 
 mis_controlsPLOT <- ggplot(recent4 %>%
                              filter(!gridtreat == "rattle"),
@@ -95,7 +94,7 @@ mis_controlsPLOT <- ggplot(recent4 %>%
   geom_boxplot() + 
   geom_jitter(color = "black",
               size = 2,
-              alpha = 0.5) + #how do i add p-vals
+              alpha = 0.5) +
   scale_color_paletteer_d("colorblindr::OkabeIto") + 
   labs(x = "Control type",
        y = "Aggression",
@@ -103,7 +102,9 @@ mis_controlsPLOT <- ggplot(recent4 %>%
        col = "Control type",
        tag = "(b)") + 
   stat_compare_means(method = "t.test",
-                     aes(label = "p.format"))
+                     aes(label = "p.format")) +
+  theme(axis.text = element_text(size = 14)) +
+  theme(legend.text = element_text(size = 12)) 
 
 ggsave("output/personality~controls_boxplot.png",
        arrangeGrob(oft_controlsPLOT, mis_controlsPLOT,
@@ -124,7 +125,12 @@ oft_treatmentPLOT <- ggplot(recent4,
        y = "Activity",
        title = "Effects of density cues on offspring activity",
        col = "Treatment",
-       tag = "(a)")
+       tag = "(a)") + 
+  stat_compare_means(method = "t.test",
+                     aes(label = "p.format")) +
+  theme(axis.text = element_text(size = 14)) +
+  theme(legend.position = "none")
+
 
 mis_treatmentPLOT <- ggplot(recent4,
                             aes(treatment, mis1, col = treatment)) + 
@@ -139,7 +145,12 @@ mis_treatmentPLOT <- ggplot(recent4,
        y = "Aggression",
        title = "Effects of density cues on offspring aggression",
        col = "Treatment",
-       tag = "(b)")
+       tag = "(b)") + 
+  stat_compare_means(method = "t.test",
+                     aes(label = "p.format")) +
+  theme(axis.text = element_text(size = 14)) +
+  theme(legend.text = element_text(size = 12)) 
+
 
 ggsave("output/personality~treatment_boxplot.png",
        arrangeGrob(oft_treatmentPLOT, mis_treatmentPLOT,
@@ -161,7 +172,9 @@ oft_carePLOT <- ggplot(master %>%
        y = "Activity",
        title = "Effects of maternal attentiveness on offspring activity",
        col = "Year",
-       tag = "(a)")
+       tag = "(a)") +
+  theme(axis.text = element_text(size = 14)) +
+  theme(legend.position = "none")
 
 mis_carePLOT <- ggplot(master %>%
                          filter(!is.na(m_return)), #takes out the years with no maternal behavior data
@@ -177,7 +190,9 @@ mis_carePLOT <- ggplot(master %>%
        y = "Aggression",
        title = "Effects of maternal attentiveness on offspring aggression",
        col = "Year",
-       tag = "(b)")
+       tag = "(b)") +
+  theme(axis.text = element_text(size = 14)) +
+  theme(legend.text = element_text(size = 12)) 
 
 ggsave("output/personality~care_scatter.png",
        arrangeGrob(oft_carePLOT, mis_carePLOT,
@@ -197,8 +212,9 @@ return_treatmentPLOT <- ggplot(recent4 %>%
   scale_color_paletteer_d("colorBlindness::paletteMartin") + 
   labs(x = "Treatment",
        y = "Standardized latency to return",
-       title = "Effect of density cues on maternal latency to return to pups") 
-
+       title = "Effect of density cues on maternal latency to return to pups") +
+  theme(axis.text = element_text(size = 14)) +
+  theme(legend.text = element_text(size = 12)) 
 
 ggsave("output/return~treatment_boxplot.png",
        plot = return_treatmentPLOT)

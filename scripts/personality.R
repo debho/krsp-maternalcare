@@ -1,13 +1,12 @@
-##############################################################################
-############### Maternal care effects on offspring personality ###############
-##############################################################################
-### How does maternal care style influence the development of offspring
-### personality and what are the fitness effects on offspring?
-### offspring personality ~ maternal care * density + other stuff
-##############################################################################
-### Script for setting personality data up for analysis
 
-#importing data and cleaning
+##############################################################################
+############ AMDP Thesis - Deborah Ho, University of Michigan 2022 ###########
+##############################################################################
+
+# EXPLANATION ####
+
+
+# importing data and cleaning
 personality <- read.csv('data/personality-master.csv',
                             header = T,
                             na.strings = c("", " ", "NA")) %>%

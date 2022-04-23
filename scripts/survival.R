@@ -1,11 +1,9 @@
+
 ##############################################################################
-############### Maternal care effects on offspring personality ###############
+############ AMDP Thesis - Deborah Ho, University of Michigan 2022 ###########
 ##############################################################################
-### How does maternal care style influence the development of offspring
-### personality and what are the fitness effects on offspring?
-### offspring personality ~ maternal care * density + other stuff
-##############################################################################
-### Script for survival data
+
+# EXPLANATION ####
 
 survival <- flastall %>%
   mutate(age_last = as.integer(difftime(datee, dates, units = "days")),

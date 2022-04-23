@@ -1,22 +1,30 @@
+
 ##############################################################################
-############### Maternal care effects on offspring personality ###############
+############ AMDP Thesis - Deborah Ho, University of Michigan 2022 ###########
 ##############################################################################
-### How does maternal care style influence the development of offspring
-### personality and what are the fitness effects on offspring?
-### offspring personality ~ maternal care * density + other stuff
-##############################################################################
-### Script for consolidating data
+
+# EXPLANATION ####
+# this script was used to consolidate data from the KRSP database with nest
+# attendance data and personality data. 
+# see dataimport.R for script where I pulled in tables from the KRSP database.
+# doing this allowed me to match juveniles to their mothers through their
+# litter IDs
+# in this script, i also prepare the data for analysis by standardizing
+# continuous variables by group and converting categorical variables into
+# factors. see below for more details on what was done to each variable.
+# grid density data is the density per grid during the May census. see
+# density.R for details.
 
 library(standardize) #to standardize continuous variables by groups
 
-# STEP 1 ####
-## matching juveniles to litters
-## should match on litter ID
-
-# but first lets clean up some column names to avoid confusion
+# first lets clean up some column names to avoid confusion
 colnames(litters)[1] <- "litter_id"
 colnames(litters)[25] <- "mom_id"
 colnames(juveniles)[17] <- "juv_id"
+
+# STEP 1 ####
+## matching juveniles to litters via litter_id
+# KRSP tables used: "juvenile" and "litter"
 
 juv_litter <- merge(juveniles,
                     litters,
@@ -37,11 +45,12 @@ juv_litter <- merge(juveniles,
             tagWT,
             growth = (tagWT - weight)) %>%
   naniar::replace_with_na(replace = list(n_days = 0)) %>%
-  mutate(growthrate = (growth / n_days))
+  mutate(growthrate = (growth / n_days)) # adds in growth rate info
             
 
 # STEP 2 ####
-## now we match the moms and attentiveness data
+## adding in nest attendance data to the table, matching on litter_id
+# see nestattendance.R for script on preparing nest attendance data for analysis
 
 juv_care <- merge(juv_litter,
                   nest_att,
@@ -68,7 +77,8 @@ juv_care <- merge(juv_litter,
             growthrate)
 
 # STEP 3 ####
-## now for personality
+## adding in cleaned personality data to the table, matching by juv_id
+# see personality.R for script on cleaning personality data
 
 juv_personality <- merge(personality,
                          juv_care,
@@ -99,13 +109,14 @@ juv_personality <- merge(personality,
              mis1,
              trialdate,
              julian_trialdate) %>%
-  mutate(julian_birth_date = yday(birth_date))
-
-juv_personality$age_trial <- (juv_personality$julian_trialdate -
-                              juv_personality$julian_birth_date)
+  mutate(julian_birth_date = yday(birth_date),
+         age_trial = as.numeric(difftime(trialdate, birth_date,
+                                         units = "days")))
 
 # STEP 4 ####
-## add in survival and we have our master table
+## adding in survival data
+# see survival.R to see how this data was prepared from the data in the KRSP
+# flastall2 table
 
 master <- merge(juv_personality,
                 survival,
@@ -142,7 +153,7 @@ master <- merge(juv_personality,
             survived_200d,
             survived_60d) %>%
   filter(age_trial >= 60,
-           age_trial <= 80) #removes juvs that were too young
+           age_trial <= 80) # takes in only juvs that were 60-80days old 
 
 # cleaning up trial dates that occur before end dates
 master$age_last <- ifelse((master$age_last < master$age_trial),
@@ -152,31 +163,36 @@ master$age_last <- ifelse((master$age_last < master$age_trial),
 master <- master %>% 
   mutate(aug_census = make_date(year, 08, 15),
   age_census = as.integer(difftime(aug_census, birth_date, units = "days")),
-  alive_aug = as.integer((end_date >= aug_census) & #were they alive on Aug 15 of their birth year?
+  # were they alive on Aug 15 of their birth year?
+  alive_aug = as.integer((end_date >= aug_census) & 
                            (age_census >= 60 | #were they at least 60 days then? 
-                              age_last >= 60 | survived_60d == 1))) #if not, are they known to have lived more than 60 days?
-#NA for those with end date after census but age unknown (ie. can't tell if they're >= 60 days old on census day)
+                              age_last >= 60 | survived_60d == 1))) # if not, are they known to have lived more than 60 days?
+# NA for those with end date after census but age unknown (ie. can't tell if
+# they're >= 60 days old on census day)
 
-# adding in treatments
+## FACTORING CATEGORICAL VARIABLES ####
+## adding in new categorical variables
+# this variable looks at the specific playback
 master$gridtreat <- factor(master$grid,
                            levels = c("JO", "RR", "BT", "KL", "SU", "SUX"),
-                           labels = c("rattle", "rattle", "chickadee", "control", "control", "control"))
+                           labels = c("rattle", "rattle", "chickadee",
+                                      "control", "control", "control"))
 
+# this variable considers chickadee as part of the controls
 master$treatment <- factor(master$grid,
                            levels = c("JO", "RR", "BT", "KL", "SU", "SUX"),
-                           labels = c("rattle", "rattle", "control", "control", "control", "control"))
+                           labels = c("rattle", "rattle", "control",
+                                      "control", "control", "control"))
 
-#add in missing age_trials
-master$birth_date <- as.Date(master$birth_date,
-                             "%y/%m/%d")
-master$julian_birth_date <- yday(master$birth_date)
-
+# this variable indicates whether a juvenile was born during a mast year
 master$mastyear <- as.factor(as.integer(master$year == 2005 |
                                           master$year == 2019))
+
+## this factors all other categorical variables already in the master table
 master <- merge(master, grids_density,
                 by = c("grid", "year"),
                 all.x = TRUE) %>%
-  mutate(grid = as.factor(grid), #making all categorical variables factors
+  mutate(grid = as.factor(grid),
          litter_id = as.factor(litter_id),
          mom_id = as.factor(mom_id),
          year = as.factor(year),
@@ -190,10 +206,14 @@ master <- merge(master, grids_density,
   distinct(juv_id,
            .keep_all = TRUE)
 
+# filters out 2018-2021 for analyses involving playback treatments
 recent4 <- master %>%
-  filter(year %in% c(2018, 2019, 2020, 2021)) #for treatment analyses
+  filter(year %in% c(2018, 2019, 2020, 2021))
 
-#standardizing all variables
+## STANDARDIZES CONTINUOUS VARIABLES ####
+## the scale at which each variable was standardized by is next to its line of 
+## code
+# standardized to mean = 0, sd = 1 within each scale of standardizing 
 master <- master %>%
   mutate(oft1 = scale_by(oft1 ~ gridyear), #grid-year
          mis1 = scale_by(mis1 ~ gridyear), #grid-year

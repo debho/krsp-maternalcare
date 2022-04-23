@@ -1,11 +1,11 @@
+
 ##############################################################################
-############### Maternal care effects on offspring personality ###############
+############ AMDP Thesis - Deborah Ho, University of Michigan 2022 ###########
 ##############################################################################
-### How does maternal care style influence the development of offspring
-### personality and what are the fitness effects on offspring?
-### offspring personality ~ maternal care * density + other stuff
-##############################################################################
-### Script for getting grid density data
+
+## SCRIPT ADAPTED FROM DR. ANDREW MCADAM'S SCRIPT ON FINDING GRID DENSITY
+# EXPLANATION ####
+
 
 census_2 <- census %>%
   rename (locX = locx,
