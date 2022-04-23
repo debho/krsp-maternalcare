@@ -15,8 +15,6 @@
 # grid density data is the density per grid during the May census. see
 # density.R for details.
 
-library(standardize) #to standardize continuous variables by groups
-
 # first lets clean up some column names to avoid confusion
 colnames(litters)[1] <- "litter_id"
 colnames(litters)[25] <- "mom_id"

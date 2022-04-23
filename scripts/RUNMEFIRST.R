@@ -15,6 +15,7 @@ library(dplyr) #for data manipulation
 library(tidyverse) #for data cleaning
 library(lubridate) #for handling dates
 library(car)
+library(standardize) #to standardize continuous variables by groups
 
 ## PACKAGES USED SPECIFICALLY IN ANALYSIS.R ####
 library(lmerTest) #for linear mixed models

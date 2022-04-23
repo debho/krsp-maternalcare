@@ -4,9 +4,15 @@
 ##############################################################################
 
 # EXPLANATION ####
+# this script has all the code for all plots shown in my thesis
+# i used ggplot2 to generate all plots
+# how the data was consolidated for these analyses can be found in dataconsol.R
+# the code for fitting linear models are in analysis.R
 
+# ANALYSIS 1: EFFECTS OF PERSONALITY ON SURVIVAL ####
 
-## EFFECTS OF PERSONALITY ON SURVIVAL ####
+# obtaining table with standardized residuals
+# spring grid densities binned instead of continuous
 survivalres <- master %>%
   filter(!is.na(alive_aug),
          !is.na(spr_density),
@@ -21,12 +27,9 @@ survivalres <- master %>%
          spr_density_binned = cut_interval(spr_density, n = 2)) %>%
   mutate(spr_density_binned = factor(spr_density_binned,
                                      labels = c("Low density", "High density")),
-         spr_density_quant = gtools::quantcut(spr_density, q = 3))
+         spr_density_quant = gtools::quantcut(spr_density, q = 4))
 
-
-# survivalres is the master table with added columns for standardized residuals for survival data
-# and it has densities binned instead of just continuous
-
+# scatterplot of survival ~ activity * spring grid density
 oft_survivalPLOT <- ggplot(survivalres, aes(oft1, alive_aug, col = spr_density_binned)) + 
   theme_classic() +
   geom_point(size = 3,
@@ -44,6 +47,7 @@ oft_survivalPLOT <- ggplot(survivalres, aes(oft1, alive_aug, col = spr_density_b
   theme(axis.text = element_text(size = 14)) +
   theme(legend.position = "none")
 
+# scatterplot of survival ~ aggression * spring grid density
 mis_survivalPLOT <- ggplot(survivalres, aes(mis1, alive_aug, col = spr_density_binned)) + 
   theme_classic() +
   geom_point(size = 3,
@@ -65,7 +69,9 @@ ggsave("output/survival~personality_scatter.png",
        arrangeGrob(oft_survivalPLOT, mis_survivalPLOT,
                    ncol = 2))
 
-## EFFECTS OF CHICKADEE PLAYBACKS ####
+# ANALYSIS 2: EFFECTS OF TREATMENT ON OFFSPRING PERSONALITY ####
+
+# boxplot of effects of chickadee playbacks on activity
 oft_controlsPLOT <- ggplot(recent4 %>%
                              filter(!gridtreat == "rattle"),
                            aes(gridtreat, oft1, col = gridtreat)) + 
@@ -86,6 +92,7 @@ oft_controlsPLOT <- ggplot(recent4 %>%
   theme(axis.text = element_text(size = 14)) +
   theme(legend.position = "none")
 
+# boxplot of effects of chickadee playbacks on aggression
 mis_controlsPLOT <- ggplot(recent4 %>%
                              filter(!gridtreat == "rattle"),
                            aes(gridtreat, mis1, col = gridtreat)) + 
@@ -110,8 +117,7 @@ ggsave("output/personality~controls_boxplot.png",
        arrangeGrob(oft_controlsPLOT, mis_controlsPLOT,
                    ncol = 2))
 
-## EFFECTS OF TREATMENT ON OFFSPRING PERSONALITY
-
+# boxplot of effects of rattle playbacks on activity
 oft_treatmentPLOT <- ggplot(recent4,
                             aes(treatment, oft1, col = treatment)) + 
   theme_classic() +
@@ -119,7 +125,7 @@ oft_treatmentPLOT <- ggplot(recent4,
   geom_boxplot() + 
   geom_jitter(color = "black",
               size = 2,
-              alpha = 0.5) + #how do i add p-vals
+              alpha = 0.5)
   scale_color_paletteer_d("colorblindr::OkabeIto") + 
   labs(x = "Treatment",
        y = "Activity",
@@ -131,7 +137,7 @@ oft_treatmentPLOT <- ggplot(recent4,
   theme(axis.text = element_text(size = 14)) +
   theme(legend.position = "none")
 
-
+# boxplot of effects of rattle playbacks on aggression
 mis_treatmentPLOT <- ggplot(recent4,
                             aes(treatment, mis1, col = treatment)) + 
   theme_classic() +
@@ -139,7 +145,7 @@ mis_treatmentPLOT <- ggplot(recent4,
   geom_boxplot() + 
   geom_jitter(color = "black",
               size = 2,
-              alpha = 0.5) + #how do i add p-vals
+              alpha = 0.5)
   scale_color_paletteer_d("colorblindr::OkabeIto") +
   labs(x = "Treatment",
        y = "Aggression",
@@ -156,8 +162,9 @@ ggsave("output/personality~treatment_boxplot.png",
        arrangeGrob(oft_treatmentPLOT, mis_treatmentPLOT,
                    ncol = 2))
 
-## EFFECTS OF MATERNAL BEHAVIOR ON OFFSPRING PERSONALITY
+# ANALYSIS 3: EFFECTS OF MATERNAL CARE ON OFFSPRING PERSONALITY ####
 
+# effects of latency to return on offspring activity
 oft_carePLOT <- ggplot(master %>%
                          filter(!is.na(m_return)), #takes out the years with no maternal behavior data
                        aes(return_lat, oft1, col = year)) + 
@@ -176,6 +183,7 @@ oft_carePLOT <- ggplot(master %>%
   theme(axis.text = element_text(size = 14)) +
   theme(legend.position = "none")
 
+# effects of latency to return on offspring aggression
 mis_carePLOT <- ggplot(master %>%
                          filter(!is.na(m_return)), #takes out the years with no maternal behavior data
                        aes(return_lat, mis1, col = year)) + 
@@ -198,7 +206,9 @@ ggsave("output/personality~care_scatter.png",
        arrangeGrob(oft_carePLOT, mis_carePLOT,
                    ncol = 2))
 
-## EFFECTS OF TREATMENT ON MATERNAL BEHAVIOR ####
+# ANALYSIS 4: EFFECTS OF TREATMENT ON MATERNAL CARE BEHAVIOR ####
+
+# boxplot of latency to return ~ treatment by grid & year
 return_treatmentPLOT <- ggplot(recent4 %>%
                                  filter(!is.na(m_return)),
                                aes(treatment, return_lat, col = gridyear)) + 
