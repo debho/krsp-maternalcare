@@ -1,20 +1,5 @@
----
-title: "README"
-author: "Deborah Ho"
-date: "5/3/2022"
-output: 
-  html_document: 
-    toc: yes
-    theme: spacelab
-    number_sections: yes
-    keep_md: yes
-editor_options: 
-  chunk_output_type: inline
----
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+## LAST UPDATED: 5/3/2022
 
 ## Does maternal care induce adaptive changes in offspring behavioral characteristics in wild North American red squirrels (*Tamiasciurus hudsonicus*)?
 
