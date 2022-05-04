@@ -51,19 +51,37 @@ This script was used for accessing the KRSP database, as well as pulling tables 
 
 I used this script to load in raw personality data from *personality-master.csv*, clean the data, and run PCA on personality data to obtain my PC scores for OFT and MIS.
 
-In my case, I was only using weaned juveniles (60-80 days old at the time of the behavioral assays).
+In my case, I was only using weaned juveniles (60-80 days old at the time of the behavioral assays). Juveniles with no known parturition date were omitted from this analysis.
 
 #### nestattendance.R
 
+This script was used to prepare nest attendance data from *AllNestCENS.csv* for analysis.
+
+I converted the variables that indicated whether a mom returned (m_return) or moved her pups (m_move) to a binary variable. I also calculated the ages of the pups at the time of the nest intrusions.
+
 #### survival.R
+
+Using data from the *flastall2* table from the KRSP database, this script returned binary variables for whether a pup survived at least 60 days and at least 200 days.
 
 #### density.R
 
+This is a modified version of Dr. Andrew McAdam's script from the KRSP GitHub. Here, I calculated the spring grid density using population size collected during the May census of each year.
+
+Since I did not have the grid areas for some of the grids (RR, BT, SUX), I could not get grid densities for these grids.
+
 #### dataconsol.R
+
+In this script, I consolidated all the data I prepared in previous scripts into a master table for analysis (*master*). Here, I also prepared the data for analysis, such as standardizing continuous variables such that mean = 0 and sd = 1, and factoring categorical variables. See comments in the script for more details.
+
+I also extracted data from 2018-2021 (*recent4*) for analyses that involved using rattle/chickadee playbacks in the models as this method of playbacks only started in 2018.
 
 #### analysis.R
 
+All statistical analyses were performed using the code in this script. These analyses were mostly linear (mixed-effects) models. Detailed explanations are in the comments of the scripts.
+
 #### plots.R
+
+All plots were generated here.
 
 ### output
 
