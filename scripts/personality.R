@@ -4,7 +4,13 @@
 ##############################################################################
 
 # EXPLANATION ####
-
+# this script prepared personality data from personality-master.csv for running
+# PCA and obtaining representative activity and aggression scores
+# only juveniles who were 60-80 days at the time they went through the
+# behavioral assays were included in this trial
+# explanation on how raw data was processed to be entered into
+# personality-master.csv can be found in the BORIS protocol document (Nov 2021
+# version and later). there is also a brief summary at the end of this script.
 
 # importing data and cleaning
 personality <- read.csv('data/personality-master.csv',
@@ -108,3 +114,15 @@ pca.mis <- dudi.pca(beh.mis,
 pca.mis$c1
 get_eig(pca.mis)
 personality$mis1 <- pca.mis$l1$RS1
+
+# RAW PERSONALITY DATA PROCESSING ####
+# after exporting .csv files from BORIS, OFT and MIS behaviors were cut off at
+# the 450s and 300s marks respectively.
+# all behaviors were summed (or counted for discrete behaviors)
+# for Still, all occurrences ≥ 1.9 seconds were summed
+# occurrences of Still that were less than 1.9 seconds AND took place on the
+# ground (i.e. NOT in Hang) were added to Walk time
+# approach and attack latencies were censored to the max time (duration of the
+# MIS trial) in the event that the focal individual did not see itself in the 
+# mirror, approach, and/or attack
+
