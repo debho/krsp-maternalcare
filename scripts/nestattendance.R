@@ -4,6 +4,12 @@
 ##############################################################################
 
 # EXPLANATION ####
+# this script was used to prepare nest attendance data for analysis. i read
+# in data from AllNestsCENS.csv, which is the master file for nest attendance
+# data but with columns added in to censor latencies for moms that did not
+# return/move within 7 minutes to 420 seconds (the maximum duration)
+# i also converted the the m_return and m_move variables to binary variables
+# indicating whether a mom returned/moved pups in ≤ 420 seconds
 
 # reading in nest attendance data and cleans it
 nest_attALL <- read.csv("data/AllNestsCENS.csv",

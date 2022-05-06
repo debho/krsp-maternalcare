@@ -5,7 +5,9 @@
 
 ## SCRIPT ADAPTED FROM DR. ANDREW MCADAM'S SCRIPT ON FINDING GRID DENSITY
 # EXPLANATION ####
-
+# this script was used to calculate the spring grid density per grid-year
+# combination using data from the May census
+# i forked this script from the KRSP Github, under krsp-functions
 
 census_2 <- census %>%
   rename (locX = locx,
