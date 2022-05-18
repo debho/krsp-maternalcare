@@ -1,5 +1,5 @@
 
-## LAST UPDATED: 5/3/2022
+## LAST UPDATED: 5/18/2022
 
 ## Does maternal care induce adaptive changes in offspring behavioral characteristics in wild North American red squirrels (*Tamiasciurus hudsonicus*)?
 
@@ -68,6 +68,10 @@ All statistical analyses were performed using the code in this script. These ana
 #### plots.R
 
 All plots were generated here.
+
+### (manu)scripts
+
+Contains the scripts used for Ho et al., 2022. This is so that the original scripts used for the AMDP thesis are not overwritten, to maintain the record.
 
 ### output
 
