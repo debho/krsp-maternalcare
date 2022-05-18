@@ -17,6 +17,10 @@ library(lubridate) #for handling dates
 library(car)
 library(standardize) #to standardize continuous variables by groups
 
+## PACKAGES USED SPECIFICALLY IN PERSONALITY.R (PCA) ####
+library(ade4) #for PCA loadings
+library(factoextra) #to get variance
+
 ## PACKAGES USED SPECIFICALLY IN ANALYSIS.R ####
 library(lmerTest) #for linear mixed models
 library(QuantPsyc)
