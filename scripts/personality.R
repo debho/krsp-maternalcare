@@ -86,13 +86,9 @@ beh.mis <- transmute(behaviors,
                      attacklat_prop = (attacklatency/mis_duration),
                      attack_prop = (attack/mis_duration)) 
 
-#PCA ####
+# PCA ####
 
-library(ade4) #for PCA loadings
-library(factoextra) #to get variance
-
-#PCA for OFT
-
+#OFT
 pca.oft <- dudi.pca(beh.oft,
                     scale = TRUE,
                     scannf = FALSE,
@@ -104,8 +100,7 @@ pca.oft$c1
 personality$oft1 <- (pca.oft$l1$RS1 * -1) 
 get_eig(pca.oft)
 
-# PCA for MIS
-
+#MIS
 pca.mis <- dudi.pca(beh.mis,
                     scale = TRUE,
                     scannf = FALSE,
