@@ -26,8 +26,9 @@ personality_updated <- read.csv("data/personality-master-updated.csv",
          !is.na(sq_id),
          !observer == "SWK", #because of GC experiment
          !(sq_id == "22985" & trialnumber == 2), #trial 2 only 8 days after trial 1 
-         !(sq_id == "23052" & trialnumber == 2)) #trial 2 only 13 days after trial 1
-
+         !(sq_id == "23052" & trialnumber == 2)) %>% #trial 2 only 13 days after trial 1
+  drop_na(walk,
+          front)
 colnames(personality_updated)[1] <- "juv_id" #distinguish from squirrel_id in other tables since these are all juvs
 
 personality_updated$trialdate <- as.Date(personality_updated$trialdate,
@@ -68,8 +69,6 @@ beh.oft <- transmute(behaviors,
                      still_prop = (still/oft_duration),
                      chew_prop = (chew/oft_duration),
                      groom_prop = (groom/oft_duration))
-beh.oft <- beh.oft %>%
-  drop_na(walk_prop)
 
 beh.mis <- transmute(behaviors,
                      front_prop = (front/mis_duration),
@@ -77,8 +76,6 @@ beh.mis <- transmute(behaviors,
                      approachlat_prop = (approachlatency/mis_duration),
                      attacklat_prop = (attacklatency/mis_duration),
                      attack_prop = (attack/mis_duration))
-beh.mis <- beh.mis %>%
-  drop_na(front_prop)
 
 # PCA ####
 #OFT
@@ -89,8 +86,9 @@ pca.oft <- dudi.pca(beh.oft,
 
 pca.oft$c1 <- (pca.oft$c1 * -1) #loadings were reversed
 pca.oft$c1
-personality_updated$oft1 <- (pca.oft$l1$RS1 * -1) 
 get_eig(pca.oft)
+personality_updated$oft1 <- (pca.oft$l1$RS1 * -1) 
+
 
 #MIS
 pca.mis <- dudi.pca(beh.mis,
