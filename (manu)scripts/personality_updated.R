@@ -4,11 +4,13 @@
 ##############################################################################
 
 # EXPLANATION ####
-# this script handles the data wrangling for analyses for the Ho et al., 2022
+# this script reruns the PCA analyses on personality data for Ho et al., 2022
 # manuscript.
 # changes from the AMDP thesis data include:
 # 1. personality master file used is the one updated by ARM (May 2022)
 # 2. includes squirrels from AG grid
+# 3. uses trial 1 of KL 2017-2018 instead of trial 2
+# 4. removes the 60-80 days filter to look at age effects
 
 # PERSONALITY DATA ####
 personality_updated <- read.csv("data/personality-master-updated.csv",
@@ -23,19 +25,14 @@ personality_updated <- read.csv("data/personality-master-updated.csv",
          !(sq_id == "19257" & trialnumber == 1),
          !is.na(sq_id),
          !observer == "SWK", #because of GC experiment
-         !(sq_id == "22684" & trialnumber == 2), #too old on this trial
-         !(sq_id == "22964" & trialnumber == 1), #too young
-         !(sq_id == "22966" & trialnumber == 1), #too young
-         !(sq_id == "22979" & trialnumber == 1), #too young
-         !(tagrt == "M6964"), #too young
          !(sq_id == "22985" & trialnumber == 2), #trial 2 only 8 days after trial 1 
          !(sq_id == "23052" & trialnumber == 2)) #trial 2 only 13 days after trial 1
 
 colnames(personality_updated)[1] <- "juv_id" #distinguish from squirrel_id in other tables since these are all juvs
 
-personality_updated$trialdate <- as.Date(personality$trialdate,
+personality_updated$trialdate <- as.Date(personality_updated$trialdate,
                                  "%m/%d/%y")
-personality_updated$julian_trialdate <- yday(personality$trialdate) #to get juv age at trial
+personality_updated$julian_trialdate <- yday(personality_updated$trialdate) #to get juv age at trial
 
 # sets all trial durations
 personality_updated[is.na(personality_updated$oft_duration),
@@ -103,6 +100,4 @@ pca.mis <- dudi.pca(beh.mis,
 
 pca.mis$c1
 get_eig(pca.mis)
-personality_updated$mis1 <- pca.mis$l1$RS1
-
-#how do i put in NA values or dummy values for those that dont have OFT/MIS 
+personality_updated$mis1 <- pca.mis$l1$RS1 
