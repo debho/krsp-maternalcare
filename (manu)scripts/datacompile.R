@@ -21,3 +21,7 @@ personality_updated <- personality_updated %>%
          gridyear = as.factor(paste(grid, year)),
          bucket_access = as.factor(as.integer(grid == "AG")))
 # we only have 8 AG juvs? recheck the personality master file
+
+# need to get survival data once we have part dates
+# add in spring grid density
+# get survival data for 2021 cohort once may 15 2022 census data is in
