@@ -25,3 +25,34 @@ personality_updated <- personality_updated %>%
 # need to get survival data once we have part dates
 # add in spring grid density
 # get survival data for 2021 cohort once may 15 2022 census data is in
+
+
+juv_personality <- merge(personality_updated,
+                         juv_litter,
+                         by = "juv_id",
+                         all.x = TRUE) %>%
+  transmute(litter_id,
+            year,
+            juv_id,
+            sex = sex.x,
+            grid = grid.x,
+            birth_date = as.Date(fieldBDate, "%Y-%m-%d"),
+            julian_birth_date = yday(birth_date),
+            weight,
+            tagWT,
+            growth,
+            n_days,
+            growthrate,
+            oft1,
+            mis1,
+            trialdate,
+            julian_trialdate) %>%
+  mutate(julian_birth_date = yday(birth_date),
+         age_trial = as.numeric(difftime(trialdate, birth_date,
+                                         units = "days")))
+
+na_bdate <- juv_personality %>%
+  filter(is.na(birth_date))
+
+write_csv(na_bdate,
+          "data/missing_bdates.csv")
