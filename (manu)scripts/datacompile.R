@@ -28,7 +28,7 @@ personality_updated <- personality_updated %>%
 
 
 juv_personality <- merge(personality_updated,
-                         juv_litter,
+                         juv_litter, #taken from dataconsol.R
                          by = "juv_id",
                          all.x = TRUE) %>%
   transmute(litter_id,
